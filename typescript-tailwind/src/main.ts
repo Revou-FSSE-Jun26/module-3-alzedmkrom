@@ -107,11 +107,35 @@ function renderCard(view: ProductView): string {
 }
 
 // Result-count text for the status region, phrased for the count and pluralized.
-// Task 9.2 will extend the zero case with an in-grid empty state.
 function resultCountText(count: number): string {
   if (count === 0) return 'No products found';
   if (count === 1) return 'Showing 1 product';
   return `Showing ${count} products`;
+}
+
+// The empty state, rendered inside the grid when a query matches nothing. It
+// spans every column with `col-span-full` so the grid stays intact and the
+// layout never collapses. The searched term is echoed through escapeHtml, and
+// the clear button carries `data-action="clear-search"` so the delegated click
+// handler on the grid resets the query and re-renders the full list.
+function renderEmptyState(query: string): string {
+  return `
+    <div class="col-span-full flex flex-col items-center gap-4 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
+      <p class="text-lg font-semibold text-slate-900">
+        No products match "${escapeHtml(query.trim())}"
+      </p>
+      <p class="text-sm text-slate-600">
+        Try a different search, or clear it to see the full catalog.
+      </p>
+      <button
+        type="button"
+        data-action="clear-search"
+        class="inline-flex items-center rounded-lg bg-revo-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-revo-700 focus:outline-none focus:ring-2 focus:ring-revo-500"
+      >
+        Clear search
+      </button>
+    </div>
+  `;
 }
 
 // Re-render the whole grid from state. Search is applied here, so the rendered
@@ -119,7 +143,10 @@ function resultCountText(count: number): string {
 // status region's count is updated on every render to match what is shown.
 function render(): void {
   const views = selectVisible(state.query);
-  catalog.innerHTML = views.map(renderCard).join('');
+  catalog.innerHTML =
+    views.length === 0
+      ? renderEmptyState(state.query)
+      : views.map(renderCard).join('');
   status.textContent = resultCountText(views.length);
 }
 
@@ -141,6 +168,18 @@ const searchInput = requireElement<HTMLInputElement>('#search');
 // than mutating the DOM in place.
 searchInput.addEventListener('input', () => {
   state.query = searchInput.value;
+  render();
+});
+
+// Delegated click handler on the grid, so the empty state's clear button works
+// without rebinding after each re-render. Resetting state.query and the input
+// value together, then re-rendering, restores the full product list exactly.
+catalog.addEventListener('click', (event) => {
+  const target = event.target as HTMLElement;
+  const clearButton = target.closest('[data-action="clear-search"]');
+  if (clearButton === null) return;
+  state.query = '';
+  searchInput.value = '';
   render();
 });
 
