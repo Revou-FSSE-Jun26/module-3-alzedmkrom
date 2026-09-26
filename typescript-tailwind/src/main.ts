@@ -1,14 +1,16 @@
 // Catalog entry point.
 //
-// Task 8.2 rendered the full grid from typed data. Task 9.1 adds live search:
+// Task 8.2 rendered the full grid from typed data. Task 9.1 added live search:
 // the query lives in CatalogState, an `input` listener updates it, and the grid
 // re-renders from state on every change rather than mutating the DOM in place.
-// The cart counter (9.3) and empty state (9.2) are still separate tasks; the
-// code stays built around a single CatalogState plus a re-render function.
+// Task 9.2 added the empty state. Task 9.3 adds the cart counter: `cart` lives
+// in the same CatalogState as a CartLines record, per-card controls mutate a
+// single line, and the header badge is recomputed from that state on every
+// render, so the badge can never drift from the per-card counts.
 
 import { CATEGORIES, PRODUCTS } from './data.js';
 import { toProduct, toView } from './types.js';
-import type { CatalogState, ProductView } from './types.js';
+import type { CartLines, CatalogState, ProductView } from './types.js';
 import {
   availabilityBadgeClass,
   availabilityLabel,
@@ -73,15 +75,136 @@ function selectVisible(query: string): ProductView[] {
   return VISIBLE_PRODUCTS.filter((view) => matchesQuery(view, query));
 }
 
+// Product lookup by id, over the same visible (non-deleted) set the grid
+// renders. The cart mutation handlers read `stockQuantity` from here to clamp
+// increments, and a soft-deleted product is absent so it can never be added.
+const PRODUCTS_BY_ID = new Map<number, ProductView>(
+  VISIBLE_PRODUCTS.map((view) => [view.id, view]),
+);
+
+// --- cart state ---
+
+// Total item count across all lines, recomputed from cart state with `reduce`.
+// The header badge reads this on every render, so it cannot drift from the sum
+// of the per-card counts.
+function cartItemCount(cart: CartLines): number {
+  return Object.values(cart).reduce((total, quantity) => total + quantity, 0);
+}
+
+// Total rupiah across all lines: each line's quantity times its product price,
+// summed with `reduce`. Lines whose product is missing contribute nothing.
+function cartTotal(cart: CartLines): number {
+  return Object.entries(cart).reduce((total, [id, quantity]) => {
+    const product = PRODUCTS_BY_ID.get(Number(id));
+    return product === undefined ? total : total + product.price * quantity;
+  }, 0);
+}
+
+// Increment a line, clamped at the product's stockQuantity, so no line can be
+// ordered beyond what the row says exists. An out-of-stock or unknown product
+// is a no-op. Returns true when the cart actually changed.
+function incrementLine(id: number): boolean {
+  const product = PRODUCTS_BY_ID.get(id);
+  if (product === undefined || product.stockQuantity <= 0) return false;
+  const current = state.cart[id] ?? 0;
+  if (current >= product.stockQuantity) return false;
+  state.cart[id] = current + 1;
+  return true;
+}
+
+// Decrement a line, clamped at zero: reaching zero removes the line entirely so
+// no orphaned or negative quantity is reachable. Returns true when the cart
+// actually changed.
+function decrementLine(id: number): boolean {
+  const current = state.cart[id] ?? 0;
+  if (current <= 0) return false;
+  if (current === 1) {
+    delete state.cart[id];
+  } else {
+    state.cart[id] = current - 1;
+  }
+  return true;
+}
+
 // --- rendering ---
+
+// The cart control block for one card. Two mutually exclusive states, chosen
+// by the derived availability rather than by styling: an out-of-stock product
+// renders a truly `disabled` add-to-cart button, and an in/low-stock product
+// renders either an "Add to cart" button (when the line is absent or zero) or
+// a stepper with minus/plus controls and the live per-card count.
+//
+// Every button carries a `data-action` and `data-id` so the delegated click
+// handler on the grid can act on the right line without rebinding after a
+// re-render. The icon-only minus and plus buttons carry an `aria-label`, since
+// their glyph alone is not an accessible name.
+function renderCartControls(view: ProductView, quantity: number): string {
+  if (view.availability.kind === 'out-of-stock') {
+    return `
+      <button
+        type="button"
+        disabled
+        aria-disabled="true"
+        class="mt-1 inline-flex items-center justify-center rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-400 cursor-not-allowed"
+      >
+        Out of stock
+      </button>
+    `;
+  }
+
+  if (quantity <= 0) {
+    return `
+      <button
+        type="button"
+        data-action="add-to-cart"
+        data-id="${view.id}"
+        class="mt-1 inline-flex items-center justify-center rounded-lg bg-revo-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-revo-700 focus:outline-none focus:ring-2 focus:ring-revo-500"
+      >
+        Add to cart
+      </button>
+    `;
+  }
+
+  return `
+    <div class="mt-1 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          data-action="decrement"
+          data-id="${view.id}"
+          aria-label="Remove one ${escapeHtml(view.name)}"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-semibold leading-none text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-revo-500"
+        >
+          &minus;
+        </button>
+        <span class="min-w-8 text-center text-sm font-semibold tabular-nums text-slate-900">
+          ${quantity}
+        </span>
+        <button
+          type="button"
+          data-action="increment"
+          data-id="${view.id}"
+          aria-label="Add one ${escapeHtml(view.name)}"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-semibold leading-none text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-revo-500"
+        >
+          +
+        </button>
+      </div>
+      <span class="text-xs font-medium text-slate-500">in cart</span>
+    </div>
+  `;
+}
 
 // One card's markup. Every class is a complete literal string, and the two
 // data-driven class groups come from the styles.ts helpers which also return
 // complete literals — nothing is assembled by interpolating into a class name.
+// The cart control block is read from state (the current quantity for this
+// product line) so the card count and the header badge share one source.
 function renderCard(view: ProductView): string {
   const badgeClass = availabilityBadgeClass(view.availability);
   const badgeText = availabilityLabel(view.availability);
   const accentClass = categoryAccentClass(view.categoryId);
+  const quantity = state.cart[view.id] ?? 0;
 
   return `
     <article class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -102,6 +225,7 @@ function renderCard(view: ProductView): string {
       <p class="mt-auto text-lg font-bold tabular-nums tracking-tight text-revo-700">
         ${escapeHtml(rupiah.format(view.price))}
       </p>
+      ${renderCartControls(view, quantity)}
     </article>
   `;
 }
@@ -138,9 +262,19 @@ function renderEmptyState(query: string): string {
   `;
 }
 
+// The header badge text, recomputed from cart state on every render. Total
+// items comes from `reduce` over the lines, and the rupiah total is appended so
+// the badge reflects both count and value. Pluralized for the single-item case.
+function cartBadgeText(cart: CartLines): string {
+  const count = cartItemCount(cart);
+  const noun = count === 1 ? 'item' : 'items';
+  return `Cart: ${count} ${noun} · ${rupiah.format(cartTotal(cart))}`;
+}
+
 // Re-render the whole grid from state. Search is applied here, so the rendered
-// card set is always the filter of the full list for state.query, and the
-// status region's count is updated on every render to match what is shown.
+// card set is always the filter of the full list for state.query; the status
+// region's count is updated to match what is shown; and the header badge is
+// recomputed from cart state so it can never drift from the per-card counts.
 function render(): void {
   const views = selectVisible(state.query);
   catalog.innerHTML =
@@ -148,6 +282,7 @@ function render(): void {
       ? renderEmptyState(state.query)
       : views.map(renderCard).join('');
   status.textContent = resultCountText(views.length);
+  cartBadge.textContent = cartBadgeText(state.cart);
 }
 
 // --- bootstrap ---
@@ -162,6 +297,7 @@ const state: CatalogState = {
 const catalog = requireElement<HTMLElement>('#catalog');
 const status = requireElement<HTMLElement>('#status');
 const searchInput = requireElement<HTMLInputElement>('#search');
+const cartBadge = requireElement<HTMLElement>('#cart-badge');
 
 // Listen on `input`, not `keyup`, so paste and the native search clear button
 // fire too. Each event updates state.query and re-renders from state rather
@@ -171,16 +307,52 @@ searchInput.addEventListener('input', () => {
   render();
 });
 
-// Delegated click handler on the grid, so the empty state's clear button works
-// without rebinding after each re-render. Resetting state.query and the input
-// value together, then re-rendering, restores the full product list exactly.
+// Announce a cart change through the existing status live region. Re-rendering
+// replaces the region's result-count text, so the announcement is set after
+// render() and reads the fresh line quantity from state.
+function announceCartChange(id: number): void {
+  const product = PRODUCTS_BY_ID.get(id);
+  if (product === undefined) return;
+  const quantity = state.cart[id] ?? 0;
+  status.textContent =
+    quantity === 0
+      ? `Removed ${product.name} from cart`
+      : `${product.name} in cart: ${quantity}`;
+}
+
+// One delegated click handler on the grid covers every dynamically created
+// control, so nothing needs rebinding after a re-render. It dispatches on the
+// nearest `[data-action]` ancestor: clear-search resets the query, and the
+// three cart actions mutate the matching line and re-render from state. Only an
+// action that actually changed the cart re-announces, so no-op clicks (e.g. at
+// the stock ceiling) stay quiet.
 catalog.addEventListener('click', (event) => {
   const target = event.target as HTMLElement;
-  const clearButton = target.closest('[data-action="clear-search"]');
-  if (clearButton === null) return;
-  state.query = '';
-  searchInput.value = '';
+  const control = target.closest<HTMLElement>('[data-action]');
+  if (control === null) return;
+
+  const action = control.dataset.action;
+
+  if (action === 'clear-search') {
+    state.query = '';
+    searchInput.value = '';
+    render();
+    return;
+  }
+
+  const id = Number(control.dataset.id);
+  if (Number.isNaN(id)) return;
+
+  let changed = false;
+  if (action === 'add-to-cart' || action === 'increment') {
+    changed = incrementLine(id);
+  } else if (action === 'decrement') {
+    changed = decrementLine(id);
+  }
+
+  if (!changed) return;
   render();
+  announceCartChange(id);
 });
 
 render();
