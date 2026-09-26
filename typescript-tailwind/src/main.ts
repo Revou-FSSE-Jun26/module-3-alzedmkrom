@@ -158,22 +158,22 @@ function renderCartControls(view: ProductView, quantity: number): string {
         type="button"
         data-action="add-to-cart"
         data-id="${view.id}"
-        class="mt-1 inline-flex items-center justify-center rounded-lg bg-revo-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-revo-700 focus:outline-none focus:ring-2 focus:ring-revo-500"
+        class="group relative mt-1 w-full cursor-pointer overflow-hidden rounded-lg border border-[#a9c6ff] bg-gradient-to-b from-[#7aa5f4] via-[#4f7fe6] to-[#3563d4] py-3 font-semibold tracking-wide text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_5px_14px_rgba(37,99,235,0.35)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] before:absolute before:inset-x-0 before:top-0 before:h-1/2 before:bg-gradient-to-b before:from-white/35 before:to-transparent before:content-[''] hover:-translate-y-0.5 hover:border-white hover:brightness-110 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_10px_24px_rgba(37,99,235,0.5),0_0_18px_rgba(147,197,253,0.45)] focus:outline-none focus:ring-2 focus:ring-white/70 active:translate-y-0 active:shadow-[inset_0_2px_5px_rgba(15,23,42,0.35)]"
       >
-        Add to cart
+        <span class="relative z-10">Add to cart</span>
       </button>
     `;
   }
 
   return `
-    <div class="mt-1 flex items-center justify-between gap-3">
+    <div class="mt-1 flex h-[52px] items-center justify-between gap-3 rounded-lg border border-[#a9c6ff] bg-white/50 px-3">
       <div class="flex items-center gap-2">
         <button
           type="button"
           data-action="decrement"
           data-id="${view.id}"
           aria-label="Remove one ${escapeHtml(view.name)}"
-          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-semibold leading-none text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-revo-500"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-semibold leading-none text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-revo-500"
         >
           &minus;
         </button>
@@ -185,12 +185,12 @@ function renderCartControls(view: ProductView, quantity: number): string {
           data-action="increment"
           data-id="${view.id}"
           aria-label="Add one ${escapeHtml(view.name)}"
-          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-semibold leading-none text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-revo-500"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 bg-white text-lg font-semibold leading-none text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-revo-500"
         >
           +
         </button>
       </div>
-      <span class="text-xs font-medium text-slate-500">in cart</span>
+      <span class="text-xs font-medium text-slate-600">in cart</span>
     </div>
   `;
 }
@@ -207,7 +207,7 @@ function renderCard(view: ProductView): string {
   const quantity = state.cart[view.id] ?? 0;
 
   return `
-    <article class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <article data-card-id="${view.id}" class="flex flex-col gap-3 rounded-xl border-2 border-menu-border bg-gradient-to-br from-menu-from via-menu-via to-menu-to p-5 shadow-md transition-transform duration-150 ease-out hover:-translate-y-1 hover:border-ink hover:shadow-lg">
       <div class="flex items-center justify-between gap-2">
         <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${accentClass}">
           ${escapeHtml(view.category.name)}
@@ -216,16 +216,16 @@ function renderCard(view: ProductView): string {
           ${escapeHtml(badgeText)}
         </span>
       </div>
-      <h2 class="text-lg font-semibold leading-snug tracking-tight text-slate-900 line-clamp-2">
+      <h2 class="text-lg font-semibold leading-snug tracking-tight text-ink line-clamp-2">
         ${escapeHtml(view.name)}
       </h2>
-      <p class="text-sm leading-relaxed text-slate-600 line-clamp-2">
+      <p class="text-sm leading-relaxed text-menu-muted line-clamp-2">
         ${escapeHtml(view.description)}
       </p>
-      <p class="mt-auto text-lg font-bold tabular-nums tracking-tight text-revo-700">
+      <p class="mt-auto text-lg font-bold tabular-nums tracking-tight text-ink">
         ${escapeHtml(rupiah.format(view.price))}
       </p>
-      ${renderCartControls(view, quantity)}
+      <div data-cart-controls>${renderCartControls(view, quantity)}</div>
     </article>
   `;
 }
@@ -282,6 +282,25 @@ function render(): void {
       ? renderEmptyState(state.query)
       : views.map(renderCard).join('');
   status.textContent = resultCountText(views.length);
+  cartBadge.textContent = cartBadgeText(state.cart);
+}
+
+// Update a single card's cart-control block in place, without rebuilding the
+// grid. This keeps each <article> node alive across a cart click, so its hover
+// state and transform are never reset - the source of the earlier wobble. Only
+// the header badge and the changed card are touched.
+function updateCard(id: number): void {
+  const view = PRODUCTS_BY_ID.get(id);
+  if (view === undefined) return;
+
+  const card = catalog.querySelector<HTMLElement>(
+    `[data-card-id="${id}"]`,
+  );
+  const controls = card?.querySelector<HTMLElement>('[data-cart-controls]');
+  if (controls === undefined || controls === null) return;
+
+  const quantity = state.cart[id] ?? 0;
+  controls.innerHTML = renderCartControls(view, quantity);
   cartBadge.textContent = cartBadgeText(state.cart);
 }
 
@@ -351,7 +370,9 @@ catalog.addEventListener('click', (event) => {
   }
 
   if (!changed) return;
-  render();
+  // Update only this card's controls, not the whole grid, so the <article>
+  // node survives and its hover/transform state is never reset mid-click.
+  updateCard(id);
   announceCartChange(id);
 });
 
