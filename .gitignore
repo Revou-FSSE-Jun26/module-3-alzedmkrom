@@ -1,0 +1,12 @@
+﻿# Dependencies
+node_modules/
+
+# Build artifacts
+typescript-tailwind/dist/
+
+# Logs
+*.log
+
+# OS cruft
+.DS_Store
+Thumbs.db
