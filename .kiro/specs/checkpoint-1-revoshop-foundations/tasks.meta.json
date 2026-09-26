@@ -1,0 +1,361 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Initialize repository skeleton": [
+      {
+        "executionId": "2c6746fa-7f4c-4cda-b5cb-282cf508445c",
+        "chatSessionId": "sess_b966b2a4-9fd6-4c60-9bf1-5494e3197aed",
+        "timestamp": 1790392799579
+      },
+      {
+        "executionId": "2c6746fa-7f4c-4cda-b5cb-282cf508445c",
+        "chatSessionId": "sess_b966b2a4-9fd6-4c60-9bf1-5494e3197aed",
+        "timestamp": 1790392915151
+      }
+    ],
+    "2.1 Write the page structure in `html-css/index.html`": [
+      {
+        "executionId": "2f2df11b-2381-4254-88c3-6ce239c03b03",
+        "chatSessionId": "sess_452b1def-107d-45b2-ac59-449dc7ea47d7",
+        "timestamp": 1790393005373
+      },
+      {
+        "executionId": "2f2df11b-2381-4254-88c3-6ce239c03b03",
+        "chatSessionId": "sess_452b1def-107d-45b2-ac59-449dc7ea47d7",
+        "timestamp": 1790393082904
+      }
+    ],
+    "2.2 Add the contact form": [
+      {
+        "executionId": "60a60c2a-c8e3-4e8e-a2cd-8cba95e0098f",
+        "chatSessionId": "sess_f0a2443b-d29c-4a6c-af47-d696584096e5",
+        "timestamp": 1790393266021
+      },
+      {
+        "executionId": "60a60c2a-c8e3-4e8e-a2cd-8cba95e0098f",
+        "chatSessionId": "sess_f0a2443b-d29c-4a6c-af47-d696584096e5",
+        "timestamp": 1790393368955
+      }
+    ],
+    "2. Build the semantic profile page markup": [
+      {
+        "executionId": "60a60c2a-c8e3-4e8e-a2cd-8cba95e0098f",
+        "chatSessionId": "sess_f0a2443b-d29c-4a6c-af47-d696584096e5",
+        "timestamp": 1790393369078
+      }
+    ],
+    "3.1 Write base styles and the box model in `html-css/styles.css`": [
+      {
+        "executionId": "c849cce4-cdeb-4001-aa7e-44e03052f708",
+        "chatSessionId": "sess_fa49483f-8f7d-4961-a31e-19cb8a41a63c",
+        "timestamp": 1790393429785
+      },
+      {
+        "executionId": "c849cce4-cdeb-4001-aa7e-44e03052f708",
+        "chatSessionId": "sess_fa49483f-8f7d-4961-a31e-19cb8a41a63c",
+        "timestamp": 1790393653098
+      }
+    ],
+    "3.2 Build the Grid and Flexbox layouts": [
+      {
+        "executionId": "6578c8e5-6774-4efa-8e1d-3a27bfdf8b17",
+        "chatSessionId": "sess_ba72df66-481b-421e-875b-f3b0aa89d966",
+        "timestamp": 1790393727850
+      },
+      {
+        "executionId": "6578c8e5-6774-4efa-8e1d-3a27bfdf8b17",
+        "chatSessionId": "sess_ba72df66-481b-421e-875b-f3b0aa89d966",
+        "timestamp": 1790393873020
+      }
+    ],
+    "3.3 Add responsive breakpoints and verify the reflow": [
+      {
+        "executionId": "ff897da1-70e9-4ba6-a93b-b030b6ffc346",
+        "chatSessionId": "sess_1425bb31-01fb-4ad7-9685-9def5b0fb874",
+        "timestamp": 1790396605325
+      },
+      {
+        "executionId": "ff897da1-70e9-4ba6-a93b-b030b6ffc346",
+        "chatSessionId": "sess_1425bb31-01fb-4ad7-9685-9def5b0fb874",
+        "timestamp": 1790396766044
+      }
+    ],
+    "3. Style the profile page": [
+      {
+        "executionId": "ff897da1-70e9-4ba6-a93b-b030b6ffc346",
+        "chatSessionId": "sess_1425bb31-01fb-4ad7-9685-9def5b0fb874",
+        "timestamp": 1790396766121
+      }
+    ],
+    "4.1 Create the exercise page and shared stylesheet": [
+      {
+        "executionId": "907e2a34-2582-48b2-b5a3-5a7c80dffc32",
+        "chatSessionId": "sess_6de383cb-598a-44ed-ae81-95a9d5c21c02",
+        "timestamp": 1790397378785
+      },
+      {
+        "executionId": "907e2a34-2582-48b2-b5a3-5a7c80dffc32",
+        "chatSessionId": "sess_6de383cb-598a-44ed-ae81-95a9d5c21c02",
+        "timestamp": 1790397469186
+      }
+    ],
+    "4.2 Declare typed state and helper functions in `javascript/dom-events.js`": [
+      {
+        "executionId": "269a8282-2f91-43fb-b5d6-9ce1c745207e",
+        "chatSessionId": "sess_9f80265a-b1c5-40fc-88ae-2b0e947743e0",
+        "timestamp": 1790397525893
+      },
+      {
+        "executionId": "269a8282-2f91-43fb-b5d6-9ce1c745207e",
+        "chatSessionId": "sess_9f80265a-b1c5-40fc-88ae-2b0e947743e0",
+        "timestamp": 1790397623367
+      }
+    ],
+    "4.3 Implement DOM selection, creation and removal": [
+      {
+        "executionId": "bcf48d25-1e4f-42f3-9797-00ba59c1536c",
+        "chatSessionId": "sess_16f167b8-5e8f-4f04-8e0e-4ee9ba951efa",
+        "timestamp": 1790397705717
+      },
+      {
+        "executionId": "bcf48d25-1e4f-42f3-9797-00ba59c1536c",
+        "chatSessionId": "sess_16f167b8-5e8f-4f04-8e0e-4ee9ba951efa",
+        "timestamp": 1790397806698
+      }
+    ],
+    "4.4 Implement class toggling and event handling": [
+      {
+        "executionId": "08209ed6-9b0c-4ffc-95a9-a22154fae3af",
+        "chatSessionId": "sess_2f72a9c2-3785-43ba-931a-0eeff42f0e66",
+        "timestamp": 1790398256971
+      },
+      {
+        "executionId": "08209ed6-9b0c-4ffc-95a9-a22154fae3af",
+        "chatSessionId": "sess_2f72a9c2-3785-43ba-931a-0eeff42f0e66",
+        "timestamp": 1790398557637
+      }
+    ],
+    "4. Build the DOM manipulation and events exercise": [
+      {
+        "executionId": "08209ed6-9b0c-4ffc-95a9-a22154fae3af",
+        "chatSessionId": "sess_2f72a9c2-3785-43ba-931a-0eeff42f0e66",
+        "timestamp": 1790398557723
+      }
+    ],
+    "5.1 Create the page and seed the order line data": [
+      {
+        "executionId": "d90357de-81ce-4d0f-b5ed-3d72dcbba26d",
+        "chatSessionId": "sess_2cac8d41-2b29-400c-92f8-c60b76786635",
+        "timestamp": 1790412603385
+      },
+      {
+        "executionId": "d90357de-81ce-4d0f-b5ed-3d72dcbba26d",
+        "chatSessionId": "sess_2cac8d41-2b29-400c-92f8-c60b76786635",
+        "timestamp": 1790412807441
+      }
+    ],
+    "5.2 Implement the four array operations with observable output": [
+      {
+        "executionId": "efc37a4a-e4d1-4afe-b325-8287e86d8f60",
+        "chatSessionId": "sess_e3238271-cbd5-4c8b-a4fb-d56f3424936b",
+        "timestamp": 1790412843063
+      },
+      {
+        "executionId": "efc37a4a-e4d1-4afe-b325-8287e86d8f60",
+        "chatSessionId": "sess_e3238271-cbd5-4c8b-a4fb-d56f3424936b",
+        "timestamp": 1790412998451
+      }
+    ],
+    "5. Build the array-processing exercise": [
+      {
+        "executionId": "efc37a4a-e4d1-4afe-b325-8287e86d8f60",
+        "chatSessionId": "sess_e3238271-cbd5-4c8b-a4fb-d56f3424936b",
+        "timestamp": 1790412998597
+      }
+    ],
+    "6.1 Create `typescript-tailwind/package.json` and install pinned dependencies": [
+      {
+        "executionId": "6cb6ab8c-087c-4e2b-be1f-1aac39e350e2",
+        "chatSessionId": "sess_d6875d51-fa5e-494c-acc6-fa76bb44b8e6",
+        "timestamp": 1790413108403
+      },
+      {
+        "executionId": "6cb6ab8c-087c-4e2b-be1f-1aac39e350e2",
+        "chatSessionId": "sess_d6875d51-fa5e-494c-acc6-fa76bb44b8e6",
+        "timestamp": 1790413254000
+      }
+    ],
+    "6.2 Configure `typescript-tailwind/tsconfig.json`": [
+      {
+        "executionId": "8fa9c5bc-a886-49e8-93a1-d5d7f024ec75",
+        "chatSessionId": "sess_12738246-39c8-41aa-bcd1-72187c53d9ea",
+        "timestamp": 1790413288180
+      },
+      {
+        "executionId": "8fa9c5bc-a886-49e8-93a1-d5d7f024ec75",
+        "chatSessionId": "sess_12738246-39c8-41aa-bcd1-72187c53d9ea",
+        "timestamp": 1790413352088
+      }
+    ],
+    "6.3 Configure Tailwind in `typescript-tailwind/src/input.css`": [
+      {
+        "executionId": "5e7833ce-739e-4dd4-8986-f2a0a0e90e5b",
+        "chatSessionId": "sess_89a13db9-1000-4030-ad68-96c77942f4db",
+        "timestamp": 1790413379837
+      },
+      {
+        "executionId": "5e7833ce-739e-4dd4-8986-f2a0a0e90e5b",
+        "chatSessionId": "sess_89a13db9-1000-4030-ad68-96c77942f4db",
+        "timestamp": 1790413437875
+      }
+    ],
+    "6.4 Create the catalog shell in `typescript-tailwind/index.html`": [
+      {
+        "executionId": "1db0d0ee-4b0b-4b24-b5bb-76dc482429e9",
+        "chatSessionId": "sess_698fbc9c-750f-4395-b989-e2cb52341936",
+        "timestamp": 1790413461662
+      },
+      {
+        "executionId": "1db0d0ee-4b0b-4b24-b5bb-76dc482429e9",
+        "chatSessionId": "sess_698fbc9c-750f-4395-b989-e2cb52341936",
+        "timestamp": 1790416159574
+      }
+    ],
+    "6. Scaffold the TypeScript and Tailwind project": [
+      {
+        "executionId": "1db0d0ee-4b0b-4b24-b5bb-76dc482429e9",
+        "chatSessionId": "sess_698fbc9c-750f-4395-b989-e2cb52341936",
+        "timestamp": 1790416159656
+      }
+    ],
+    "7.1 Define the types in `typescript-tailwind/src/types.ts`": [
+      {
+        "executionId": "3212c3f9-d02d-45bb-895d-01decfceb403",
+        "chatSessionId": "sess_be30c998-93b1-4221-a57a-b70364673afb",
+        "timestamp": 1790416238675
+      },
+      {
+        "executionId": "3212c3f9-d02d-45bb-895d-01decfceb403",
+        "chatSessionId": "sess_be30c998-93b1-4221-a57a-b70364673afb",
+        "timestamp": 1790416410230
+      }
+    ],
+    "7.2 Write the mapping and deriving functions": [
+      {
+        "executionId": "ae23ab50-d5c9-4ef2-b4c9-2519f6889441",
+        "chatSessionId": "sess_f5f53712-455e-4038-9ad0-77c9f985e448",
+        "timestamp": 1790416439766
+      },
+      {
+        "executionId": "ae23ab50-d5c9-4ef2-b4c9-2519f6889441",
+        "chatSessionId": "sess_f5f53712-455e-4038-9ad0-77c9f985e448",
+        "timestamp": 1790416687736
+      }
+    ],
+    "7.3 Seed the data in `typescript-tailwind/src/data.ts`": [
+      {
+        "executionId": "946ccc4e-9755-4803-a70f-b5305e70e47c",
+        "chatSessionId": "sess_1d22af6b-9ac7-4b45-ae44-5043ca4c2607",
+        "timestamp": 1790416717116
+      },
+      {
+        "executionId": "946ccc4e-9755-4803-a70f-b5305e70e47c",
+        "chatSessionId": "sess_1d22af6b-9ac7-4b45-ae44-5043ca4c2607",
+        "timestamp": 1790416837562
+      }
+    ],
+    "7.4 Prove strictness is enforced": [
+      {
+        "executionId": "f91c75fc-e1b4-4701-b62f-a10c907010e4",
+        "chatSessionId": "sess_84f66d5d-b971-44b1-b53d-726a5f870b85",
+        "timestamp": 1790416877308
+      },
+      {
+        "executionId": "f91c75fc-e1b4-4701-b62f-a10c907010e4",
+        "chatSessionId": "sess_84f66d5d-b971-44b1-b53d-726a5f870b85",
+        "timestamp": 1790417110534
+      }
+    ],
+    "7. Model the product data": [
+      {
+        "executionId": "f91c75fc-e1b4-4701-b62f-a10c907010e4",
+        "chatSessionId": "sess_84f66d5d-b971-44b1-b53d-726a5f870b85",
+        "timestamp": 1790417110648
+      }
+    ],
+    "8.1 Map typed fields to Tailwind class strings in `typescript-tailwind/src/styles.ts`": [
+      {
+        "executionId": "529e2cb1-413d-496a-8d41-754b434c9785",
+        "chatSessionId": "sess_6e52fa76-3c36-4f37-a780-b24595dbc9e3",
+        "timestamp": 1790417251660
+      },
+      {
+        "executionId": "529e2cb1-413d-496a-8d41-754b434c9785",
+        "chatSessionId": "sess_6e52fa76-3c36-4f37-a780-b24595dbc9e3",
+        "timestamp": 1790417328018
+      }
+    ],
+    "8.2 Render the card grid in `typescript-tailwind/src/main.ts`": [
+      {
+        "executionId": "d17de354-5f32-49bc-9400-e198fe596154",
+        "chatSessionId": "sess_c75f2fc1-aa40-4ba7-b6d0-ea0bd89febf5",
+        "timestamp": 1790417562711
+      },
+      {
+        "executionId": "d17de354-5f32-49bc-9400-e198fe596154",
+        "chatSessionId": "sess_c75f2fc1-aa40-4ba7-b6d0-ea0bd89febf5",
+        "timestamp": 1790417712365
+      }
+    ],
+    "8. Render the typed catalog with Tailwind": [
+      {
+        "executionId": "d17de354-5f32-49bc-9400-e198fe596154",
+        "chatSessionId": "sess_c75f2fc1-aa40-4ba7-b6d0-ea0bd89febf5",
+        "timestamp": 1790417712442
+      }
+    ],
+    "9.1 Implement the live search filter": [
+      {
+        "executionId": "6a68a92f-4c4e-4e7e-822e-9c69daf393c1",
+        "chatSessionId": "sess_d0cce5aa-92b2-481c-bdf5-bd02e3132a97",
+        "timestamp": 1790417887969
+      },
+      {
+        "executionId": "6a68a92f-4c4e-4e7e-822e-9c69daf393c1",
+        "chatSessionId": "sess_d0cce5aa-92b2-481c-bdf5-bd02e3132a97",
+        "timestamp": 1790418132432
+      }
+    ],
+    "9.2 Implement the empty state": [
+      {
+        "executionId": "f5e836f8-10f3-423a-92f2-4f153e96b28e",
+        "chatSessionId": "sess_e8da2e54-9552-4b25-8f1a-bc655bf219e6",
+        "timestamp": 1790418181723
+      },
+      {
+        "executionId": "f5e836f8-10f3-423a-92f2-4f153e96b28e",
+        "chatSessionId": "sess_e8da2e54-9552-4b25-8f1a-bc655bf219e6",
+        "timestamp": 1790418289746
+      }
+    ],
+    "9.3 Implement the cart counter": [
+      {
+        "executionId": "c75fa022-1f5a-4f5c-b422-6f6bcdb95920",
+        "chatSessionId": "sess_53f98f9a-62c0-4caf-8bb9-0eaecef17936",
+        "timestamp": 1790418358879
+      },
+      {
+        "executionId": "c75fa022-1f5a-4f5c-b422-6f6bcdb95920",
+        "chatSessionId": "sess_53f98f9a-62c0-4caf-8bb9-0eaecef17936",
+        "timestamp": 1790418689687
+      }
+    ],
+    "9.4 Verify the catalog end to end": [
+      {
+        "executionId": "abf23615-0e47-4cfb-8157-32fead01a2d8",
+        "chatSessionId": "sess_9c380d90-a962-42bc-8024-750200105dc7",
+        "timestamp": 1790420776465
+      }
+    ]
+  }
+}
