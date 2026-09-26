@@ -3,12 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alzed Krom — Frontend Developer Profile</title>
+    <title>Muhammad Alzed Mukarom — Frontend Developer Profile</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!--
+      CSS-only dark-mode toggle. The checkbox lives at the top of <body> so
+      its :checked state can be read by `body:has(#theme-toggle:checked)` in
+      the stylesheet. No JavaScript, keeping this a pure HTML/CSS exercise.
+    -->
+    <input
+      type="checkbox"
+      id="theme-toggle"
+      class="theme-toggle-input"
+    />
+
     <header>
-      <a class="brand" href="#profile">Alzed Krom</a>
+      <a class="brand" href="#profile">Muhammad Alzed Mukarom</a>
       <nav aria-label="Primary">
         <ul>
           <li><a href="#profile">Profile</a></li>
@@ -17,6 +28,12 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
+      <label for="theme-toggle" class="theme-toggle">
+        <span class="theme-toggle-track" aria-hidden="true">
+          <span class="theme-toggle-thumb"></span>
+        </span>
+        <span class="theme-toggle-label">Dark mode</span>
+      </label>
     </header>
 
     <main>
@@ -25,21 +42,21 @@
         <div class="layout">
           <img
             class="avatar"
-            src="https://placehold.co/240x240?text=Avatar"
-            alt="Portrait of Alzed Krom, frontend developer"
+            src="images/alzed_profile.jpg"
+            alt="Portrait of Muhammad Alzed Mukarom, frontend developer"
             width="240"
             height="240"
           />
-          <h1 class="profile-name">Alzed Krom</h1>
+          <h1 class="profile-name">Muhammad Alzed Mukarom</h1>
           <p class="bio">
             Frontend developer who enjoys turning fuzzy ideas into clean,
             accessible interfaces. I care about semantic markup, thoughtful
             layout, and code that reads as clearly as it runs.
           </p>
           <ul class="stats">
-            <li><strong>3+</strong> years experience</li>
-            <li><strong>12</strong> projects shipped</li>
-            <li><strong>6</strong> happy clients</li>
+            <li><strong>1</strong> years experience</li>
+            <li><strong>3</strong> projects shipped</li>
+            <li><strong>0</strong> happy clients</li>
           </ul>
         </div>
       </section>
@@ -190,9 +207,9 @@
     <footer>
       <address>
         Reach me at
-        <a href="mailto:alzed.krom@example.com">alzed.krom@example.com</a>
+        <a href="mailto:alzedmkrom@gmail.com">alzedmkrom@gmail.com</a>
       </address>
-      <p class="copyright">&copy; 2026 Alzed Krom. All rights reserved.</p>
+      <p class="copyright">&copy; 2026 Muhammad Alzed Mukarom. All rights reserved.</p>
     </footer>
   </body>
 </html>

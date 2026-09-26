@@ -21,14 +21,30 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Colors */
-  --color-bg: #f7f8fa;
+  --bg-color: linear-gradient(135deg, #d0e1f9 0%, #e2eefc 100%);
+  --text-main: #0b192c;
+  --color-bg: #eef4fc; /* solid fallback used by small tinted components */
   --color-surface: #ffffff;
-  --color-text: #1c2430;
-  --color-muted: #5c6773;
-  --color-border: #d9dee5;
+  --color-text: var(--text-main);
+  --color-muted: #45566b;
+  --color-border: #c2d3e8;
   --color-accent: #2f6df6;
   --color-accent-dark: #1f4fc4;
   --color-focus: #1a3fb0;
+  --shadow-card: 0 6px 20px -14px rgba(11, 25, 44, 0.3);
+  --shadow-panel: 0 10px 30px -12px rgba(11, 25, 44, 0.25);
+
+  /* Frosted bar for the header and footer, tuned per theme. */
+  --frost-strong: rgba(255, 255, 255, 0.75);
+  --frost-soft: rgba(255, 255, 255, 0.6);
+
+  /* Pale champagne-gold surface for the profile panel and project cards.
+     Lightened from the original saturated gold to sit softly on the blue
+     background while keeping enough tint to read as gold. */
+  --menu-bg: linear-gradient(135deg, #f5dd92 0%, #fdf6d4 50%, #eed08a 100%);
+  --menu-text: #0b192c;
+  --menu-border: #dcb968;
+  --menu-border-hover: #b9922f; /* deeper gold on hover (light mode) */
 
   /* Spacing scale */
   --space-xs: 0.25rem;
@@ -44,6 +60,40 @@
 }
 
 /* --------------------------------------------------------------------------
+   Dark mode. The CSS-only toggle (a checkbox at the top of <body>) flips
+   these theme tokens when checked. Only colors change here; layout tokens
+   and the spacing scale are shared, so nothing structural moves.
+   -------------------------------------------------------------------------- */
+body:has(#theme-toggle:checked) {
+  --bg-color: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+  --text-main: #f8fafc;
+  /* --color-text is what elements actually read; it must be re-pointed here.
+     It was resolved once in :root against the light --text-main, so updating
+     --text-main alone does not cascade to it. */
+  --color-text: var(--text-main);
+  --color-bg: #16233d; /* solid fallback for small tinted components */
+  --color-surface: #1b2942; /* dark card base beneath translucent layers */
+  --color-muted: #b6c2d6;
+  --color-border: #33456a;
+  --color-accent: #7ea6ff;
+  --color-accent-dark: #a9c4ff;
+  --color-focus: #9cc0ff;
+  --shadow-card: 0 6px 20px -12px rgba(0, 0, 0, 0.6);
+  --shadow-panel: 0 12px 34px -12px rgba(0, 0, 0, 0.65);
+  /* Dark translucent bars instead of bright white ones. */
+  --frost-strong: rgba(15, 23, 42, 0.7);
+  --frost-soft: rgba(15, 23, 42, 0.5);
+
+  /* Dark-mode-only panel treatment: a metallic gold gradient with white
+     borders, replacing the light theme's champagne gold. Light mode keeps
+     its own --menu-* values from :root. */
+  --menu-bg: linear-gradient(135deg, #fff3b3 0%, #f2c94c 60%, #d4a316 100%);
+  --menu-text: #0f172a;
+  --menu-border: rgba(255, 255, 255, 0.9);
+  --menu-border-hover: #ffffff; /* full white on hover (dark mode) */
+}
+
+/* --------------------------------------------------------------------------
    Element selectors — sensible document-wide defaults.
    -------------------------------------------------------------------------- */
 html {
@@ -53,7 +103,11 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--color-bg);
+  /* The chosen gradient, fixed so it stays put while the page scrolls.
+     min-height keeps it covering the viewport on short pages. */
+  background: var(--bg-color);
+  background-attachment: fixed;
+  min-height: 100vh;
   color: var(--color-text);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
@@ -121,8 +175,16 @@ a:hover {
    -------------------------------------------------------------------------- */
 header {
   padding: var(--space-md) var(--space-lg);
-  background-color: var(--color-surface);
+  /* Translucent bar with blur so the gradient glows through the top bar.
+     Token-driven so it inverts to dark in dark mode. */
+  background-color: var(--frost-strong);
+  backdrop-filter: blur(8px);
   border-bottom: var(--border-width) solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
 }
 
 /* One-dimensional Flexbox: the primary nav row.
@@ -134,7 +196,6 @@ nav ul {
   flex-wrap: wrap;
   gap: var(--space-md);
   align-items: center;
-  justify-content: space-between;
 }
 
 /* Class selector: the brand wordmark */
@@ -146,6 +207,73 @@ nav ul {
 
 .brand:hover {
   color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Dark-mode toggle switch (CSS-only). The real checkbox is visually hidden
+   but kept accessible; the <label> renders a track-and-thumb switch and is
+   fully keyboard operable because activating the label toggles the input.
+   -------------------------------------------------------------------------- */
+
+/* Visually hide the checkbox without removing it from the accessibility tree
+   or disabling keyboard focus. */
+.theme-toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  user-select: none;
+}
+
+.theme-toggle-track {
+  position: relative;
+  display: inline-block;
+  width: 2.75rem;
+  height: 1.5rem;
+  background-color: var(--color-border);
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 0.1875rem;
+  left: 0.1875rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  background-color: var(--color-surface);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+/* When checked: slide the thumb and light the track with the accent. */
+body:has(#theme-toggle:checked) .theme-toggle-track {
+  background-color: var(--color-accent);
+}
+
+body:has(#theme-toggle:checked) .theme-toggle-thumb {
+  transform: translateX(1.25rem);
+}
+
+/* Keyboard focus ring mirrors the global :focus-visible treatment. */
+.theme-toggle-input:focus-visible + header .theme-toggle-track {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 main {
@@ -164,6 +292,7 @@ footer {
   border-top: var(--border-width) solid var(--color-border);
   color: var(--color-muted);
   text-align: center;
+  background-color: var(--frost-soft);
 }
 
 footer address {
@@ -191,22 +320,41 @@ footer address {
     "avatar bio"
     "avatar stats";
   gap: var(--space-md) var(--space-xl);
+  /* Gold gradient panel so the profile lifts off the blue background. */
+  background: var(--menu-bg);
+  color: var(--menu-text);
+  padding: var(--space-lg);
+  border: var(--border-width) solid var(--menu-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-panel);
 }
 
 .avatar {
   grid-area: avatar;
+  /* Square footprint: width fills the 12rem avatar column and aspect-ratio
+     forces height to equal it, so the 50% radius is always a true circle
+     regardless of the photo's own dimensions. */
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  height: auto;
   border-radius: 50%;
   border: var(--border-width) solid var(--color-border);
+  /* Crop the photo to fill the circle instead of stretching it. */
+  object-fit: cover;
+  object-position: center;
 }
 
 .profile-name {
   grid-area: heading;
-  color: var(--color-text);
+  /* Sits on the gold panel, so it uses the panel's text token (navy) in
+     both themes rather than --color-text, which flips to white in dark. */
+  color: var(--menu-text);
 }
 
 .bio {
   grid-area: bio;
-  color: var(--color-muted);
+  /* Navy at slight transparency reads as softened text on the gold panel. */
+  color: color-mix(in srgb, var(--menu-text) 78%, transparent);
   max-width: 42rem;
 }
 
@@ -214,10 +362,18 @@ footer address {
   grid-area: stats;
 }
 
-/* Descendant combinator: emphasized numbers inside the stats list */
+/* Descendant combinator: emphasized numbers inside the stats list.
+   A deeper gold than the lightened border keeps the emphasis readable
+   against the pale panel. */
 .stats strong {
-  color: var(--color-accent);
+  color: #a9781a;
   font-size: 1.125rem;
+}
+
+/* In dark mode the panel gradient runs into deep red, where the gold above
+   loses contrast. Fall back to the panel text token (navy) for the numbers. */
+body:has(#theme-toggle:checked) .stats strong {
+  color: var(--menu-text);
 }
 
 /* Child combinator + pseudo-class: zebra spacing on stat rows */
@@ -226,7 +382,9 @@ footer address {
 }
 
 .stats > li:nth-child(even) {
-  color: var(--color-text);
+  /* On the gold panel: use the panel token so even rows stay navy in dark
+     mode instead of flipping to white via --color-text. */
+  color: var(--menu-text);
 }
 
 /* --------------------------------------------------------------------------
@@ -263,6 +421,9 @@ footer address {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: var(--space-lg);
+  /* Small inset so a card's hover lift and glow shadow have room to render
+     without being clipped by the grid's edge. */
+  padding: var(--space-xs);
 }
 
 /* --------------------------------------------------------------------------
@@ -279,38 +440,53 @@ footer address {
   padding: var(--space-lg);
 
   /* BORDER: a visible edge one step in from the margin */
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--menu-border);
   border-radius: var(--radius);
 
   /* MARGIN: zero — the grid gap separates cards from their neighbors */
   margin: 0;
 
-  background-color: var(--color-surface);
+  background: var(--menu-bg);
+  color: var(--menu-text);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-/* Pseudo-class: lift the accent on hover */
+/* Pseudo-class on repeated cards: subtle top rule from the second card on.
+   Placed BEFORE :hover so the hover state can override the top border. */
+.project-grid .card:nth-child(n + 2) {
+  border-top-color: var(--menu-border);
+}
+
+/* Pseudo-class: lift the card and deepen the gold border on hover.
+   border-top-color is set explicitly so the more specific :nth-child rule
+   above cannot pin the top edge on the 2nd and 3rd cards. */
 .project-grid .card:hover {
-  border-color: var(--color-accent);
+  /* Deepen (light) or brighten (dark) the panel border on hover, driven by
+     a per-theme token so it never flips to a dark navy edge in dark mode. */
+  border-color: var(--menu-border-hover);
+  border-top-color: var(--menu-border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px -16px rgba(11, 25, 44, 0.45);
 }
 
 /* Descendant selector: card heading */
 .project-grid .card h3 {
-  color: var(--color-text);
+  color: var(--menu-text);
 }
 
-/* Pseudo-class on repeated cards: subtle top rule from the second card on */
-.project-grid .card:nth-child(n + 2) {
-  border-top-color: var(--color-border);
-}
-
-/* Descendant selector: tech tags inside a card */
+/* Descendant selector: tech tags inside a card.
+   Translucent navy chips sit cleanly on the gold card surface. */
 .card .tags li {
   display: inline-block;
   padding: var(--space-xs) var(--space-sm);
   margin: var(--space-xs) var(--space-xs) 0 0;
   font-size: 0.8125rem;
-  color: var(--color-muted);
-  background-color: var(--color-bg);
+  color: var(--menu-text);
+  background-color: color-mix(in srgb, var(--menu-text) 10%, transparent);
+  border: var(--border-width) solid
+    color-mix(in srgb, var(--menu-text) 22%, transparent);
   border-radius: var(--radius);
 }
 
@@ -322,11 +498,26 @@ footer address {
   border-radius: var(--radius);
   padding: var(--space-lg);
   margin: 0;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-panel);
 }
 
 .contact-form legend {
-  padding: 0 var(--space-sm);
+  /* Drop the legend fully inside the box instead of straddling the top
+     border. float + width makes it flow as a normal heading within the
+     fieldset padding, so it is never clipped by the border line. */
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--space-md);
   font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--color-text);
+}
+
+/* Clear the legend's float so the first field starts below it. */
+.contact-form legend + .field {
+  clear: both;
 }
 
 /* Class selector: each labeled field wrapper */
