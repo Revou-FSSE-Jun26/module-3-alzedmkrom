@@ -262,7 +262,7 @@ Task 1 gates everything. Tasks 2 and 3 are sequential, as are 6 through 9. The H
   - Commit: `docs: document folders, run steps and add screenshots`
   - _Requirements: 7.1, 7.2, 7.3_
 
-- [ ] 11. Push and final review
+- [x] 11. Push and final review
   - Confirm the history shows separate commits across HTML/CSS, JavaScript, TypeScript and Tailwind, not one squashed commit
   - Confirm `node_modules/` and `dist/` are absent from the repository
   - Push `main` to `origin` with upstream tracking
