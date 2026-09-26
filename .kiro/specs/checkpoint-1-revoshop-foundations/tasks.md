@@ -41,7 +41,7 @@ flowchart TD
 Task 1 gates everything. Tasks 2 and 3 are sequential, as are 6 through 9. The HTML/CSS chain, the two JavaScript exercises, and the TypeScript chain are independent of each other and can be done in any order once task 1 lands. Task 10 needs all four finished, since screenshots come from the working pages.
 
 ## Tasks
-- [ ] 1. Initialize repository skeleton
+- [x] 1. Initialize repository skeleton
   - Create `.gitignore` covering `node_modules/`, `typescript-tailwind/dist/`, `*.log`, `.DS_Store`, `Thumbs.db`
   - Create `screenshots/` with a `.gitkeep` so the folder survives the first commit
   - Create a placeholder `README.md` with the project title and a folder list, to be filled in at task 10
@@ -49,7 +49,7 @@ Task 1 gates everything. Tasks 2 and 3 are sequential, as are 6 through 9. The H
   - _Requirements: 1.1, 1.4, 1.5, 1.6, 1.7_
 
 - [ ] 2. Build the semantic profile page markup
-- [ ] 2.1 Write the page structure in `html-css/index.html`
+- [x] 2.1 Write the page structure in `html-css/index.html`
   - Lay out `header` with a `nav` list, `main`, and `footer` with an `address`
   - Add four sections with `h2` headings: `#profile`, `#skills`, `#projects`, `#contact`
   - Inside `#profile`, add an avatar `img` with meaningful `alt`, a heading, a bio paragraph, and a short stats list
