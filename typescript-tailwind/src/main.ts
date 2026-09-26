@@ -1,9 +1,10 @@
 // Catalog entry point.
 //
-// Task 8.2 scope: render the full product card grid from typed data using
-// Tailwind utility classes only. Live search, the cart counter, and the empty
-// state are separate tasks (9.x). The code is built around a single CatalogState
-// plus a re-render function so those can be layered in without restructuring.
+// Task 8.2 rendered the full grid from typed data. Task 9.1 adds live search:
+// the query lives in CatalogState, an `input` listener updates it, and the grid
+// re-renders from state on every change rather than mutating the DOM in place.
+// The cart counter (9.3) and empty state (9.2) are still separate tasks; the
+// code stays built around a single CatalogState plus a re-render function.
 
 import { CATEGORIES, PRODUCTS } from './data.js';
 import { toProduct, toView } from './types.js';
@@ -52,6 +53,26 @@ const VISIBLE_PRODUCTS: ProductView[] = PRODUCTS.map(toProduct)
   .filter((product) => !product.isDeleted)
   .map((product) => toView(product, CATEGORIES));
 
+// Case-insensitive match across the name, description, and resolved category
+// name. An empty or whitespace-only query matches everything. Search is a pure
+// projection of the full list for the current query: same input, same output,
+// with no card lost or duplicated across keystrokes.
+function matchesQuery(view: ProductView, query: string): boolean {
+  const needle = query.trim().toLowerCase();
+  if (needle === '') return true;
+  return (
+    view.name.toLowerCase().includes(needle) ||
+    view.description.toLowerCase().includes(needle) ||
+    view.category.name.toLowerCase().includes(needle)
+  );
+}
+
+// The visible set for a given query. Derived from VISIBLE_PRODUCTS on every
+// render, so clearing the query restores the full list exactly.
+function selectVisible(query: string): ProductView[] {
+  return VISIBLE_PRODUCTS.filter((view) => matchesQuery(view, query));
+}
+
 // --- rendering ---
 
 // One card's markup. Every class is a complete literal string, and the two
@@ -85,22 +106,42 @@ function renderCard(view: ProductView): string {
   `;
 }
 
-// Re-render the whole grid from the current visible set. Task 9.x will filter
-// this list by state.query before rendering and branch to an empty state.
-function render(catalog: HTMLElement, views: ProductView[]): void {
+// Result-count text for the status region, phrased for the count and pluralized.
+// Task 9.2 will extend the zero case with an in-grid empty state.
+function resultCountText(count: number): string {
+  if (count === 0) return 'No products found';
+  if (count === 1) return 'Showing 1 product';
+  return `Showing ${count} products`;
+}
+
+// Re-render the whole grid from state. Search is applied here, so the rendered
+// card set is always the filter of the full list for state.query, and the
+// status region's count is updated on every render to match what is shown.
+function render(): void {
+  const views = selectVisible(state.query);
   catalog.innerHTML = views.map(renderCard).join('');
+  status.textContent = resultCountText(views.length);
 }
 
 // --- bootstrap ---
 
-// Single source of truth. Only `query` and `cart` live here; task 8.2 renders
-// the full list, tasks 9.x read from this state on each render.
+// Single source of truth. Only `query` and `cart` live here; render() reads
+// from this state on each call, and the input listener writes state.query.
 const state: CatalogState = {
   query: '',
   cart: {},
 };
 
 const catalog = requireElement<HTMLElement>('#catalog');
-render(catalog, VISIBLE_PRODUCTS);
+const status = requireElement<HTMLElement>('#status');
+const searchInput = requireElement<HTMLInputElement>('#search');
 
-console.info(`RevoShop catalog rendered ${VISIBLE_PRODUCTS.length} products.`, state.query);
+// Listen on `input`, not `keyup`, so paste and the native search clear button
+// fire too. Each event updates state.query and re-renders from state rather
+// than mutating the DOM in place.
+searchInput.addEventListener('input', () => {
+  state.query = searchInput.value;
+  render();
+});
+
+render();
