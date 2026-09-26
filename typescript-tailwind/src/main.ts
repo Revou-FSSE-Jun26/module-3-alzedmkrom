@@ -55,18 +55,15 @@ const VISIBLE_PRODUCTS: ProductView[] = PRODUCTS.map(toProduct)
   .filter((product) => !product.isDeleted)
   .map((product) => toView(product, CATEGORIES));
 
-// Case-insensitive match across the name, description, and resolved category
-// name. An empty or whitespace-only query matches everything. Search is a pure
-// projection of the full list for the current query: same input, same output,
-// with no card lost or duplicated across keystrokes.
+// Case-insensitive match against the product name only. An empty or
+// whitespace-only query matches everything. Search is a pure projection of the
+// full list for the current query: same input, same output, with no card lost
+// or duplicated across keystrokes.
 function matchesQuery(view: ProductView, query: string): boolean {
   const needle = query.trim().toLowerCase();
   if (needle === '') return true;
-  return (
-    view.name.toLowerCase().includes(needle) ||
-    view.description.toLowerCase().includes(needle) ||
-    view.category.name.toLowerCase().includes(needle)
-  );
+  // Match against the product name only, not description or category.
+  return view.name.toLowerCase().includes(needle);
 }
 
 // The visible set for a given query. Derived from VISIBLE_PRODUCTS on every
@@ -216,6 +213,14 @@ function renderCard(view: ProductView): string {
           ${escapeHtml(badgeText)}
         </span>
       </div>
+      <img
+        src="${escapeHtml(view.imageSrc)}"
+        alt="${escapeHtml(view.name)}"
+        loading="lazy"
+        width="400"
+        height="300"
+        class="aspect-[4/3] w-full rounded-lg border border-white/60 bg-white/40 object-cover"
+      />
       <h2 class="text-lg font-semibold leading-snug tracking-tight text-ink line-clamp-2">
         ${escapeHtml(view.name)}
       </h2>

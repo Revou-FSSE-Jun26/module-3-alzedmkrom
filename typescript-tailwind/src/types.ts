@@ -27,6 +27,7 @@ export interface ProductRecord {
   stock_quantity: number;
   created_at: string;      // ISO 8601 with offset, e.g. '2026-08-14T18:44:04.027+07:00'
   is_delete: boolean;      // soft-delete flag
+  image_url?: string | null; // optional; absent until the API adds an image column
 }
 
 // The app model: same data, idiomatic TypeScript naming.
@@ -39,6 +40,7 @@ export interface Product {
   stockQuantity: number;
   createdAt: string;
   isDeleted: boolean;
+  imageUrl: string | null;   // null when the product has no image yet
 }
 
 // Derived from stock_quantity, never stored on the product.
@@ -53,6 +55,7 @@ export type Availability =
 export interface ProductView extends Product {
   category: Category;
   availability: Availability;
+  imageSrc: string;   // real imageUrl if present, else a generated placeholder
 }
 
 export type ProductList = Product[];              // typed array of typed objects
@@ -76,7 +79,18 @@ export function toProduct(record: ProductRecord): Product {
     stockQuantity: record.stock_quantity,
     createdAt: record.created_at,
     isDeleted: record.is_delete,
+    imageUrl: record.image_url ?? null,
   };
+}
+
+// Placeholder image for products with no image yet. Swapping in real photos
+// later is just a matter of setting image_url on the data - nothing else moves.
+function imageSrcFor(product: Product): string {
+  if (product.imageUrl !== null && product.imageUrl !== '') {
+    return product.imageUrl;
+  }
+  const label = encodeURIComponent(product.name);
+  return `https://placehold.co/400x300/e7c86a/0f172a?text=${label}`;
 }
 
 // At or below this quantity a product is low-stock; at or below zero it is out.
@@ -97,5 +111,6 @@ export function toView(product: Product, categories: CategoryLookup): ProductVie
     ...product,
     category: categories[product.categoryId],
     availability: availabilityOf(product),
+    imageSrc: imageSrcFor(product),
   };
 }
