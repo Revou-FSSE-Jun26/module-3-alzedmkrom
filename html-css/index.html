@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alzed Krom — Frontend Developer Profile</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="#profile">Alzed Krom</a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#profile">Profile</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section id="profile">
+        <h2>Profile</h2>
+        <div class="layout">
+          <img
+            class="avatar"
+            src="https://placehold.co/240x240?text=Avatar"
+            alt="Portrait of Alzed Krom, frontend developer"
+            width="240"
+            height="240"
+          />
+          <h1 class="profile-name">Alzed Krom</h1>
+          <p class="bio">
+            Frontend developer who enjoys turning fuzzy ideas into clean,
+            accessible interfaces. I care about semantic markup, thoughtful
+            layout, and code that reads as clearly as it runs.
+          </p>
+          <ul class="stats">
+            <li><strong>3+</strong> years experience</li>
+            <li><strong>12</strong> projects shipped</li>
+            <li><strong>6</strong> happy clients</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <ul class="skills">
+          <li class="chip">HTML5</li>
+          <li class="chip">CSS3</li>
+          <li class="chip">JavaScript</li>
+          <li class="chip">TypeScript</li>
+          <li class="chip">React</li>
+          <li class="chip">Tailwind CSS</li>
+          <li class="chip">Accessibility</li>
+          <li class="chip">Responsive Design</li>
+        </ul>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-grid">
+          <article class="card">
+            <h3>RevoShop Catalog</h3>
+            <p>
+              A typed, interactive product catalog with live search and a
+              cart counter, built as the direct predecessor of a React
+              product card.
+            </p>
+            <ul class="tags">
+              <li>TypeScript</li>
+              <li>Tailwind CSS</li>
+              <li>DOM APIs</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Study Planner</h3>
+            <p>
+              A vanilla JavaScript planner that adds, toggles, and removes
+              tasks with delegated events and a live summary region.
+            </p>
+            <ul class="tags">
+              <li>JavaScript</li>
+              <li>Events</li>
+              <li>ARIA</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Order Insights</h3>
+            <p>
+              An array-processing exercise that iterates, transforms,
+              filters, and aggregates order line items into readable totals.
+            </p>
+            <ul class="tags">
+              <li>map</li>
+              <li>filter</li>
+              <li>reduce</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <!-- Contact form is added in task 2.2 -->
+      </section>
+    </main>
+
+    <footer>
+      <address>
+        Reach me at
+        <a href="mailto:alzed.krom@example.com">alzed.krom@example.com</a>
+      </address>
+      <p class="copyright">&copy; 2026 Alzed Krom. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
