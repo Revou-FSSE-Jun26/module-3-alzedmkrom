@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RevoShop Catalog</title>
+    <link rel="stylesheet" href="dist/output.css" />
+    <script type="module" src="dist/main.js"></script>
+  </head>
+  <body class="min-h-screen bg-revo-50 font-display text-slate-800">
+    <header class="border-b border-slate-200 bg-white">
+      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <h1 class="text-2xl font-bold tracking-tight text-revo-700">RevoShop</h1>
+
+        <div class="flex flex-1 items-center gap-4 sm:justify-end">
+          <div class="flex-1 sm:max-w-xs">
+            <label for="search" class="sr-only">Search products</label>
+            <input
+              id="search"
+              name="search"
+              type="search"
+              placeholder="Search products..."
+              autocomplete="off"
+              class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 placeholder:text-slate-400 focus:border-revo-500 focus:outline-none focus:ring-2 focus:ring-revo-500"
+            />
+          </div>
+
+          <span
+            id="cart-badge"
+            class="inline-flex items-center gap-2 rounded-full bg-revo-500 px-4 py-2 text-sm font-semibold text-white"
+          >
+            Cart: 0 items
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <div
+      id="status"
+      role="status"
+      aria-live="polite"
+      class="mx-auto max-w-6xl px-4 pt-4 text-sm text-slate-600"
+    ></div>
+
+    <main
+      id="catalog"
+      class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 py-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    ></main>
+  </body>
+</html>
