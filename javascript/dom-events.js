@@ -296,3 +296,113 @@ function removeTaskRow(id) {
 function renderSummaryText() {
   taskSummaryEl.textContent = renderSummary();
 }
+/* ==========================================================================
+   Class toggling and event handling (Task 4.4)
+
+   Wire the three interactions on top of the state (4.2) and DOM helpers (4.3):
+     - the compact-mode button toggles `compact` on <main>,
+     - the form's submit handler calls preventDefault() first, then validates
+       and adds the task (Requirement 3.7 — no reload, URL unchanged),
+     - a single delegated click handler on the list container dispatches on
+       closest('[data-action]') so rows created later work without rebinding
+       (Requirement 3.6).
+
+   Invalid input is surfaced in the role="alert" region and the entered values
+   are left intact — no alert() dialogs anywhere (Requirement 3.4).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Error-region helpers — write and clear the role="alert" message. Keeping
+   these tiny means the callbacks stay declarative.
+   -------------------------------------------------------------------------- */
+
+/**
+ * Show an inline validation message in the role="alert" region.
+ * @param {string} message
+ * @returns {void}
+ */
+function showError(message) {
+  taskErrorEl.textContent = message;
+}
+
+/**
+ * Clear any inline validation message.
+ * @returns {void}
+ */
+function clearError() {
+  taskErrorEl.textContent = '';
+}
+
+/* --------------------------------------------------------------------------
+   Compact-mode toggle — flip `compact` on <main> and mirror the state in
+   aria-pressed so assistive tech hears the change.
+   -------------------------------------------------------------------------- */
+compactToggleBtn.addEventListener('click', () => {
+  // classList.toggle returns the new presence of the class.
+  isCompactMode = mainEl.classList.toggle('compact');
+  compactToggleBtn.setAttribute('aria-pressed', isCompactMode === true ? 'true' : 'false');
+});
+
+/* --------------------------------------------------------------------------
+   Add-task form — preventDefault() is the FIRST statement so the browser never
+   reloads the page or appends a query string (Requirement 3.7). Only after
+   that do we read, validate, and add.
+   -------------------------------------------------------------------------- */
+taskFormEl.addEventListener('submit', (event) => {
+  event.preventDefault(); // FIRST statement — stops the native form submit/reload.
+
+  // Read the raw field values; keep them intact on failure so nothing is lost.
+  const title = taskTitleInput.value;
+  const minutes = Number(taskMinutesInput.value);
+
+  // Delegate validation to addTask, which returns null on invalid input.
+  const created = addTask(title, minutes);
+  if (created === null) {
+    showError('Enter a task title and a positive number of minutes.');
+    return; // leave the entered values in the inputs untouched
+  }
+
+  // Success: clear any prior error, refresh the list, and reset for the next entry.
+  clearError();
+  renderTasks();
+  taskFormEl.reset();
+  taskTitleInput.focus();
+});
+
+/* --------------------------------------------------------------------------
+   Delegated list clicks — a single listener on the <ul> handles every row's
+   buttons, present and future, by walking up to the nearest [data-action]
+   (Requirement 3.6). Dynamically created rows need no rebinding.
+   -------------------------------------------------------------------------- */
+taskListEl.addEventListener('click', (event) => {
+  // Walk up from the click target to the nearest element carrying data-action.
+  const actionEl = event.target.closest('[data-action]');
+  if (actionEl === null) {
+    return; // clicked in the row but not on an action button
+  }
+
+  // Recover the owning row and its task id (stamped in createTaskRow).
+  const row = actionEl.closest('li[data-task-id]');
+  if (row === null) {
+    return;
+  }
+  const id = Number(row.dataset.taskId);
+
+  // Dispatch on the declared action.
+  const action = actionEl.dataset.action;
+  if (action === 'toggle') {
+    const nowDone = toggleTask(id); // strict-equality lookup + flip in the array
+    row.classList.toggle('task--done', nowDone === true);
+    actionEl.setAttribute('aria-pressed', nowDone === true ? 'true' : 'false');
+    actionEl.textContent = nowDone === true ? 'Done' : 'Mark done';
+    renderSummaryText();
+  } else if (action === 'delete') {
+    removeTaskRow(id); // element.remove() + array sync + summary refresh
+  }
+});
+
+/* --------------------------------------------------------------------------
+   Initial paint — render the (empty) list once so the summary region shows the
+   empty-state message on load.
+   -------------------------------------------------------------------------- */
+renderTasks();
