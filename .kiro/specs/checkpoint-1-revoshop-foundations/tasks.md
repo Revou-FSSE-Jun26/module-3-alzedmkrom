@@ -214,7 +214,7 @@ Task 1 gates everything. Tasks 2 and 3 are sequential, as are 6 through 9. The H
   - Commit: `feat(typescript-tailwind): render typed product cards with tailwind utilities`
   - _Requirements: 6.1, 6.2, 6.3_
 
-- [ ] 9. Add live search and the cart counter
+- [x] 9. Add live search and the cart counter
 - [x] 9.1 Implement the live search filter
   - Hold `query` in `CatalogState` and re-render from state on change, rather than mutating the DOM in place
   - Attach an `input` listener on the search box, not `keyup`, so paste and the native clear button also fire
@@ -235,7 +235,7 @@ Task 1 gates everything. Tasks 2 and 3 are sequential, as are 6 through 9. The H
   - Announce cart changes through the existing live region
   - _Requirements: 6.6, 5.7, 5.8_
 
-- [-] 9.4 Verify the catalog end to end
+- [x] 9.4 Verify the catalog end to end
   - Type a query and confirm filtering happens per keystroke; clear it and confirm the full list returns with no card lost or duplicated
   - Search a nonsense string and confirm the empty state renders inside the grid without collapsing the layout
   - Add to cart and confirm both the card count and the header badge update, and that quantity cannot exceed stock or go below zero
