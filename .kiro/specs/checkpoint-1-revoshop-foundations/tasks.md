@@ -245,8 +245,8 @@ Task 1 gates everything. Tasks 2 and 3 are sequential, as are 6 through 9. The H
   - Commit: `feat(typescript-tailwind): add live search filter and cart counter`
   - _Requirements: 6.5, 6.6, 6.7_
 
-- [ ] 10. Write documentation and capture screenshots
-- [ ] 10.1 Write the root `README.md`
+- [x] 10. Write documentation and capture screenshots
+- [x] 10.1 Write the root `README.md`
   - Describe what each of the three folders contains
   - State that `html-css/` and `javascript/` open by double-clicking the HTML file, with no build step
   - State how to run `typescript-tailwind/`: install, build, serve, then open the local URL, and explain that a static server is required because browsers refuse to load ES modules over `file://`
@@ -255,7 +255,7 @@ Task 1 gates everything. Tasks 2 and 3 are sequential, as are 6 through 9. The H
   - Embed the three screenshots
   - _Requirements: 1.4, 7.3_
 
-- [ ] 10.2 Capture and commit the screenshots
+- [x] 10.2 Capture and commit the screenshots
   - Capture `screenshots/profile-desktop.png` at a desktop width and `screenshots/profile-mobile.png` at a mobile width, both showing the reflow difference
   - Capture `screenshots/catalog-search.png` with a search query typed and results filtered, showing the Tailwind styling and at least two different badge states
   - Confirm each image is committed and renders in the README
