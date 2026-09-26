@@ -413,3 +413,76 @@ button[type="submit"]:hover {
   background-color: var(--color-accent-dark);
   border-color: var(--color-accent-dark);
 }
+
+/* ==========================================================================
+   Responsive breakpoints (Task 3.3)
+   Mobile-first content flows in a single column by default; these queries
+   step DOWN from the desktop layout. The column count only ever decreases
+   as the viewport narrows, so no width can introduce a new column or push
+   content past the edge and cause horizontal overflow.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Primary reflow at 768px — tablet and below.
+   The profile grid drops its fixed avatar column and stacks the four named
+   areas into one column. The projects grid collapses to a single column so
+   cards read full-width instead of squeezing two narrow tracks.
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  #profile .layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "avatar"
+      "heading"
+      "bio"
+      "stats";
+    justify-items: start;
+    gap: var(--space-md);
+  }
+
+  .project-grid {
+    /* Single column below the primary breakpoint — the column count can
+       only go down from here as the viewport keeps narrowing. */
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  main {
+    padding: var(--space-md);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Secondary polish at 480px — small phones. Type scale and spacing only;
+   the single-column arrangement from the 768px query still holds, so this
+   query never reintroduces a column.
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  html {
+    font-size: 93.75%; /* 15px base — gentle type down-scale */
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.375rem;
+  }
+
+  header {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  main {
+    padding: var(--space-sm);
+  }
+
+  section[id] {
+    margin-bottom: var(--space-lg);
+  }
+
+  .contact-form fieldset {
+    padding: var(--space-md);
+  }
+}
