@@ -125,6 +125,18 @@ header {
   border-bottom: var(--border-width) solid var(--color-border);
 }
 
+/* One-dimensional Flexbox: the primary nav row.
+   The header holds the brand and the nav; the nav's own list is a single
+   row of links, spaced out end-to-end. (Grid/Flex layouts — task 3.2.) */
+nav ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* Class selector: the brand wordmark */
 .brand {
   font-weight: 700;
@@ -166,20 +178,40 @@ footer address {
 }
 
 /* --------------------------------------------------------------------------
-   Profile section — base styling. (Grid placement is task 3.2.)
+   Profile section — base styling and the two-dimensional Grid (task 3.2).
+   The grid applies only to .layout, so the section's <h2> above it is
+   unaffected. A fixed avatar column sits beside a content column that
+   stacks the heading, bio and stats across three named rows.
    -------------------------------------------------------------------------- */
+#profile .layout {
+  display: grid;
+  grid-template-columns: 12rem 1fr;
+  grid-template-areas:
+    "avatar heading"
+    "avatar bio"
+    "avatar stats";
+  gap: var(--space-md) var(--space-xl);
+}
+
 .avatar {
+  grid-area: avatar;
   border-radius: 50%;
   border: var(--border-width) solid var(--color-border);
 }
 
 .profile-name {
+  grid-area: heading;
   color: var(--color-text);
 }
 
 .bio {
+  grid-area: bio;
   color: var(--color-muted);
   max-width: 42rem;
+}
+
+.stats {
+  grid-area: stats;
 }
 
 /* Descendant combinator: emphasized numbers inside the stats list */
@@ -198,12 +230,19 @@ footer address {
 }
 
 /* --------------------------------------------------------------------------
-   Skills — chip base styling. (Flex wrapping row is task 3.2.)
+   Skills — chip base styling and a wrapping Flexbox row (task 3.2).
+   One-dimensional layout: chips flow left to right and wrap onto new lines
+   as needed, with the flex gap governing spacing instead of chip margins.
    -------------------------------------------------------------------------- */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
 .chip {
   display: inline-block;
   padding: var(--space-xs) var(--space-md);
-  margin: var(--space-xs);
   background-color: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: 999px;
@@ -216,14 +255,25 @@ footer address {
 }
 
 /* --------------------------------------------------------------------------
+   Projects — a responsive two-dimensional Grid (task 3.2). auto-fit with a
+   minmax track lets the column count follow the available width without any
+   media query, and the grid gap now owns the spacing between cards.
+   -------------------------------------------------------------------------- */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
    Project cards — the deliberate box-model demonstration.
    All four layers of the box model are set explicitly and labeled.
-   (The .project-grid grid layout itself is task 3.2.)
+   In the grid, each card fills its track and the grid gap (above) governs
+   the spacing between cards, so the card has no bottom margin of its own.
    -------------------------------------------------------------------------- */
 .project-grid .card {
-  /* CONTENT: constrain the content box so cards keep a readable measure */
+  /* CONTENT: fill the grid track so cards size to their column */
   width: 100%;
-  max-width: 28rem;
 
   /* PADDING: inner breathing room between the border and the content */
   padding: var(--space-lg);
@@ -232,8 +282,8 @@ footer address {
   border: 2px solid var(--color-border);
   border-radius: var(--radius);
 
-  /* MARGIN: outer spacing that separates each card from its neighbors */
-  margin: 0 0 var(--space-md);
+  /* MARGIN: zero — the grid gap separates cards from their neighbors */
+  margin: 0;
 
   background-color: var(--color-surface);
 }
