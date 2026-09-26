@@ -631,6 +631,12 @@ button[type="submit"]:hover {
     gap: var(--space-md);
   }
 
+  /* In the stacked single-column layout the avatar column is full width, so
+     cap the photo to a sensible size instead of letting it fill the screen. */
+  .avatar {
+    width: 8rem;
+  }
+
   .project-grid {
     /* Single column below the primary breakpoint — the column count can
        only go down from here as the viewport keeps narrowing. */
