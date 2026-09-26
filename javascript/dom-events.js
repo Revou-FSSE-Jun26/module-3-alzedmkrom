@@ -148,3 +148,151 @@ function formatDuration(totalMinutes) {
   const combined = `${hourPart} ${minutePart}`.trim();
   return combined.length > 0 ? combined : '0m';
 }
+/* ==========================================================================
+   DOM selection, creation and removal (Task 4.3)
+
+   Cache the elements the app touches, then provide the render helpers that
+   build task rows with document.createElement, repopulate the list, remove a
+   row with element.remove(), and write the summary/attributes back to the DOM.
+
+   Element references and the render helpers are declared here so Task 4.4 can
+   consume them; NO event listeners are attached in this task.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Element references — selected with all three query APIs so each is
+   demonstrably exercised (Requirement 3.3): getElementById for the id-based
+   lookups, querySelector for a scoped single match, querySelectorAll for a
+   collection.
+   -------------------------------------------------------------------------- */
+
+/** The <main> landmark — compact mode is toggled on it later. @type {HTMLElement} */
+const mainEl = document.querySelector('main');
+
+/** The add-task form. @type {HTMLFormElement} */
+const taskFormEl = document.getElementById('task-form');
+
+/** The task title input. @type {HTMLInputElement} */
+const taskTitleInput = document.getElementById('task-title');
+
+/** The estimated-minutes input. @type {HTMLInputElement} */
+const taskMinutesInput = document.getElementById('task-minutes');
+
+/** The role="alert" error region. @type {HTMLElement} */
+const taskErrorEl = document.getElementById('task-error');
+
+/** The <ul> that holds the task rows. @type {HTMLUListElement} */
+const taskListEl = document.getElementById('task-list');
+
+/** The aria-live summary region. @type {HTMLElement} */
+const taskSummaryEl = document.getElementById('task-summary');
+
+/** The compact-mode toggle button. @type {HTMLButtonElement} */
+const compactToggleBtn = document.getElementById('compact-toggle');
+
+/**
+ * All submit buttons inside the form, gathered with querySelectorAll to round
+ * out the three selection APIs. Currently informational; Task 4.4 owns the
+ * wiring.
+ * @type {NodeListOf<HTMLButtonElement>}
+ */
+const formSubmitButtons = taskFormEl.querySelectorAll('button[type="submit"]');
+
+/* --------------------------------------------------------------------------
+   Render helpers — build and refresh the DOM from the `tasks` array. They do
+   the DOM work only; event listeners are attached in Task 4.4, which dispatches
+   on the data-action attributes set below.
+   -------------------------------------------------------------------------- */
+
+/**
+ * Build a single task row (<li>) for the given task, with a title/minutes label
+ * plus a done-toggle button and a delete button. Each button carries a
+ * `data-action` attribute (so a delegated handler can dispatch via
+ * closest('[data-action]')) and an `aria-label` for assistive tech. The
+ * done-toggle reflects state through `aria-pressed` set with setAttribute.
+ *
+ * @param {{ id: number, title: string, minutes: number, done: boolean }} task
+ * @returns {HTMLLIElement} the fully built row, not yet inserted into the list
+ */
+function createTaskRow(task) {
+  const li = document.createElement('li');
+  // Stash the id on the row so the delegated handler can recover it.
+  li.dataset.taskId = String(task.id);
+  // Reflect done state as a class the stylesheet strikes through.
+  if (task.done === true) {
+    li.classList.add('task--done');
+  }
+
+  // Text label: title plus the formatted duration.
+  const label = document.createElement('span');
+  label.className = 'task__label';
+  label.textContent = `${task.title} — ${formatDuration(task.minutes)}`;
+
+  // Done-toggle button: aria-pressed mirrors the done flag via setAttribute.
+  const doneBtn = document.createElement('button');
+  doneBtn.type = 'button';
+  doneBtn.dataset.action = 'toggle';
+  doneBtn.setAttribute('aria-pressed', task.done === true ? 'true' : 'false');
+  doneBtn.setAttribute('aria-label', `Mark "${task.title}" as ${task.done === true ? 'not done' : 'done'}`);
+  doneBtn.textContent = task.done === true ? 'Done' : 'Mark done';
+
+  // Delete button.
+  const deleteBtn = document.createElement('button');
+  deleteBtn.type = 'button';
+  deleteBtn.dataset.action = 'delete';
+  deleteBtn.setAttribute('aria-label', `Delete "${task.title}"`);
+  deleteBtn.textContent = 'Delete';
+
+  // Assemble the row with append (accepts multiple nodes at once).
+  li.append(label, doneBtn, deleteBtn);
+  return li;
+}
+
+/**
+ * Clear the list and repopulate it from the backing `tasks` array, then refresh
+ * the summary so the two never drift. Rebuilds every row with createTaskRow.
+ *
+ * @returns {void}
+ */
+function renderTasks() {
+  // Clear existing rows before repopulating.
+  taskListEl.replaceChildren();
+
+  // Rebuild one row per task and append it.
+  tasks.forEach((task) => {
+    taskListEl.append(createTaskRow(task));
+  });
+
+  renderSummaryText();
+}
+
+/**
+ * Remove a task's row from the DOM with element.remove() and keep the backing
+ * array in sync (removeTask handles the array side). Refreshes the summary
+ * afterwards. Returns whether a row was actually removed.
+ *
+ * @param {number} id - the id of the task to remove
+ * @returns {boolean} true when a row and its task were removed
+ */
+function removeTaskRow(id) {
+  // Locate the row by the data-task-id stamped in createTaskRow.
+  const row = taskListEl.querySelector(`li[data-task-id="${id}"]`);
+  const removedFromArray = removeTask(id); // keep the array in sync
+
+  if (row) {
+    row.remove(); // element.remove() detaches the node from the DOM
+  }
+
+  renderSummaryText();
+  return removedFromArray === true && row !== null;
+}
+
+/**
+ * Write the current summary string into the summary region with textContent.
+ * Delegates the wording to renderSummary() (Task 4.2).
+ *
+ * @returns {void}
+ */
+function renderSummaryText() {
+  taskSummaryEl.textContent = renderSummary();
+}
