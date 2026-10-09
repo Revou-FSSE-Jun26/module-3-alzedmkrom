@@ -49,7 +49,7 @@ export default function Loading() {
           <SkeletonCard key={index} />
         ))}
       </div>
-      <span className="sr-only">Loading productsâ€¦</span>
+      <span className="sr-only">Loading products…</span>
     </section>
   );
 }

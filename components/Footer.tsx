@@ -1,6 +1,6 @@
 // components/Footer.tsx
 //
-// The application footer. A server component â€” purely presentational, no state
+// The application footer. A server component — purely presentational, no state
 // and no hooks. Pushed to the bottom by the flex-column body in the root layout.
 //
 // The copyright year is read through a "use cache" function with cacheLife('max').

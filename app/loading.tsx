@@ -6,7 +6,7 @@
 // column classes as ProductGrid (one column, two at `sm`, three at `lg`) so the
 // skeleton occupies the same shape the content will fill.
 //
-// A Server Component by default â€” it only renders static markup. Five skeleton
+// A Server Component by default — it only renders static markup. Five skeleton
 // cards match the five featured products the home page slices.
 
 const SKELETON_CARDS = 5;
@@ -44,7 +44,7 @@ export default function Loading() {
           <SkeletonCard key={index} />
         ))}
       </div>
-      <span className="sr-only">Loading featured productsâ€¦</span>
+      <span className="sr-only">Loading featured products…</span>
     </section>
   );
 }

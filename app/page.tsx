@@ -1,6 +1,6 @@
 // app/page.tsx
 //
-// The home route. A pure Server Component â€” no "use client" directive and no
+// The home route. A pure Server Component — no "use client" directive and no
 // hooks anywhere in its own tree. It fetches the catalog on the server with
 // `await getProducts({})`, takes the first five products, and renders them
 // through <ProductGrid /> in read-only mode. Read-only means the cards drop
@@ -16,7 +16,7 @@ import { getProducts } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 
 export const metadata: Metadata = {
-  title: "RevoShop â€” Home",
+  title: "RevoShop — Home",
   description:
     "Discover a selection of featured products from the RevoShop catalog, served live from the RevoShop API.",
 };

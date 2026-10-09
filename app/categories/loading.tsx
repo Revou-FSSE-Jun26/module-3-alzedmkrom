@@ -6,7 +6,7 @@
 // column classes as the categories page (one column, two at `sm`, three at
 // `lg`) so the skeleton occupies the shape the content will fill.
 //
-// A Server Component by default â€” it only renders static markup. Four skeleton
+// A Server Component by default — it only renders static markup. Four skeleton
 // tiles match the four real categories the API returns.
 
 const SKELETON_TILES = 4;
@@ -39,7 +39,7 @@ export default function Loading() {
           <SkeletonTile key={index} />
         ))}
       </div>
-      <span className="sr-only">Loading categoriesâ€¦</span>
+      <span className="sr-only">Loading categories…</span>
     </section>
   );
 }
