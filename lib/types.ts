@@ -38,6 +38,19 @@ export interface OrderRecord {
   created_at: string;
 }
 
+// GET /orders/:id returns the order WITH its line items (unlike the list,
+// which returns headers only). Each item nests the full product plus the
+// quantity ordered and the unit price captured at order time.
+export interface OrderItemRecord {
+  product: ProductRecord;
+  quantity: number;
+  unit_price: number; // JSON float
+}
+
+export interface OrderDetailRecord extends OrderRecord {
+  items: OrderItemRecord[];
+}
+
 // ---------- app layer: camelCase, the shape components consume ----------
 
 export interface Product {
@@ -70,6 +83,18 @@ export interface Order {
 // Only 'PENDING' is confirmed from live data. Kept open with a string
 // fallback so an unseen status renders instead of breaking the page.
 export type OrderStatus = 'PENDING' | (string & {});
+
+// One line of an order detail, in app-model shape.
+export interface OrderItem {
+  product: Product;
+  quantity: number;
+  unitPrice: number;
+  lineTotal: number; // unitPrice * quantity, computed in the mapper
+}
+
+export interface OrderDetail extends Order {
+  items: OrderItem[];
+}
 
 // Derived stock state — a discriminated union, carried over from Checkpoint 1.
 export type Availability =
@@ -140,6 +165,18 @@ export function toOrder(record: OrderRecord): Order {
     totalPrice: record.total_price,
     isDeleted: record.is_delete,
     createdAt: record.created_at,
+  };
+}
+
+export function toOrderDetail(record: OrderDetailRecord): OrderDetail {
+  return {
+    ...toOrder(record),
+    items: record.items.map((item) => ({
+      product: toProduct(item.product),
+      quantity: item.quantity,
+      unitPrice: item.unit_price,
+      lineTotal: item.unit_price * item.quantity,
+    })),
   };
 }
 

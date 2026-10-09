@@ -21,8 +21,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { getOrders } from "@/lib/auth";
-import { formatDate, formatRupiah } from "@/lib/format";
-import Card from "@/components/Card";
+import OrderList from "@/components/OrderList";
 
 export const metadata: Metadata = {
   title: "Orders — RevoShop",
@@ -111,31 +110,7 @@ async function OrdersContent() {
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-4">
-          {orders.map((order) => (
-            <li key={order.id}>
-              <Card className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex flex-col gap-1">
-                  <span className="text-lg font-semibold text-black dark:text-white">
-                    Order #{order.id}
-                  </span>
-                  <span className="text-sm text-black/60 dark:text-white/60">
-                    {formatDate(order.createdAt)}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 dark:bg-amber-400/15 dark:text-amber-300">
-                    {order.status}
-                  </span>
-                  <span className="text-lg font-semibold text-black dark:text-white">
-                    {formatRupiah(order.totalPrice)}
-                  </span>
-                </div>
-              </Card>
-            </li>
-          ))}
-        </ul>
+        <OrderList orders={orders} />
       )}
     </>
   );

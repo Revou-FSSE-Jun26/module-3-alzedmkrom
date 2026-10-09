@@ -14,8 +14,8 @@
 import 'server-only';
 
 import { ApiError, baseUrl, fetchJson } from './api';
-import type { Order, OrderRecord } from './types';
-import { toOrder } from './types';
+import type { Order, OrderDetail, OrderDetailRecord, OrderRecord } from './types';
+import { toOrder, toOrderDetail } from './types';
 
 /**
  * The subset of the `POST /auth/login` response this checkpoint uses. The API
@@ -186,4 +186,24 @@ export async function getOrders(userId: number): Promise<Order[]> {
   );
 
   return records.map(toOrder).filter((order) => !order.isDeleted);
+}
+
+/**
+ * Fetches a single order WITH its line items from `GET /orders/:id`. Unlike the
+ * list endpoint, this returns the nested `items` array (each with its product,
+ * quantity and unit price), so the orders UI can show what was ordered.
+ *
+ * Authenticated the same way as getOrders — wrapped in withBearerToken, token
+ * server-side only. The API scopes an order to its owner, so requesting an
+ * order that does not belong to the demo account returns 403/404 and surfaces
+ * as an ApiError.
+ */
+export async function getOrderDetail(orderId: number): Promise<OrderDetail> {
+  const record = await withBearerToken((token) =>
+    fetchJson<OrderDetailRecord>(`/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+  );
+
+  return toOrderDetail(record);
 }
