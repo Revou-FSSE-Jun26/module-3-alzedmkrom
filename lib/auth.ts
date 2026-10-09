@@ -13,7 +13,9 @@
 
 import 'server-only';
 
-import { ApiError, baseUrl } from './api';
+import { ApiError, baseUrl, fetchJson } from './api';
+import type { Order, OrderRecord } from './types';
+import { toOrder } from './types';
 
 /**
  * The subset of the `POST /auth/login` response this checkpoint uses. The API
@@ -154,4 +156,34 @@ export async function withBearerToken<T>(
     }
     throw error;
   }
+}
+
+/**
+ * Fetches a user's orders from `GET /orders?user_id=`. The endpoint requires a
+ * JWT, so the request is wrapped in `withBearerToken`, which logs in
+ * server-side with the demo credentials, attaches
+ * `Authorization: Bearer <access_token>`, and retries once on a 401. The token
+ * is created and used entirely on the server and never reaches the browser.
+ *
+ * This lives in lib/auth.ts rather than lib/api.ts because it is inherently
+ * server-only: it depends on the token cache and the demo credentials. Keeping
+ * it here lets lib/api.ts stay free of any `server-only` edge, so its
+ * client-safe read helpers can be imported from Client Components.
+ *
+ * `userId` must be the id of the authenticated demo account (DEMO_USER_ID): a
+ * token for one user requesting another user's orders returns 403, verified
+ * against the live API.
+ *
+ * The response is a bare array of order headers — no nested line items. Records
+ * are mapped into the app `Order` shape and soft-deleted rows are filtered out,
+ * so snake_case and the `is_delete` flag never escape the data layer.
+ */
+export async function getOrders(userId: number): Promise<Order[]> {
+  const records = await withBearerToken((token) =>
+    fetchJson<OrderRecord[]>(`/orders?user_id=${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+  );
+
+  return records.map(toOrder).filter((order) => !order.isDeleted);
 }

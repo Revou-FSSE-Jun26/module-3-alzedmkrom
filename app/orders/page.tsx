@@ -18,7 +18,7 @@
 // app/orders/error.tsx; the in-flight fetch shows app/orders/loading.tsx.
 
 import type { Metadata } from "next";
-import { getOrders } from "@/lib/api";
+import { getOrders } from "@/lib/auth";
 import { formatDate, formatRupiah } from "@/lib/format";
 import Card from "@/components/Card";
 
