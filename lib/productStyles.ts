@@ -15,7 +15,7 @@ import type { Availability } from './types';
  */
 export function getButtonClasses(inStock: boolean): string {
   return inStock
-    ? 'w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-400'
+    ? 'w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 active:scale-95 focus-visible:ring-2 focus-visible:ring-blue-400'
     : 'w-full cursor-not-allowed rounded-md bg-slate-200 px-4 py-2 font-semibold text-slate-400';
 }
 

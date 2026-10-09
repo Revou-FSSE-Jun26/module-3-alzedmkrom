@@ -96,7 +96,7 @@ export default function ProductCard({
               onClick={decrement}
               disabled={!inStock || quantity <= 0}
               aria-label="Decrease quantity"
-              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:scale-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
             >
               −
             </button>
@@ -111,7 +111,7 @@ export default function ProductCard({
               onClick={increment}
               disabled={!inStock || quantity >= product.stockQuantity}
               aria-label="Increase quantity"
-              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:scale-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
             >
               +
             </button>

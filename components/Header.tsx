@@ -14,7 +14,7 @@ export default function Header() {
       <div className="flex w-full items-center justify-between gap-6 px-6 py-4">
         <Link
           href="/"
-          className="text-lg font-bold tracking-tight text-black dark:text-white"
+          className="text-2xl font-extrabold tracking-tight text-[#ffde3d] [text-shadow:_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000,_0_0_12px_rgba(255,222,61,0.9)]"
         >
           RevoShop
         </Link>

@@ -150,7 +150,7 @@ export default function AddProductForm({
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="flex w-full flex-col gap-4 rounded-xl border border-black/10 p-4 dark:border-white/15"
+      className="flex w-full flex-col gap-4 rounded-xl border border-black/10 bg-white p-4 shadow-sm dark:border-white/15 dark:bg-white/5"
     >
       <h2 className="font-semibold text-black dark:text-white">
         Add a product
@@ -289,7 +289,7 @@ export default function AddProductForm({
 
       <button
         type="submit"
-        className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+        className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
       >
         Add product
       </button>

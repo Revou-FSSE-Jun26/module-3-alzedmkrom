@@ -20,7 +20,20 @@
 }
 
 body {
-  background: var(--background);
+  /* Royal blue background: a soft white glow radiating from the top blends
+     into a vertical wash that deepens to #ABD9FF. Set explicitly (not via
+     --background) so it holds regardless of the OS colour-scheme preference.
+     `fixed` keeps the wash still while the page scrolls. */
+  background:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0) 55%
+    ),
+    linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

@@ -68,7 +68,7 @@ export default function CartSummary({ cart }: CartSummaryProps) {
   const isEmpty = itemCount === 0;
 
   return (
-    <section className="rounded-xl border border-black/10 bg-black/2 dark:border-white/15 dark:bg-white/3">
+    <section className="rounded-xl border border-black/10 bg-white shadow-sm dark:border-white/15 dark:bg-white/5">
       {/* Headline bar. It is a button only when there is something to expand. */}
       <button
         type="button"
