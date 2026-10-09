@@ -1,0 +1,375 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Run create-next-app into a temporary directory": [
+      {
+        "executionId": "5fad95dd-c277-4005-944f-41db017901b3",
+        "chatSessionId": "sess_2868ce07-1af3-44df-b1bb-13ad96faac9f",
+        "timestamp": 1791545568009
+      },
+      {
+        "executionId": "5fad95dd-c277-4005-944f-41db017901b3",
+        "chatSessionId": "sess_2868ce07-1af3-44df-b1bb-13ad96faac9f",
+        "timestamp": 1791545867919
+      }
+    ],
+    "1.2 Move the scaffold to the repository root without destroying existing files": [
+      {
+        "executionId": "d657e55e-39e4-401c-9f1d-afd523af9504",
+        "chatSessionId": "sess_8b41a6d3-fc82-4506-8367-9479108cbba0",
+        "timestamp": 1791547046139
+      },
+      {
+        "executionId": "d657e55e-39e4-401c-9f1d-afd523af9504",
+        "chatSessionId": "sess_8b41a6d3-fc82-4506-8367-9479108cbba0",
+        "timestamp": 1791547207024
+      }
+    ],
+    "1.3 Verify the dev server and build both run clean": [
+      {
+        "executionId": "13180c3c-06dd-4c14-93af-8810418bf5a4",
+        "chatSessionId": "sess_ab161383-948e-44ce-8ee3-93d1d66a7472",
+        "timestamp": 1791547257993
+      },
+      {
+        "executionId": "13180c3c-06dd-4c14-93af-8810418bf5a4",
+        "chatSessionId": "sess_ab161383-948e-44ce-8ee3-93d1d66a7472",
+        "timestamp": 1791547518848
+      }
+    ],
+    "1. Scaffold the Next.js project at the repository root": [
+      {
+        "executionId": "13180c3c-06dd-4c14-93af-8810418bf5a4",
+        "chatSessionId": "sess_ab161383-948e-44ce-8ee3-93d1d66a7472",
+        "timestamp": 1791547518967
+      }
+    ],
+    "2.1 Write `lib/types.ts`": [
+      {
+        "executionId": "bcb1dd59-749b-46fe-b417-acf6f355d864",
+        "chatSessionId": "sess_77a9e32a-b427-42a2-8fb4-3f5ccc6887e3",
+        "timestamp": 1791547587292
+      },
+      {
+        "executionId": "bcb1dd59-749b-46fe-b417-acf6f355d864",
+        "chatSessionId": "sess_77a9e32a-b427-42a2-8fb4-3f5ccc6887e3",
+        "timestamp": 1791547658639
+      }
+    ],
+    "2.2 Add environment configuration": [
+      {
+        "executionId": "787f04a5-cae8-4379-aef5-b675c3489095",
+        "chatSessionId": "sess_637bdb8f-7f37-4865-8502-442f5ce2804f",
+        "timestamp": 1791547690960
+      },
+      {
+        "executionId": "787f04a5-cae8-4379-aef5-b675c3489095",
+        "chatSessionId": "sess_637bdb8f-7f37-4865-8502-442f5ce2804f",
+        "timestamp": 1791547785276
+      }
+    ],
+    "2.3 Add the rupiah and date formatters": [
+      {
+        "executionId": "905da3a8-40cb-4af0-8184-1a37eefd883b",
+        "chatSessionId": "sess_82d881e4-1242-44b7-a08e-9b79bb0ad815",
+        "timestamp": 1791547955343
+      },
+      {
+        "executionId": "905da3a8-40cb-4af0-8184-1a37eefd883b",
+        "chatSessionId": "sess_82d881e4-1242-44b7-a08e-9b79bb0ad815",
+        "timestamp": 1791548113877
+      }
+    ],
+    "2. Define types and environment configuration": [
+      {
+        "executionId": "905da3a8-40cb-4af0-8184-1a37eefd883b",
+        "chatSessionId": "sess_82d881e4-1242-44b7-a08e-9b79bb0ad815",
+        "timestamp": 1791548114000
+      }
+    ],
+    "3.1 Write `lib/api.ts` with a typed error and a guarded fetch": [
+      {
+        "executionId": "8e30d7f5-fc0b-43f1-911a-b0d6529ba59f",
+        "chatSessionId": "sess_928656a2-ff88-4f28-824b-b8c3a8fe0cd5",
+        "timestamp": 1791555132769
+      },
+      {
+        "executionId": "8e30d7f5-fc0b-43f1-911a-b0d6529ba59f",
+        "chatSessionId": "sess_928656a2-ff88-4f28-824b-b8c3a8fe0cd5",
+        "timestamp": 1791555217192
+      }
+    ],
+    "3.2 Add the read helpers": [
+      {
+        "executionId": "c14089c7-0d73-47ff-a58d-70140599369e",
+        "chatSessionId": "sess_d87355b4-9bf2-4861-95bd-902cb365eb0e",
+        "timestamp": 1791555255018
+      },
+      {
+        "executionId": "c14089c7-0d73-47ff-a58d-70140599369e",
+        "chatSessionId": "sess_d87355b4-9bf2-4861-95bd-902cb365eb0e",
+        "timestamp": 1791555370087
+      }
+    ],
+    "3. Build the API client": [
+      {
+        "executionId": "c14089c7-0d73-47ff-a58d-70140599369e",
+        "chatSessionId": "sess_d87355b4-9bf2-4861-95bd-902cb365eb0e",
+        "timestamp": 1791555370206
+      }
+    ],
+    "4.1 Write the `Card` wrapper": [
+      {
+        "executionId": "80492aed-a369-48c4-a0e1-aa5cdf4bdcd7",
+        "chatSessionId": "sess_b371ba1b-3069-497c-837b-fe52c309afb0",
+        "timestamp": 1791555523404
+      },
+      {
+        "executionId": "80492aed-a369-48c4-a0e1-aa5cdf4bdcd7",
+        "chatSessionId": "sess_b371ba1b-3069-497c-837b-fe52c309afb0",
+        "timestamp": 1791555594414
+      }
+    ],
+    "4.2 Write `Header`, `Footer` and `Nav`": [
+      {
+        "executionId": "6340f576-15a7-48a0-a683-2ca517fc5acc",
+        "chatSessionId": "sess_36cc1fb1-3515-40bb-aa1c-a0b603a27367",
+        "timestamp": 1791555619638
+      },
+      {
+        "executionId": "6340f576-15a7-48a0-a683-2ca517fc5acc",
+        "chatSessionId": "sess_36cc1fb1-3515-40bb-aa1c-a0b603a27367",
+        "timestamp": 1791555747044
+      }
+    ],
+    "4. Build the shared chrome and Card wrapper": [
+      {
+        "executionId": "6340f576-15a7-48a0-a683-2ca517fc5acc",
+        "chatSessionId": "sess_36cc1fb1-3515-40bb-aa1c-a0b603a27367",
+        "timestamp": 1791555747121
+      }
+    ],
+    "5.1 Add the typed class mapping": [
+      {
+        "executionId": "2fb464cb-5d87-4db1-b7b1-7bc33455cd86",
+        "chatSessionId": "sess_3f7faeb5-2872-409c-b60d-97f0b108d2c2",
+        "timestamp": 1791555807488
+      },
+      {
+        "executionId": "2fb464cb-5d87-4db1-b7b1-7bc33455cd86",
+        "chatSessionId": "sess_3f7faeb5-2872-409c-b60d-97f0b108d2c2",
+        "timestamp": 1791555891409
+      }
+    ],
+    "5.2 Implement the card": [
+      {
+        "executionId": "9bd2c2dc-5136-4baa-b128-233ba2a23945",
+        "chatSessionId": "sess_3497a844-dbb4-486a-aaae-1d873cb1c5d7",
+        "timestamp": 1791555926162
+      },
+      {
+        "executionId": "9bd2c2dc-5136-4baa-b128-233ba2a23945",
+        "chatSessionId": "sess_3497a844-dbb4-486a-aaae-1d873cb1c5d7",
+        "timestamp": 1791556134304
+      }
+    ],
+    "5. Build ProductCard": [
+      {
+        "executionId": "9bd2c2dc-5136-4baa-b128-233ba2a23945",
+        "chatSessionId": "sess_3497a844-dbb4-486a-aaae-1d873cb1c5d7",
+        "timestamp": 1791556134403
+      }
+    ],
+    "6. Build ProductGrid": [
+      {
+        "executionId": "633b0fde-2e8c-4dd0-b188-9b4fb86fefa9",
+        "chatSessionId": "sess_84256296-ee5a-4606-959b-3d73856b3e3b",
+        "timestamp": 1791556218191
+      },
+      {
+        "executionId": "633b0fde-2e8c-4dd0-b188-9b4fb86fefa9",
+        "chatSessionId": "sess_84256296-ee5a-4606-959b-3d73856b3e3b",
+        "timestamp": 1791556363563
+      }
+    ],
+    "7.1 Write the root layout": [
+      {
+        "executionId": "b4720dcb-3361-49e7-ac8f-e4a2002c4e39",
+        "chatSessionId": "sess_fbf06e3d-cf00-4fb1-b4cb-89a521610c3c",
+        "timestamp": 1791556428523
+      },
+      {
+        "executionId": "b4720dcb-3361-49e7-ac8f-e4a2002c4e39",
+        "chatSessionId": "sess_fbf06e3d-cf00-4fb1-b4cb-89a521610c3c",
+        "timestamp": 1791556696861
+      }
+    ],
+    "7.2 Write the nested products layout and its mount probe": [
+      {
+        "executionId": "f6f9c02a-5a9f-4df8-a66f-ae195b3f14ae",
+        "chatSessionId": "sess_6ad7c08c-f58a-4123-a783-d84d9be3c6c8",
+        "timestamp": 1791556959214
+      },
+      {
+        "executionId": "f6f9c02a-5a9f-4df8-a66f-ae195b3f14ae",
+        "chatSessionId": "sess_6ad7c08c-f58a-4123-a783-d84d9be3c6c8",
+        "timestamp": 1791557150863
+      }
+    ],
+    "7. Build the layouts": [
+      {
+        "executionId": "f6f9c02a-5a9f-4df8-a66f-ae195b3f14ae",
+        "chatSessionId": "sess_6ad7c08c-f58a-4123-a783-d84d9be3c6c8",
+        "timestamp": 1791557150982
+      }
+    ],
+    "8. Build the home route end to end": [
+      {
+        "executionId": "b2275b49-bf45-4f0a-8fb0-8ba07736cb98",
+        "chatSessionId": "sess_dd9fa053-65a4-4075-a418-5dc034c83643",
+        "timestamp": 1791557369803
+      },
+      {
+        "executionId": "b2275b49-bf45-4f0a-8fb0-8ba07736cb98",
+        "chatSessionId": "sess_dd9fa053-65a4-4075-a418-5dc034c83643",
+        "timestamp": 1791557616368
+      }
+    ],
+    "9. Build the products route end to end": [
+      {
+        "executionId": "dbce391b-468e-4a2b-8063-16f72ba1a497",
+        "chatSessionId": "sess_08d76e7c-7ce0-4159-b29d-1ee76dc27d1b",
+        "timestamp": 1791557671747
+      },
+      {
+        "executionId": "dbce391b-468e-4a2b-8063-16f72ba1a497",
+        "chatSessionId": "sess_08d76e7c-7ce0-4159-b29d-1ee76dc27d1b",
+        "timestamp": 1791557881601
+      }
+    ],
+    "10. Build the product detail route end to end": [
+      {
+        "executionId": "c89cffe9-779e-449c-b74f-ebd47c1758b5",
+        "chatSessionId": "sess_a58ee5eb-501d-40ff-9aba-7e0a96a8ee4f",
+        "timestamp": 1791557914016
+      },
+      {
+        "executionId": "c89cffe9-779e-449c-b74f-ebd47c1758b5",
+        "chatSessionId": "sess_a58ee5eb-501d-40ff-9aba-7e0a96a8ee4f",
+        "timestamp": 1791558596481
+      }
+    ],
+    "11.1 Build the categories route": [
+      {
+        "executionId": "c51a4378-4bf5-4fbc-860f-2a85bfe6c3a7",
+        "chatSessionId": "sess_1a8b14cb-a557-49d1-973f-5e01abd025bf",
+        "timestamp": 1791558676394
+      },
+      {
+        "executionId": "c51a4378-4bf5-4fbc-860f-2a85bfe6c3a7",
+        "chatSessionId": "sess_1a8b14cb-a557-49d1-973f-5e01abd025bf",
+        "timestamp": 1791558856365
+      }
+    ],
+    "11.2 Add server-side authentication for orders": [
+      {
+        "executionId": "e7eec597-9807-442a-9635-49e7cd0180a4",
+        "chatSessionId": "sess_2678d3f0-09da-4122-9448-361bb1ac1bdc",
+        "timestamp": 1791559103957
+      }
+    ],
+    "11.3 Build the orders route": [
+      {
+        "executionId": "92173a6b-42c1-4c44-9315-b6aa2b854ba4",
+        "chatSessionId": "sess_65ac74af-3871-4bed-859c-c70c46d62720",
+        "timestamp": 1791559175516
+      },
+      {
+        "executionId": "92173a6b-42c1-4c44-9315-b6aa2b854ba4",
+        "chatSessionId": "sess_65ac74af-3871-4bed-859c-c70c46d62720",
+        "timestamp": 1791559822075
+      }
+    ],
+    "11. Build the categories and orders routes end to end": [
+      {
+        "executionId": "92173a6b-42c1-4c44-9315-b6aa2b854ba4",
+        "chatSessionId": "sess_65ac74af-3871-4bed-859c-c70c46d62720",
+        "timestamp": 1791559822175
+      }
+    ],
+    "12.1 Build the SearchBar": [
+      {
+        "executionId": "995e8d31-d4b0-4303-8518-d988b86e984f",
+        "chatSessionId": "sess_8b945f7b-160f-48c8-9a55-cb7fe768b142",
+        "timestamp": 1791559898025
+      },
+      {
+        "executionId": "995e8d31-d4b0-4303-8518-d988b86e984f",
+        "chatSessionId": "sess_8b945f7b-160f-48c8-9a55-cb7fe768b142",
+        "timestamp": 1791559987991
+      }
+    ],
+    "12.2 Build the CategoryFilter": [
+      {
+        "executionId": "c76e836d-218f-42a5-83f3-5ab044421bb9",
+        "chatSessionId": "sess_c4f7aab8-4e92-45d2-b67a-34ae4334856c",
+        "timestamp": 1791563055056
+      },
+      {
+        "executionId": "c76e836d-218f-42a5-83f3-5ab044421bb9",
+        "chatSessionId": "sess_c4f7aab8-4e92-45d2-b67a-34ae4334856c",
+        "timestamp": 1791563212910
+      }
+    ],
+    "12.3 Build the ProductList client component": [
+      {
+        "executionId": "2fe4c4da-0be7-42e7-99e8-51862b2d6aaa",
+        "chatSessionId": "sess_3b2ae94b-6838-4a7f-bd62-6755346f711a",
+        "timestamp": 1791563263667
+      },
+      {
+        "executionId": "2fe4c4da-0be7-42e7-99e8-51862b2d6aaa",
+        "chatSessionId": "sess_3b2ae94b-6838-4a7f-bd62-6755346f711a",
+        "timestamp": 1791563632157
+      }
+    ],
+    "12. Wire URL-driven search and the category filter": [
+      {
+        "executionId": "2fe4c4da-0be7-42e7-99e8-51862b2d6aaa",
+        "chatSessionId": "sess_3b2ae94b-6838-4a7f-bd62-6755346f711a",
+        "timestamp": 1791563632303
+      }
+    ],
+    "13.1 Add cart state and summary": [
+      {
+        "executionId": "6fe86d93-e716-4f87-9155-5836b87d9ed7",
+        "chatSessionId": "sess_a1e022ce-ca11-4043-846c-01d193b94d7c",
+        "timestamp": 1791563848465
+      },
+      {
+        "executionId": "6fe86d93-e716-4f87-9155-5836b87d9ed7",
+        "chatSessionId": "sess_a1e022ce-ca11-4043-846c-01d193b94d7c",
+        "timestamp": 1791564108373
+      }
+    ],
+    "13.2 Build AddProductForm with validation": [
+      {
+        "executionId": "7676c32f-af28-4fae-b504-18b6dd5f0dcb",
+        "chatSessionId": "sess_cf891f76-2039-4375-9fab-9de13243eacb",
+        "timestamp": 1791564364400
+      },
+      {
+        "executionId": "7676c32f-af28-4fae-b504-18b6dd5f0dcb",
+        "chatSessionId": "sess_cf891f76-2039-4375-9fab-9de13243eacb",
+        "timestamp": 1791564599809
+      }
+    ],
+    "13. Build the interactive catalog": [
+      {
+        "executionId": "7676c32f-af28-4fae-b504-18b6dd5f0dcb",
+        "chatSessionId": "sess_cf891f76-2039-4375-9fab-9de13243eacb",
+        "timestamp": 1791564599947
+      }
+    ]
+  }
+}

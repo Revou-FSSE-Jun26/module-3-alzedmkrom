@@ -52,14 +52,14 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
 
 ## Tasks
 
-- [ ] 1. Scaffold the Next.js project at the repository root
-- [ ] 1.1 Run create-next-app into a temporary directory
+- [x] 1. Scaffold the Next.js project at the repository root
+- [x] 1.1 Run create-next-app into a temporary directory
   - Run `npx create-next-app@latest .next-scaffold --typescript --tailwind --app --eslint --no-src-dir --use-npm`
   - Use `--no-src-dir` so `app/`, `components/` and `lib/` live at the root, matching the deliverable's `components/` folder wording
   - Confirm the generated project uses Next 16.x and React 19.x
   - _Requirements: 1.1, 1.4_
 
-- [ ] 1.2 Move the scaffold to the repository root without destroying existing files
+- [x] 1.2 Move the scaffold to the repository root without destroying existing files
   - Move everything from `.next-scaffold/` into the root **except** `README.md` and `.gitignore`
   - Merge the generated `.gitignore` entries (`.next/`, `node_modules/`, `/out/`, `.env*.local`, `*.tsbuildinfo`) into the existing `.gitignore` rather than overwriting it
   - Delete `.next-scaffold/`
@@ -67,14 +67,14 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Verify `.env*.local` is matched by `.gitignore` using `git check-ignore -v .env.local`
   - _Requirements: 1.3_
 
-- [ ] 1.3 Verify the dev server and build both run clean
+- [x] 1.3 Verify the dev server and build both run clean
   - Run `npm run dev` and confirm the default page renders with no terminal or browser console errors, then stop it
   - Run `npx tsc --noEmit`, `npm run lint`, and `npm run build` and confirm all three exit without errors
   - Commit: `chore(app): scaffold next.js project with typescript and tailwind`
   - _Requirements: 1.2, 1.5_
 
-- [ ] 2. Define types and environment configuration
-- [ ] 2.1 Write `lib/types.ts`
+- [x] 2. Define types and environment configuration
+- [x] 2.1 Write `lib/types.ts`
   - Define the wire types `ProductRecord`, `CategoryRecord` and `OrderRecord` with the exact snake_case fields the API returns, including `is_delete` on both products and orders
   - Define the app models `Product`, `Category` and `Order` in camelCase
   - Define `OrderStatus` as `'PENDING' | (string & {})`, since only `PENDING` is confirmed from live data
@@ -84,21 +84,21 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Type `price` and `total_price` as `number`; the API returns JSON floats such as `850000.0`
   - _Requirements: 2.2, 2.3, 2.5, 5.3_
 
-- [ ] 2.2 Add environment configuration
+- [x] 2.2 Add environment configuration
   - Create `.env.example` at the root with `NEXT_PUBLIC_API_BASE_URL`, `API_SECRET_KEY`, `DEMO_USER_EMAIL`, `DEMO_USER_PASSWORD` and `DEMO_USER_ID`, all placeholders
   - Create `.env.local` with the real values, including `DEMO_USER_ID=14`, and confirm it is git-ignored
   - Add a comment in `.env.example` noting `DEMO_USER_ID` must match `DEMO_USER_EMAIL`'s account, because the API returns 403 for another user's orders
   - Keep every server-only variable free of the `NEXT_PUBLIC_` prefix
   - _Requirements: 10.1, 10.2, 10.3_
 
-- [ ] 2.3 Add the rupiah and date formatters
+- [x] 2.3 Add the rupiah and date formatters
   - Write `lib/format.ts` with a rupiah formatter using `Intl.NumberFormat('id-ID')` at zero fraction digits, so `850000.0` renders as `Rp 850.000`
   - Add a short date formatter for order `createdAt`
   - Commit: `feat(app): add typed API models and environment configuration`
   - _Requirements: 2.5_
 
-- [ ] 3. Build the API client
-- [ ] 3.1 Write `lib/api.ts` with a typed error and a guarded fetch
+- [x] 3. Build the API client
+- [x] 3.1 Write `lib/api.ts` with a typed error and a guarded fetch
   - Define `ApiError` carrying `message`, `status` and `url`
   - Write `baseUrl()` reading `NEXT_PUBLIC_API_BASE_URL`, throwing a message that names the variable when it is missing, and stripping any trailing slash
   - Write `fetchJson<T>` that checks `res.ok` **before** calling `res.json()`, and throws `ApiError` on failure
@@ -106,7 +106,7 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Default every request to `cache: 'no-store'` so pages show live data and the error states stay reachable
   - _Requirements: 14.1_
 
-- [ ] 3.2 Add the read helpers
+- [x] 3.2 Add the read helpers
   - `getProducts({ search?, categoryId? })` building its query string with `URLSearchParams` and omitting empty values, so an empty argument requests a clean `/products`
   - `getProduct(id)` hitting `/products/:id`, which returns a single object rather than an array
   - `getCategories()` hitting `/categories`
@@ -114,13 +114,13 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add API client with typed errors and response mapping`
   - _Requirements: 12.1, 12.6_
 
-- [ ] 4. Build the shared chrome and Card wrapper
-- [ ] 4.1 Write the `Card` wrapper
+- [x] 4. Build the shared chrome and Card wrapper
+- [x] 4.1 Write the `Card` wrapper
   - Create `components/Card.tsx` as a server component accepting `children` and an optional `className`
   - Own the shared surface styling here — border, radius, padding, shadow — so no other component repeats it
   - _Requirements: 2.4_
 
-- [ ] 4.2 Write `Header`, `Footer` and `Nav`
+- [x] 4.2 Write `Header`, `Footer` and `Nav`
   - Create `components/Header.tsx` and `components/Footer.tsx` as server components
   - Create `components/Nav.tsx` as a client component with `"use client"`, linking `/`, `/products`, `/categories` and `/orders`
   - Determine the active route with `usePathname()`, using an exact match for `/` and a prefix match elsewhere so `/products/3` still highlights Products
@@ -128,14 +128,14 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add Header, Footer, Nav and Card components`
   - _Requirements: 2.1, 8.1, 8.2, 8.3, 8.4_
 
-- [ ] 5. Build ProductCard
-- [ ] 5.1 Add the typed class mapping
+- [x] 5. Build ProductCard
+- [x] 5.1 Add the typed class mapping
   - Write `lib/productStyles.ts` with `getButtonClasses(inStock: boolean): string` returning a different complete literal Tailwind string per branch
   - Add an availability badge class mapping driven by the `Availability` union, with a `never` exhaustiveness check
   - Write every class as a whole literal string; never assemble one by interpolating a variable, since Tailwind resolves classes by scanning source text
   - _Requirements: 3.5, 3.6_
 
-- [ ] 5.2 Implement the card
+- [x] 5.2 Implement the card
   - Create `components/ProductCard.tsx` as a client component consuming `ProductCardProps` and composing `Card`
   - Destructure with defaults: `readOnly = false`, `actionLabel = 'Add to cart'`
   - Implement the quantity counter, clamped so it cannot drop below zero or exceed `stockQuantity`
@@ -145,7 +145,7 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add ProductCard with quantity counter and conditional rendering`
   - _Requirements: 2.3, 3.1, 3.2, 3.3, 3.4_
 
-- [ ] 6. Build ProductGrid
+- [x] 6. Build ProductGrid
   - Create `components/ProductGrid.tsx` as a server component taking `products: Product[]`
   - Render the cards from a single `.map()`; no hardcoded or repeated `ProductCard` instances anywhere in the codebase
   - Lay the grid out mobile-first, adding columns at `sm` and `lg`
@@ -153,21 +153,21 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): render product grid from a mapped Product array`
   - _Requirements: 4.1, 4.2_
 
-- [ ] 7. Build the layouts
-- [ ] 7.1 Write the root layout
+- [x] 7. Build the layouts
+- [x] 7.1 Write the root layout
   - Create `app/layout.tsx` wrapping every page with `<Header />` and `<Footer />`
   - Export `metadata` with `title` and `description`
   - Keep `Header` and `Footer` out of individual pages, so they are never duplicated
   - _Requirements: 7.2, 11.1, 4.3_
 
-- [ ] 7.2 Write the nested products layout and its mount probe
+- [x] 7.2 Write the nested products layout and its mount probe
   - Create `app/products/layout.tsx` wrapping the products segment
   - Create `components/LayoutMountProbe.tsx` as a client component whose only behaviour is a `useEffect` with an empty dependency array that logs once on mount
   - Render the probe from the products layout
   - Commit: `feat(app): add root and nested products layouts with metadata`
   - _Requirements: 7.3_
 
-- [ ] 8. Build the home route end to end
+- [x] 8. Build the home route end to end
   - Create `app/page.tsx` as a pure Server Component: `await getProducts({})`, take the first five, render through `ProductGrid` with `readOnly`
   - Confirm no `"use client"` directive and no hooks appear anywhere in this page's own tree
   - Export `metadata` with `title` and `description`
@@ -177,7 +177,7 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): fetch products in a Server Component for the home page`
   - _Requirements: 11.2, 12.1, 12.2, 14.2, 14.3, 14.4, 15.1_
 
-- [ ] 9. Build the products route end to end
+- [x] 9. Build the products route end to end
   - Create `app/products/page.tsx` as a Server Component that awaits `searchParams` (a Promise in Next 15+), fetches the initial products honouring any `search` value, and fetches categories
   - Render `<ProductList />` inside `<Suspense>`, required because the child reads `useSearchParams()`
   - Export `metadata` with `title` and `description`
@@ -186,7 +186,7 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add products route with loading and error states`
   - _Requirements: 7.1, 11.2, 13.1, 14.2, 14.3_
 
-- [ ] 10. Build the product detail route end to end
+- [x] 10. Build the product detail route end to end
   - Create `app/products/[id]/page.tsx` as a Server Component, awaiting `params` and fetching via `getProduct(id)`
   - Implement `generateMetadata({ params })` that awaits `params`, fetches the product, and uses the real product name as the title, falling back to the id when the fetch fails
   - Create `app/products/[id]/loading.tsx` and `app/products/[id]/error.tsx`
@@ -195,21 +195,21 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add product detail route with generateMetadata`
   - _Requirements: 7.4, 11.3, 11.4, 12.3, 14.4, 15.3_
 
-- [ ] 11. Build the categories and orders routes end to end
-- [ ] 11.1 Build the categories route
+- [x] 11. Build the categories and orders routes end to end
+- [x] 11.1 Build the categories route
   - Create `app/categories/page.tsx` as a Server Component calling `getCategories()`
   - Export `metadata`, and add `loading.tsx` and `error.tsx` for the segment
   - Verify the four real categories render
   - _Requirements: 11.2, 12.4, 14.4, 15.4_
 
-- [ ] 11.2 Add server-side authentication for orders
+- [x] 11.2 Add server-side authentication for orders
   - Create `lib/auth.ts` beginning with `import 'server-only'`, so importing it from a client component fails the build
   - `POST /auth/login` with `{ email, password }` from `DEMO_USER_EMAIL` and `DEMO_USER_PASSWORD`, and read `access_token` from the response
   - Cache the token in module scope with an expiry derived from `expires_in`; ignore `refresh_token`, since refresh is Checkpoint 3 scope
   - On a 401, discard the cached token, retry the login once, then fail with an `ApiError`
   - _Requirements: 10.2_
 
-- [ ] 11.3 Build the orders route
+- [x] 11.3 Build the orders route
   - Add `getOrders(userId)` to the API client, sending `Authorization: Bearer <access_token>` and `?user_id=`
   - Send the id of the account that was logged in, read from `DEMO_USER_ID`, because the API returns 403 for another user's orders
   - Create `app/orders/page.tsx` as a Server Component rendering each order's id, status, total and date — the API returns order headers only, with no nested line items
@@ -220,18 +220,18 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add categories and authenticated orders routes`
   - _Requirements: 11.2, 12.5, 14.4, 15.4_
 
-- [ ] 12. Wire URL-driven search and the category filter
-- [ ] 12.1 Build the SearchBar
+- [x] 12. Wire URL-driven search and the category filter
+- [x] 12.1 Build the SearchBar
   - Create `components/SearchBar.tsx` as a controlled client component holding its value in state and updating it through an `onChange` handler
   - On Enter, call `router.push('/products?search=' + encodeURIComponent(query))`
   - _Requirements: 5.1, 9.1_
 
-- [ ] 12.2 Build the CategoryFilter
+- [x] 12.2 Build the CategoryFilter
   - Create `components/CategoryFilter.tsx` as a client component that fetches `GET /categories` on mount, accepting the server-fetched list as a prop for first paint
   - On selection, trigger a refetch of `GET /products?category_id=${id}`
   - _Requirements: 13.4, 13.5_
 
-- [ ] 12.3 Build the ProductList client component
+- [x] 12.3 Build the ProductList client component
   - Create `components/ProductList.tsx` with `"use client"`, accepting `products: Product[]` and `categories: Category[]` from its Server Component parent
   - Add a `useEffect` reading `useSearchParams()` that fetches `GET /products?search=${query}` whenever the query changes, and replaces the rendered list
   - Display the current search value, so a direct load of `/products?search=watch` renders already filtered and shows the term
@@ -240,15 +240,15 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add URL-driven search and category filtering`
   - _Requirements: 9.2, 9.3, 9.4, 13.1, 13.2, 13.3, 13.6, 13.7, 15.2_
 
-- [ ] 13. Build the interactive catalog
-- [ ] 13.1 Add cart state and summary
+- [x] 13. Build the interactive catalog
+- [x] 13.1 Add cart state and summary
   - Hold `cart` as `Product[]` state in `ProductList`
   - Add to cart with `setCart((prev) => [...prev, product])`; never `push`, `splice` or element assignment
   - Create `components/CartSummary.tsx` deriving item count and total from cart state with `reduce` on every render, so the figures cannot drift
   - Confirm an out-of-stock product cannot be added, because its control is disabled
   - _Requirements: 6.1, 6.3, 6.4, 6.6_
 
-- [ ] 13.2 Build AddProductForm with validation
+- [x] 13.2 Build AddProductForm with validation
   - Create `components/AddProductForm.tsx` with controlled inputs for name, description, price, stock quantity and category, each bound to `FormState`
   - Write `validate(data: FormState): FormErrors` returning per-field messages for empty, too-short, non-numeric and non-positive values
   - Call `preventDefault()` first on submit, then validate, and proceed only when no errors are returned
@@ -293,6 +293,7 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
 - **`res.ok` is checked before `res.json()`.** Unhandled API errors return Flask's HTML error page, so parsing first would surface a JSON syntax error instead of the real status.
 - **Tailwind classes must be complete literal strings.** Tailwind finds classes by scanning source text, so an interpolated class name silently produces no CSS. This is the most likely cause of a styling bug in task 5.
 - **`fetch` is no longer cached by default** in Next 15+. Requests declare `cache: 'no-store'` so data stays live and the error states remain reachable.
+- **Dates render during static prerender.** Cache Components is enabled in this Next version, so calling `new Date()` or `Date.now()` directly in a server component that prerenders statically is rejected as non-deterministic. This surfaced on the `Footer` copyright year in task 7 and will recur in the orders date formatting in task 11.3. Either mark the segment dynamic or wrap the time read in a `"use cache"` function with an appropriate `cacheLife`, as done for `Footer`.
 - **Orders require a matching `user_id`.** A token for user 14 requesting another user's orders returns 403, verified against the live API.
 - **No test framework is introduced.** The rubric is verified by interaction and demo evidence; verification steps are written into the tasks, with `tsc`, `lint` and `build` as the automated gates.
 - **Forms are local state only.** No `POST`, `PUT` or `DELETE` in this checkpoint; those are Checkpoint 3.
