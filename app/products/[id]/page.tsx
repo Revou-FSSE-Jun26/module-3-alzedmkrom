@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function ProductDetailPage({ params }: Props) {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10">
+    <section className="mx-auto w-full max-w-7xl px-6 py-10">
       <Suspense fallback={<DetailSkeleton />}>
         <ProductDetail params={params} />
       </Suspense>

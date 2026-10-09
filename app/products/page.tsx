@@ -24,7 +24,7 @@ import { getCategories, getProducts } from "@/lib/api";
 import ProductList from "@/components/ProductList";
 
 export const metadata: Metadata = {
-  title: "Products — RevoShop",
+  title: "Products â€” RevoShop",
   description:
     "Browse the full RevoShop catalog. Search by name and filter by category, served live from the RevoShop API.",
 };
@@ -45,7 +45,7 @@ export default async function ProductsPage({
   ]);
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10">
+    <section className="mx-auto w-full max-w-7xl px-6 py-10">
       <header className="mb-8 flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">
           Products

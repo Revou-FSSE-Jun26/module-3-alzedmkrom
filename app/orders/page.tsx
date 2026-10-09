@@ -1,4 +1,4 @@
-﻿// app/orders/page.tsx
+// app/orders/page.tsx
 //
 // The orders route. A Server Component that reads the demo user's orders from
 // the authenticated API. Authentication happens entirely on the server:
@@ -55,7 +55,7 @@ function demoUserId(): number {
 // Date.now() expiry check trips Next's "unstable value during prerender" error.
 export default function OrdersPage() {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10">
+    <section className="mx-auto w-full max-w-7xl px-6 py-10">
       <header className="mb-8 flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">
           Orders

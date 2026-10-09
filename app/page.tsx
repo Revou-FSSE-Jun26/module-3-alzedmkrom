@@ -1,6 +1,6 @@
 // app/page.tsx
 //
-// The home route. A pure Server Component — no "use client" directive and no
+// The home route. A pure Server Component â€” no "use client" directive and no
 // hooks anywhere in its own tree. It fetches the catalog on the server with
 // `await getProducts({})`, takes the first five products, and renders them
 // through <ProductGrid /> in read-only mode. Read-only means the cards drop
@@ -16,7 +16,7 @@ import { getProducts } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 
 export const metadata: Metadata = {
-  title: "RevoShop — Home",
+  title: "RevoShop â€” Home",
   description:
     "Discover a selection of featured products from the RevoShop catalog, served live from the RevoShop API.",
 };
@@ -26,7 +26,7 @@ export default async function Home() {
   const featured = products.slice(0, 5);
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10">
+    <section className="mx-auto w-full max-w-7xl px-6 py-10">
       <header className="mb-8 flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">
           Featured products

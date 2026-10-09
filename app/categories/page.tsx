@@ -1,6 +1,6 @@
 // app/categories/page.tsx
 //
-// The categories route. A pure Server Component — no "use client" directive and
+// The categories route. A pure Server Component â€” no "use client" directive and
 // no hooks anywhere in its own tree. It fetches the category list on the server
 // with `await getCategories()` and renders each one through <Card />, reusing
 // the shared surface so the category tiles match every other card in the app.
@@ -17,7 +17,7 @@ import { getCategories } from "@/lib/api";
 import Card from "@/components/Card";
 
 export const metadata: Metadata = {
-  title: "Categories — RevoShop",
+  title: "Categories â€” RevoShop",
   description:
     "Browse the product categories in the RevoShop catalog, served live from the RevoShop API.",
 };
@@ -26,7 +26,7 @@ export default async function CategoriesPage() {
   const categories = await getCategories();
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10">
+    <section className="mx-auto w-full max-w-7xl px-6 py-10">
       <header className="mb-8 flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">
           Categories

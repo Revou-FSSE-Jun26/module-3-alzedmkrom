@@ -6,7 +6,7 @@
 // column classes as ProductGrid (one column, two at `sm`, four at `lg`) so the
 // skeleton occupies the same shape the content will fill.
 //
-// A Server Component by default — it only renders static markup. Five skeleton
+// A Server Component by default â€” it only renders static markup. Five skeleton
 // cards match the five featured products the home page slices.
 
 const SKELETON_CARDS = 5;
@@ -30,7 +30,7 @@ function SkeletonCard() {
 
 export default function Loading() {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10">
+    <section className="mx-auto w-full max-w-7xl px-6 py-10">
       <header className="mb-8 flex flex-col gap-2">
         <div className="h-8 w-56 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
         <div className="h-4 w-80 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
@@ -44,7 +44,7 @@ export default function Loading() {
           <SkeletonCard key={index} />
         ))}
       </div>
-      <span className="sr-only">Loading featured products…</span>
+      <span className="sr-only">Loading featured productsâ€¦</span>
     </section>
   );
 }

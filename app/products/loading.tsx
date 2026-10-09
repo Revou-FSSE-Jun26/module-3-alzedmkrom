@@ -7,7 +7,7 @@
 // exact same responsive column classes as ProductGrid (one column, two at
 // `sm`, four at `lg`) so the skeleton occupies the shape the content will fill.
 //
-// A Server Component by default — it only renders static markup.
+// A Server Component by default â€” it only renders static markup.
 
 const SKELETON_CARDS = 8;
 
@@ -30,7 +30,7 @@ function SkeletonCard() {
 
 export default function Loading() {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-10">
+    <section className="mx-auto w-full max-w-7xl px-6 py-10">
       <header className="mb-8 flex flex-col gap-2">
         <div className="h-8 w-40 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
         <div className="h-4 w-80 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
@@ -49,7 +49,7 @@ export default function Loading() {
           <SkeletonCard key={index} />
         ))}
       </div>
-      <span className="sr-only">Loading products…</span>
+      <span className="sr-only">Loading productsâ€¦</span>
     </section>
   );
 }
