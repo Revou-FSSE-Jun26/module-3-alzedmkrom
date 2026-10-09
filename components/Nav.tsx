@@ -60,3 +60,20 @@ export default function Nav() {
     </nav>
   );
 }
+
+// Prerender fallback for the Suspense boundary around <Nav /> in the Header.
+// It reads no pathname, so it is safe to prerender on a dynamic route; every
+// link renders in its inactive state and the real active styling streams in
+// once usePathname() resolves on the client. The markup matches <Nav /> so the
+// swap is visually seamless.
+export function NavFallback() {
+  return (
+    <nav aria-label="Primary" className="flex items-center gap-6 text-sm">
+      {links.map((link) => (
+        <Link key={link.href} href={link.href} className={INACTIVE_LINK}>
+          {link.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}

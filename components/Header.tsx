@@ -4,8 +4,9 @@
 // A server component — it holds no state and uses no hooks. The interactive
 // part (active-route detection) lives in <Nav />, the only client island here.
 
+import { Suspense } from "react";
 import Link from "next/link";
-import Nav from "./Nav";
+import Nav, { NavFallback } from "./Nav";
 
 export default function Header() {
   return (
@@ -17,7 +18,17 @@ export default function Header() {
         >
           RevoShop
         </Link>
-        <Nav />
+        {/*
+          Nav calls usePathname() for active-route styling. On a statically
+          known path that resolves during prerender, but on a dynamic route
+          such as /products/[id] the pathname is only known at runtime, which
+          would block prerendering the shared chrome. Wrapping Nav in Suspense
+          lets the shell prerender with the inactive fallback and streams the
+          active state in — the documented fix for a runtime client hook.
+        */}
+        <Suspense fallback={<NavFallback />}>
+          <Nav />
+        </Suspense>
       </div>
     </header>
   );
