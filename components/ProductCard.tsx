@@ -58,7 +58,7 @@ export default function ProductCard({
   return (
     <Card className="flex flex-col gap-3">
       {/* Placeholder image — no image column exists yet. */}
-      <div className="flex aspect-square w-full items-center justify-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
+      <div className="flex aspect-[4/3] w-full items-center justify-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
         {product.imageUrl === null ? (
           <span className="text-sm">No image</span>
         ) : (
