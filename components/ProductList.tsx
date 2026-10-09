@@ -10,8 +10,8 @@
 //   - categoryId   : the selected category, or null for "All categories"
 //   - isPending    : true while a client-side refetch is in flight
 //   - fetchError   : a recoverable message when a client fetch fails
-//   - cart         : held here (empty for now) so task 13 can add CartSummary
-//                    and AddProductForm without restructuring this component.
+//   - cart         : the Product[] added to the cart, replaced immutably on
+//                    every add so CartSummary can derive its figures freshly.
 //
 // Two filters, composed with AND, exactly as the API supports:
 //   - Search is URL-driven. SearchBar pushes /products?search=<q>; this
@@ -38,6 +38,8 @@ import { useSearchParams } from "next/navigation";
 import ProductGrid from "@/components/ProductGrid";
 import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
+import CartSummary from "@/components/CartSummary";
+import AddProductForm from "@/components/AddProductForm";
 import { getProducts } from "@/lib/api";
 import type { Category, Product } from "@/lib/types";
 
@@ -62,11 +64,11 @@ export default function ProductList({
   const [items, setItems] = useState<Product[]>(products);
   // The selected category, or null for "All categories".
   const [categoryId, setCategoryId] = useState<number | null>(null);
-  // Cart state is task 13 scope. It belongs here — this is the single
-  // interactive subtree — and will be added as:
-  //   const [cart, setCart] = useState<Product[]>([]);
-  // alongside CartSummary and AddProductForm, without restructuring the search
-  // and filter logic below.
+  // The cart. Held here because this is the single interactive subtree. It is
+  // only ever *replaced* with a new array — never mutated in place — so React
+  // sees a fresh reference and CartSummary recomputes from it (design
+  // Property 7).
+  const [cart, setCart] = useState<Product[]>([]);
   // True while a client refetch is in flight; drives the pending indicator.
   const [isPending, setIsPending] = useState<boolean>(false);
   // A recoverable message shown instead of silently rendering an empty list.
@@ -131,6 +133,26 @@ export default function ProductList({
     setFetchError(null);
   }
 
+  // Add a product to the cart immutably: the updater returns a brand-new array
+  // with the product appended, so the cart is replaced rather than mutated —
+  // no push/splice/element assignment (design Property 7). ProductCard only
+  // ever invokes this for an in-stock product (its control is disabled when
+  // out of stock), so a sold-out product can never land in the cart. The
+  // product is appended once per add action, matching the design's
+  // `[...prev, product]` wording; the card's quantity counter stays local.
+  function handleAddToCart(product: Product): void {
+    setCart((prev) => [...prev, product]);
+  }
+
+  // Prepend a locally-added product immutably: the updater returns a brand-new
+  // array with the new product at the front, so the rendered list is replaced
+  // rather than mutated and the addition appears at the top of the grid (the
+  // design's `[newProduct, ...prev]` wording). Local state only — no POST is
+  // issued; persistence is Checkpoint 3.
+  function handleAddProduct(newProduct: Product): void {
+    setItems((prev) => [newProduct, ...prev]);
+  }
+
   return (
     <div className="flex w-full flex-col gap-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
@@ -173,7 +195,11 @@ export default function ProductList({
         )}
       </div>
 
-      <ProductGrid products={items} />
+      <CartSummary cart={cart} />
+
+      <AddProductForm categories={categories} onAdd={handleAddProduct} />
+
+      <ProductGrid products={items} onAddToCart={handleAddToCart} />
     </div>
   );
 }
