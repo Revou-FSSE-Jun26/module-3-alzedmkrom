@@ -76,14 +76,14 @@ export default function OrderList({ orders }: OrderListProps) {
 
         return (
           <li key={order.id}>
-            <Card className="flex flex-col gap-0 p-0">
+            <Card className="flex flex-col gap-0 overflow-hidden !p-0">
               {/* Header row — the whole bar toggles the item breakdown. */}
               <button
                 type="button"
                 onClick={() => toggle(order.id)}
                 aria-expanded={isOpen}
                 aria-controls={`order-items-${order.id}`}
-                className="flex flex-col gap-3 p-5 text-left sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col gap-2 px-4 py-3 text-left sm:flex-row sm:items-center sm:justify-between"
               >
                 <div className="flex flex-col gap-1">
                   <span className="text-lg font-semibold text-black dark:text-white">
@@ -116,7 +116,7 @@ export default function OrderList({ orders }: OrderListProps) {
               {isOpen && (
                 <div
                   id={`order-items-${order.id}`}
-                  className="border-t border-black/10 px-5 py-4 dark:border-white/15"
+                  className="border-t border-black/10 px-4 py-2 dark:border-white/15"
                 >
                   {rowStatus === "loading" && (
                     <p className="text-sm text-black/60 dark:text-white/60">
