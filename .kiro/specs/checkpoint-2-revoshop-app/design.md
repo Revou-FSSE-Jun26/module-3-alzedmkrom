@@ -90,62 +90,78 @@ Note the earlier `users` rows (ids 1–13) have placeholder `password_hash` valu
 
 ### Repository layout
 
-The Next.js app lives in a new top-level folder in the existing repository, alongside the Checkpoint 1 exercises. Checkpoint 1 folders are not modified.
+The Next.js app occupies the **repository root**. The Checkpoint 1 exercises were archived to the `checkpoint-1` branch, so `main` is dedicated to this application.
 
 ```
-module-3-alzedmkrom/
-├─ html-css/                     # Checkpoint 1, untouched
-├─ javascript/                   # Checkpoint 1, untouched
-├─ typescript-tailwind/          # Checkpoint 1, untouched
-├─ revoshop-app/                 # Checkpoint 2 — the Next.js project
-│  ├─ app/
-│  │  ├─ layout.tsx              # root layout: Header + Footer + metadata
-│  │  ├─ page.tsx                # home: Server Component, first 5 products
+module-3-alzedmkrom/            <- repository root IS the Next.js project
+├─ app/
+│  ├─ layout.tsx                # root layout: Header + Footer + metadata
+│  ├─ page.tsx                  # home: Server Component, first 5 products
+│  ├─ loading.tsx
+│  ├─ error.tsx
+│  ├─ globals.css               # Tailwind entry
+│  ├─ products/
+│  │  ├─ layout.tsx             # nested layout for the products segment
+│  │  ├─ page.tsx               # Server Component -> <ProductList />
 │  │  ├─ loading.tsx
 │  │  ├─ error.tsx
-│  │  ├─ products/
-│  │  │  ├─ layout.tsx           # nested layout for the products segment
-│  │  │  ├─ page.tsx             # Server Component -> <ProductList />
-│  │  │  ├─ loading.tsx
-│  │  │  ├─ error.tsx
-│  │  │  └─ [id]/
-│  │  │     ├─ page.tsx          # detail + generateMetadata
-│  │  │     ├─ loading.tsx
-│  │  │     └─ error.tsx
-│  │  ├─ categories/
-│  │  │  ├─ page.tsx             # Server Component fetch
-│  │  │  ├─ loading.tsx
-│  │  │  └─ error.tsx
-│  │  └─ orders/
-│  │     ├─ page.tsx             # Server Component fetch, authenticated
+│  │  └─ [id]/
+│  │     ├─ page.tsx            # detail + generateMetadata
 │  │     ├─ loading.tsx
 │  │     └─ error.tsx
-│  ├─ components/
-│  │  ├─ Header.tsx              # server
-│  │  ├─ Nav.tsx                 # client — usePathname active styling
-│  │  ├─ Footer.tsx              # server
-│  │  ├─ Card.tsx                # server — presentational wrapper
-│  │  ├─ ProductCard.tsx         # client — quantity counter + add to cart
-│  │  ├─ ProductGrid.tsx         # server — maps Product[] to cards
-│  │  ├─ ProductList.tsx         # client — search, filter, cart, add form
-│  │  ├─ SearchBar.tsx           # client — controlled input, router.push
-│  │  ├─ CategoryFilter.tsx      # client — dropdown, fetches categories
-│  │  ├─ CartSummary.tsx         # client — count + total from cart state
-│  │  ├─ AddProductForm.tsx      # client — controlled inputs + validate()
-│  │  └─ LayoutMountProbe.tsx    # client — mount-only log, proves no re-render
-│  ├─ lib/
-│  │  ├─ types.ts                # wire types, app models, props interfaces
-│  │  ├─ api.ts                  # fetch wrappers, res.ok checks, ApiError
-│  │  ├─ auth.ts                 # server-only login for the orders route
-│  │  ├─ format.ts               # rupiah + date formatting
-│  │  └─ productStyles.ts        # getButtonClasses and typed class mapping
-│  ├─ .env.example               # committed, placeholder values only
-│  ├─ .env.local                 # git-ignored, real values
-│  └─ (create-next-app config files)
-└─ .kiro/specs/                  # requirements, design, tasks
+│  ├─ categories/
+│  │  ├─ page.tsx               # Server Component fetch
+│  │  ├─ loading.tsx
+│  │  └─ error.tsx
+│  └─ orders/
+│     ├─ page.tsx               # Server Component fetch, authenticated
+│     ├─ loading.tsx
+│     └─ error.tsx
+├─ components/
+│  ├─ Header.tsx                # server
+│  ├─ Nav.tsx                   # client — usePathname active styling
+│  ├─ Footer.tsx                # server
+│  ├─ Card.tsx                  # server — presentational wrapper
+│  ├─ ProductCard.tsx           # client — quantity counter + add to cart
+│  ├─ ProductGrid.tsx           # server — maps Product[] to cards
+│  ├─ ProductList.tsx           # client — search, filter, cart, add form
+│  ├─ SearchBar.tsx             # client — controlled input, router.push
+│  ├─ CategoryFilter.tsx        # client — dropdown, fetches categories
+│  ├─ CartSummary.tsx           # client — count + total from cart state
+│  ├─ AddProductForm.tsx        # client — controlled inputs + validate()
+│  └─ LayoutMountProbe.tsx      # client — mount-only log, proves no re-render
+├─ lib/
+│  ├─ types.ts                  # wire types, app models, props interfaces
+│  ├─ api.ts                    # fetch wrappers, res.ok checks, ApiError
+│  ├─ auth.ts                   # server-only login for the orders route
+│  ├─ format.ts                 # rupiah + date formatting
+│  └─ productStyles.ts          # getButtonClasses and typed class mapping
+├─ public/
+├─ .kiro/specs/                 # requirements, design, tasks (pre-existing)
+├─ .env.example                 # committed, placeholder values only
+├─ .env.local                   # git-ignored, real values
+├─ next.config.ts
+├─ tsconfig.json
+├─ package.json
+├─ .gitignore
+└─ README.md
 ```
 
-Rationale for a subfolder rather than the repository root: the Checkpoint 1 deliverables are graded from this same repository, and scaffolding Next.js at the root would collide with the existing `README.md` and `.gitignore` and bury the earlier exercises. A named subfolder keeps both checkpoints legible, and `npm run dev` from `revoshop-app/` satisfies the deliverable.
+Rationale for the root rather than a subfolder: deployment platforms detect a Next.js project at the repository root automatically, so a hosted build needs no root-directory configuration. It also means a grader can clone, `npm install`, and `npm run dev` with no `cd` step. Since the Checkpoint 1 exercises now live on their own branch, nothing competes for the root.
+
+#### Scaffolding into a non-empty root
+
+`create-next-app` refuses to write into a directory containing files that clash with its template — here `README.md` and `.gitignore` already exist, and `.kiro/` must survive. The scaffold therefore runs into a temporary directory and its contents are moved up:
+
+1. `npx create-next-app@latest .next-scaffold --typescript --tailwind --app --eslint --no-src-dir --use-npm`
+2. Move everything from `.next-scaffold/` into the repository root, **except** `README.md` and `.gitignore`.
+3. Merge the generated `.gitignore` entries (`.next/`, `node_modules/`, `.env*.local`) into the existing `.gitignore` rather than overwriting it.
+4. Append the Next.js setup section to the existing `README.md`, preserving the `checkpoint-1` branch pointer.
+5. Delete `.next-scaffold/`.
+
+A task verifies afterwards that `.kiro/specs/` is intact and that `.env*.local` is ignored.
+
+The `--no-src-dir` flag keeps `app/`, `components/`, and `lib/` at the root, matching the deliverable's "components/ folder" wording rather than nesting them under `src/`.
 
 ### Rendering topology
 
@@ -675,7 +691,7 @@ Demo evidence for Requirement 15 is captured during this pass.
 
 ## Environment configuration
 
-`.env.example` — committed, placeholders only:
+`.env.example` at the repository root — committed, placeholders only:
 
 ```
 # Public: exposed to the browser, safe to publish
@@ -691,7 +707,18 @@ DEMO_USER_PASSWORD=replace-me
 DEMO_USER_ID=14
 ```
 
-`.env.local` holds the real values and is already git-ignored by `create-next-app`'s default `.gitignore`. A task verifies that ignore rule rather than assuming it.
+`.env.local` holds the real values and is git-ignored via the `.env*.local` rule that `create-next-app` adds. A task verifies that rule is present after the scaffold merge rather than assuming it.
+
+**`API_SECRET_KEY` is declared but unused in this checkpoint.** Every endpoint this frontend calls was probed without any API key: `/products`, `/products/:id`, and `/categories` all return 200 unauthenticated, and `/orders` wants a JWT rather than a static key. The variable is defined because the rubric requires it and because Checkpoint 3 may need it, but no request sends it. Recording that here so a reader does not hunt for a usage that does not exist.
+
+### Deployment
+
+The app sits at the repository root specifically so a hosting platform detects it without a root-directory setting. Two things must be configured in the host's dashboard rather than in the repository, because `.env.local` is never committed:
+
+- `NEXT_PUBLIC_API_BASE_URL` — needed at build time, since it is inlined into the client bundle.
+- `API_SECRET_KEY`, `DEMO_USER_EMAIL`, `DEMO_USER_PASSWORD`, `DEMO_USER_ID` — server-side only.
+
+The API is already deployed and publicly reachable over HTTPS, so a hosted frontend can call it without a proxy or CORS workaround.
 
 ## Commit plan
 
@@ -718,7 +745,7 @@ _Requirement 1.6 — incremental history in the order scaffold, components, rout
 
 | Requirement | Satisfied by |
 |---|---|
-| 1.1 – 1.6 | `create-next-app` scaffold, `revoshop-app/` layout, commit plan |
+| 1.1 – 1.6 | `create-next-app` scaffold at the repository root, `app/` + `components/` + `lib/` separation, commit plan |
 | 2.1 – 2.5 | `components/` set, `ProductCardProps`, `Card`, reused Checkpoint 1 model |
 | 3.1 – 3.6 | `ProductCard` counter and conditional branches, `getButtonClasses` |
 | 4.1 – 4.3 | Root layout chrome, `ProductGrid` single `.map()` |
