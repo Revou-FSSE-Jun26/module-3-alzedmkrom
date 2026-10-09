@@ -1,4 +1,4 @@
-// lib/api.ts
+﻿// lib/api.ts
 //
 // One module owns every request to the Flask API. Pages never call `fetch`
 // with a raw URL.
@@ -13,10 +13,12 @@
 import type {
   Category,
   CategoryRecord,
+  Order,
+  OrderRecord,
   Product,
   ProductRecord,
 } from './types';
-import { toCategory, toProduct } from './types';
+import { toCategory, toOrder, toProduct } from './types';
 
 /**
  * A typed error carrying the HTTP status and the URL that failed, so
@@ -139,6 +141,37 @@ async function getCategories(): Promise<Category[]> {
   return records.map(toCategory);
 }
 
+/**
+ * Fetches a user's orders from `GET /orders?user_id=`. The endpoint requires a
+ * JWT, so the request is wrapped in `withBearerToken` (lib/auth.ts), which logs
+ * in server-side with the demo credentials, attaches
+ * `Authorization: Bearer <access_token>`, and retries once on a 401. The token
+ * is created and used entirely on the server and never reaches the browser.
+ *
+ * `userId` must be the id of the authenticated demo account (DEMO_USER_ID): a
+ * token for one user requesting another user's orders returns 403, verified
+ * against the live API.
+ *
+ * The response is a bare array of order headers — no nested line items. Records
+ * are mapped into the app `Order` shape and soft-deleted rows are filtered out,
+ * so snake_case and the `is_delete` flag never escape this module.
+ *
+ * `withBearerToken` is imported lazily inside the function so that lib/auth.ts
+ * — which pulls in `server-only` — is loaded only when orders are actually
+ * fetched, keeping the top of this module free of a hard server-only edge.
+ */
+async function getOrders(userId: number): Promise<Order[]> {
+  const { withBearerToken } = await import('./auth');
+
+  const records = await withBearerToken((token) =>
+    fetchJson<OrderRecord[]>(`/orders?user_id=${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+  );
+
+  return records.map(toOrder).filter((order) => !order.isDeleted);
+}
+
 export {
   baseUrl,
   describeFailure,
@@ -146,4 +179,5 @@ export {
   getProducts,
   getProduct,
   getCategories,
+  getOrders,
 };
