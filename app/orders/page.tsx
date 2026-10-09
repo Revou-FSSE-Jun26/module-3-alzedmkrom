@@ -18,6 +18,8 @@
 // app/orders/error.tsx; the in-flight fetch shows app/orders/loading.tsx.
 
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { connection } from "next/server";
 import { getOrders } from "@/lib/auth";
 import { formatDate, formatRupiah } from "@/lib/format";
 import Card from "@/components/Card";
@@ -45,9 +47,14 @@ function demoUserId(): number {
   return id;
 }
 
-export default async function OrdersPage() {
-  const orders = await getOrders(demoUserId());
-
+// The page itself is now a static shell: the heading prerenders, and the
+// authenticated, request-time order fetch streams in through <Suspense>. This
+// is the Cache Components model (enabled by default in this project): fresh
+// per-request data is not opted in with force-dynamic, it is wrapped in a
+// Suspense boundary so the prerender completes with the shell and the dynamic
+// read runs at request time. Without the boundary, the token cache's
+// Date.now() expiry check trips Next's "unstable value during prerender" error.
+export default function OrdersPage() {
   return (
     <section className="mx-auto w-full max-w-6xl px-4 py-10">
       <header className="mb-8 flex flex-col gap-2">
@@ -55,10 +62,45 @@ export default async function OrdersPage() {
           Orders
         </h1>
         <p className="text-black/60 dark:text-white/60">
-          Your order history, served live from the RevoShop API.
+          Your order history in RevoShop.
         </p>
       </header>
 
+      <Suspense fallback={<OrdersSkeleton />}>
+        <OrdersContent />
+      </Suspense>
+    </section>
+  );
+}
+
+// A lightweight inline skeleton for the streamed region. app/orders/loading.tsx
+// still covers the initial navigation; this covers the Suspense fallback for
+// the request-time fetch within the already-rendered shell.
+function OrdersSkeleton() {
+  return (
+    <ul className="flex flex-col gap-4" aria-hidden="true">
+      {[0, 1, 2].map((i) => (
+        <li
+          key={i}
+          className="h-20 animate-pulse rounded-xl border border-black/10 bg-black/5 dark:border-white/15 dark:bg-white/5"
+        />
+      ))}
+    </ul>
+  );
+}
+
+// The request-time, authenticated read. Isolated here so only this subtree is
+// dynamic; everything above it prerenders into the static shell.
+async function OrdersContent() {
+  // Stop prerendering here: the auth token cache checks Date.now() for expiry,
+  // an unstable value Next refuses to prerender. connection() defers everything
+  // below to request time, which is correct — these are live authenticated
+  // orders, never a static snapshot.
+  await connection();
+  const orders = await getOrders(demoUserId());
+
+  return (
+    <>
       {orders.length === 0 ? (
         <div className="flex min-h-48 flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-black/15 p-8 text-center dark:border-white/20">
           <p className="font-semibold text-black dark:text-white">
@@ -95,6 +137,6 @@ export default async function OrdersPage() {
           ))}
         </ul>
       )}
-    </section>
+    </>
   );
 }
