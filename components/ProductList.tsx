@@ -134,14 +134,16 @@ export default function ProductList({
   }
 
   // Add a product to the cart immutably: the updater returns a brand-new array
-  // with the product appended, so the cart is replaced rather than mutated —
-  // no push/splice/element assignment (design Property 7). ProductCard only
-  // ever invokes this for an in-stock product (its control is disabled when
-  // out of stock), so a sold-out product can never land in the cart. The
-  // product is appended once per add action, matching the design's
-  // `[...prev, product]` wording; the card's quantity counter stays local.
-  function handleAddToCart(product: Product): void {
-    setCart((prev) => [...prev, product]);
+  // with the product appended `quantity` times, so the cart is replaced rather
+  // than mutated — no push/splice/element assignment (design Property 7).
+  // ProductCard passes the quantity chosen on its counter; CartSummary counts
+  // one entry per unit, so appending N copies makes the item count and total
+  // reflect the chosen quantity. ProductCard only invokes this for an in-stock
+  // product with quantity >= 1, so a sold-out or zero-quantity add never lands.
+  function handleAddToCart(product: Product, quantity: number): void {
+    if (quantity < 1) return;
+    const additions = Array.from({ length: quantity }, () => product);
+    setCart((prev) => [...prev, ...additions]);
   }
 
   // Prepend a locally-added product immutably: the updater returns a brand-new

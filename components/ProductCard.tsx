@@ -42,9 +42,8 @@ export default function ProductCard({
   const availability = availabilityOf(product);
   const inStock = availability.kind !== "out-of-stock";
 
-  // Start at 1 for a stocked product so a single click adds a sensible default;
-  // an out-of-stock product starts (and stays) at 0.
-  const [quantity, setQuantity] = useState(inStock ? 1 : 0);
+  // Every product starts at 0; the shopper chooses a quantity before adding.
+  const [quantity, setQuantity] = useState(0);
 
   const decrement = () =>
     setQuantity((current) => clamp(current - 1, product.stockQuantity));
@@ -52,7 +51,7 @@ export default function ProductCard({
     setQuantity((current) => clamp(current + 1, product.stockQuantity));
 
   const handleAdd = () => {
-    if (!inStock) return;
+    if (!inStock || quantity < 1) return; // nothing to add at zero
     onAddToCart?.(product, quantity);
   };
 
