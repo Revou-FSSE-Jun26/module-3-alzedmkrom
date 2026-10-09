@@ -156,7 +156,7 @@ export default function ProductList({
   }
 
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div className="flex w-full flex-col gap-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
         <div className="w-full sm:flex-1">
           <SearchBar initialQuery={searchTerm} />
@@ -170,7 +170,7 @@ export default function ProductList({
         </div>
       </div>
 
-      <div className="flex min-h-6 flex-col gap-2">
+      <div className="flex flex-col gap-2 empty:hidden">
         {searchTerm && (
           <p className="text-sm text-black/70 dark:text-white/70">
             Showing results for{" "}
@@ -197,11 +197,11 @@ export default function ProductList({
         )}
       </div>
 
+      <ProductGrid products={items} onAddToCart={handleAddToCart} />
+
       <CartSummary cart={cart} />
 
       <AddProductForm categories={categories} onAdd={handleAddProduct} />
-
-      <ProductGrid products={items} onAddToCart={handleAddToCart} />
     </div>
   );
 }

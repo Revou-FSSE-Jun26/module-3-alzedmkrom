@@ -30,8 +30,8 @@ function SkeletonCard() {
 
 export default function Loading() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 py-10">
-      <header className="mb-8 flex flex-col gap-2">
+    <section className="mx-auto w-full max-w-7xl px-6 pt-6 pb-12">
+      <header className="mb-6 flex flex-col gap-2">
         <div className="h-8 w-40 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
         <div className="h-4 w-80 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
       </header>

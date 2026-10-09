@@ -26,8 +26,8 @@ export default async function Home() {
   const featured = products.slice(0, 5);
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 py-10">
-      <header className="mb-8 flex flex-col gap-2">
+    <section className="mx-auto w-full max-w-7xl px-6 pt-6 pb-12">
+      <header className="mb-6 flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">
           Featured products
         </h1>
