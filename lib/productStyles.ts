@@ -27,11 +27,11 @@ export function getButtonClasses(inStock: boolean): string {
 export function getBadgeClasses(availability: Availability): string {
   switch (availability.kind) {
     case 'in-stock':
-      return 'inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800';
+      return 'inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-sm font-medium text-emerald-800';
     case 'low-stock':
-      return 'inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800';
+      return 'inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-sm font-medium text-amber-800';
     case 'out-of-stock':
-      return 'inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800';
+      return 'inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-sm font-medium text-red-800';
     default: {
       const _exhaustive: never = availability;
       return _exhaustive;
