@@ -20,10 +20,20 @@
 }
 
 body {
-  /* Royal blue background: a soft white glow radiating from the top blends
-     into a vertical wash that deepens to #ABD9FF. Set explicitly (not via
-     --background) so it holds regardless of the OS colour-scheme preference.
-     `fixed` keeps the wash still while the page scrolls. */
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Royal blue background on a fixed, behind-everything layer rather than on the
+   body itself. Putting a `fixed` background on the scrolling body is a known
+   mobile scroll-breaker; a separate fixed pseudo-element is visually identical
+   but never touches the body's scroll behaviour. A soft white glow from the
+   top blends into a vertical wash that deepens to #ABD9FF. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background:
     radial-gradient(
       120% 80% at 50% -10%,
@@ -31,9 +41,4 @@ body {
       rgba(255, 255, 255, 0) 55%
     ),
     linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }

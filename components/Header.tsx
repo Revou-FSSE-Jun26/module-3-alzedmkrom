@@ -11,10 +11,10 @@ import Nav, { NavFallback } from "./Nav";
 export default function Header() {
   return (
     <header className="border-b border-black/10 bg-white dark:border-white/15 dark:bg-black">
-      <div className="flex w-full items-center justify-between gap-6 px-6 py-4">
+      <div className="flex w-full flex-col items-start gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6">
         <Link
           href="/"
-          className="text-2xl font-extrabold tracking-tight text-[#ffde3d] [text-shadow:_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000,_0_0_12px_rgba(255,222,61,0.9)]"
+          className="text-2xl font-extrabold tracking-tight text-[#ffde3d] [text-shadow:-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000,0_0_12px_rgba(255,222,61,0.9)]"
         >
           RevoShop
         </Link>

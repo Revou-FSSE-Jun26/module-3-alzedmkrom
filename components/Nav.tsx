@@ -43,7 +43,10 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Primary" className="flex items-center gap-6 text-sm">
+    <nav
+      aria-label="Primary"
+      className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm sm:gap-x-6"
+    >
       {links.map((link) => {
         const active = isActive(pathname, link.href);
         return (
@@ -68,7 +71,10 @@ export default function Nav() {
 // swap is visually seamless.
 export function NavFallback() {
   return (
-    <nav aria-label="Primary" className="flex items-center gap-6 text-sm">
+    <nav
+      aria-label="Primary"
+      className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm sm:gap-x-6"
+    >
       {links.map((link) => (
         <Link key={link.href} href={link.href} className={INACTIVE_LINK}>
           {link.label}

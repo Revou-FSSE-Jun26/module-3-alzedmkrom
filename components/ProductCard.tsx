@@ -58,7 +58,7 @@ export default function ProductCard({
   return (
     <Card className="flex flex-col gap-3">
       {/* Placeholder image — no image column exists yet. */}
-      <div className="flex aspect-[4/3] w-full items-center justify-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
+      <div className="flex aspect-4/3 w-full items-center justify-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
         {product.imageUrl === null ? (
           <span className="text-sm">No image</span>
         ) : (
@@ -72,10 +72,10 @@ export default function ProductCard({
       </div>
 
       <div className="flex items-start justify-between gap-2">
-        <h3 className="font-semibold text-black dark:text-white">
+        <h3 className="min-w-0 font-semibold text-black dark:text-white">
           {product.name}
         </h3>
-        <span className={getBadgeClasses(availability)}>
+        <span className={`${getBadgeClasses(availability)} shrink-0 whitespace-nowrap`}>
           {getBadgeLabel(availability)}
         </span>
       </div>
@@ -96,7 +96,7 @@ export default function ProductCard({
               onClick={decrement}
               disabled={!inStock || quantity <= 0}
               aria-label="Decrease quantity"
-              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:scale-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
             >
               −
             </button>
@@ -111,7 +111,7 @@ export default function ProductCard({
               onClick={increment}
               disabled={!inStock || quantity >= product.stockQuantity}
               aria-label="Increase quantity"
-              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:scale-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
             >
               +
             </button>

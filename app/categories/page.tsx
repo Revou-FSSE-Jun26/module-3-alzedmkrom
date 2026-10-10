@@ -26,9 +26,9 @@ export default async function CategoriesPage() {
   const categories = await getCategories();
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 pt-6 pb-12">
+    <section className="mx-auto w-full max-w-7xl px-4 pt-6 pb-12 sm:px-6">
       <header className="mb-6 flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white">
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
           Categories
         </h1>
         <p className="text-black/60 dark:text-white/60">

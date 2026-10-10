@@ -25,7 +25,7 @@ function SkeletonTile() {
 
 export default function Loading() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-6 pt-6 pb-12">
+    <section className="mx-auto w-full max-w-7xl px-4 pt-6 pb-12 sm:px-6">
       <header className="mb-6 flex flex-col gap-2">
         <div className="h-8 w-44 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
         <div className="h-4 w-80 animate-pulse rounded bg-slate-200 dark:bg-white/10" />
