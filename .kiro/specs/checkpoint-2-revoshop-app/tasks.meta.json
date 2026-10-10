@@ -370,6 +370,37 @@
         "chatSessionId": "sess_cf891f76-2039-4375-9fab-9de13243eacb",
         "timestamp": 1791564599947
       }
+    ],
+    "14.1 Update the README": [
+      {
+        "executionId": "c86dc3a8-a6bc-48dc-b367-098b8bad9d23",
+        "chatSessionId": "sess_6eeb59c9-99c3-4ec9-895d-f239077bf985",
+        "timestamp": 1791571183701
+      },
+      {
+        "executionId": "c86dc3a8-a6bc-48dc-b367-098b8bad9d23",
+        "chatSessionId": "sess_6eeb59c9-99c3-4ec9-895d-f239077bf985",
+        "timestamp": 1791571262781
+      }
+    ],
+    "14.3 Final verification pass": [
+      {
+        "executionId": "9d774dd9-be58-4057-8c13-4dbdcdb3a879",
+        "chatSessionId": "sess_57eecfb5-f82c-4f1c-a797-1fb4b172f81a",
+        "timestamp": 1791602893587
+      },
+      {
+        "executionId": "9d774dd9-be58-4057-8c13-4dbdcdb3a879",
+        "chatSessionId": "sess_57eecfb5-f82c-4f1c-a797-1fb4b172f81a",
+        "timestamp": 1791603025602
+      }
+    ],
+    "14. Document and capture demo evidence": [
+      {
+        "executionId": "9d774dd9-be58-4057-8c13-4dbdcdb3a879",
+        "chatSessionId": "sess_57eecfb5-f82c-4f1c-a797-1fb4b172f81a",
+        "timestamp": 1791603025722
+      }
     ]
   }
 }

@@ -259,8 +259,8 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit: `feat(app): add cart, cart summary and AddProductForm with validation`
   - _Requirements: 5.2, 5.4, 5.5, 5.6, 5.7, 6.2, 6.5_
 
-- [ ] 14. Document and capture demo evidence
-- [ ] 14.1 Update the README
+- [x] 14. Document and capture demo evidence
+- [x] 14.1 Update the README
   - Describe the project, the component and route structure, and the separation between `app/`, `components/` and `lib/`
   - Document setup: copy `.env.example` to `.env.local`, fill the values, `npm install`, `npm run dev`
   - Keep the pointer to the `checkpoint-1` branch
@@ -268,7 +268,7 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Note that `API_SECRET_KEY` is declared for the rubric but unused in this checkpoint
   - _Requirements: 1.3_
 
-- [ ] 14.2 Capture the demo evidence
+- [x] 14.2 Capture the demo evidence
   - Capture the home page rendering five real products from the API
   - Capture live search and category filtering on `/products`
   - Capture a product detail page with its dynamic page title visible in the browser tab
@@ -278,7 +278,7 @@ Task 1 gates everything. The data layer (3) and the presentation layer (4, 5, 6,
   - Commit each screenshot or the recording, and reference it from the README
   - _Requirements: 15.5, 15.6, 15.7_
 
-- [ ] 14.3 Final verification pass
+- [x] 14.3 Final verification pass
   - Run `npx tsc --noEmit`, `npm run lint` and `npm run build`, and confirm all three exit clean
   - Confirm the commit history shows the scaffold, components, routing and API integration phases as separate commits
   - Confirm `node_modules/`, `.next/` and `.env.local` are absent from the repository
