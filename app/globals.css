@@ -24,6 +24,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+input.password-field::-ms-reveal,
+input.password-field::-ms-clear {
+  display: none;
+}
+
 /* Royal blue background on a fixed, behind-everything layer rather than on the
    body itself. Putting a `fixed` background on the scrolling body is a known
    mobile scroll-breaker; a separate fixed pseudo-element is visually identical
