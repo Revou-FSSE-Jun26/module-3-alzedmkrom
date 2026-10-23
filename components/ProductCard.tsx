@@ -16,6 +16,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Card from "@/components/Card";
 import AddToCartButton from "@/components/AddToCartButton";
 import { useCart } from "@/hooks/useCart";
@@ -68,90 +69,92 @@ export default function ProductCard({
   };
 
   return (
-    <Card className="flex flex-col gap-3">
-      {/* Placeholder image — no image column exists yet. */}
-      <div className="flex aspect-4/3 w-full items-center justify-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
-        {product.imageUrl === null ? (
-          <span className="text-sm">No image</span>
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="h-full w-full rounded-lg object-cover"
-          />
-        )}
-      </div>
-
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="min-w-0 font-semibold text-black dark:text-white">
-          {product.name}
-        </h3>
-        <span className={`${getBadgeClasses(availability)} shrink-0 whitespace-nowrap`}>
-          {getBadgeLabel(availability)}
-        </span>
-      </div>
-
-      <p className="line-clamp-2 text-sm text-black/70 dark:text-white/70">
-        {product.description}
-      </p>
-
-      <p className="text-lg font-bold text-black dark:text-white">
-        {formatRupiah(product.price)}
-      </p>
-
-      {!readOnly && (
-        <div className="mt-auto flex flex-col gap-2">
-          {onAddToCart ? (
-            // Simple mode: just show the AddToCartButton
-            <AddToCartButton
-              product={product}
-              quantity={1}
-              label={actionLabel}
-              onSuccess={() => setQuantity(0)}
-            />
+    <Link href={`/products/${product.id}`}>
+      <Card className="flex flex-col gap-3 cursor-pointer transition hover:shadow-lg">
+        {/* Placeholder image — no image column exists yet. */}
+        <div className="flex aspect-4/3 w-full items-center justify-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
+          {product.imageUrl === null ? (
+            <span className="text-sm">No image</span>
           ) : (
-            // Interactive mode: show quantity controls and button
-            <>
-              <div className="flex items-center justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={decrement}
-                  disabled={!inStock || quantity <= 0}
-                  aria-label="Decrease quantity"
-                  className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
-                >
-                  −
-                </button>
-                <span
-                  aria-live="polite"
-                  className="w-8 text-center font-semibold text-black dark:text-white"
-                >
-                  {quantity}
-                </span>
-                <button
-                  type="button"
-                  onClick={increment}
-                  disabled={!inStock || quantity >= product.stockQuantity}
-                  aria-label="Increase quantity"
-                  className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
-                >
-                  +
-                </button>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleAdd}
-                disabled={!inStock}
-                className={getButtonClasses(inStock)}
-              >
-                {inStock ? actionLabel : "Out of stock"}
-              </button>
-            </>
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="h-full w-full rounded-lg object-cover"
+            />
           )}
         </div>
-      )}
-    </Card>
+
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="min-w-0 font-semibold text-black dark:text-white">
+            {product.name}
+          </h3>
+          <span className={`${getBadgeClasses(availability)} shrink-0 whitespace-nowrap`}>
+            {getBadgeLabel(availability)}
+          </span>
+        </div>
+
+        <p className="line-clamp-2 text-sm text-black/70 dark:text-white/70">
+          {product.description}
+        </p>
+
+        <p className="text-lg font-bold text-black dark:text-white">
+          {formatRupiah(product.price)}
+        </p>
+
+        {!readOnly && (
+          <div className="mt-auto flex flex-col gap-2" onClick={(e) => e.preventDefault()}>
+            {onAddToCart ? (
+              // Simple mode: just show the AddToCartButton
+              <AddToCartButton
+                product={product}
+                quantity={1}
+                label={actionLabel}
+                onSuccess={() => setQuantity(0)}
+              />
+            ) : (
+              // Interactive mode: show quantity controls and button
+              <>
+                <div className="flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={decrement}
+                    disabled={!inStock || quantity <= 0}
+                    aria-label="Decrease quantity"
+                    className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+                  >
+                    −
+                  </button>
+                  <span
+                    aria-live="polite"
+                    className="w-8 text-center font-semibold text-black dark:text-white"
+                  >
+                    {quantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={increment}
+                    disabled={!inStock || quantity >= product.stockQuantity}
+                    aria-label="Increase quantity"
+                    className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleAdd}
+                  disabled={!inStock}
+                  className={getButtonClasses(inStock)}
+                >
+                  {inStock ? actionLabel : "Out of stock"}
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </Card>
+    </Link>
   );
 }
