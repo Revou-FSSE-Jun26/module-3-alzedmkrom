@@ -32,7 +32,7 @@
 
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { getProduct } from "@/lib/api";
+import { getProduct, getCategories } from "@/lib/api";
 import { availabilityOf } from "@/lib/types";
 import { getBadgeClasses, getBadgeLabel } from "@/lib/productStyles";
 import { formatRupiah } from "@/lib/format";
@@ -72,8 +72,11 @@ export default function ProductDetailPage({ params }: Props) {
 async function ProductDetail({ params }: Props) {
   const { id } = await params;
   const product = await getProduct(Number(id));
+  const categories = await getCategories();
 
   const availability = availabilityOf(product);
+  const category = categories.find((c) => c.id === product.categoryId);
+  const categoryName = category?.name || "Uncategorized";
 
   return (
     <Card className="flex flex-col gap-6 md:flex-row">
@@ -119,7 +122,7 @@ async function ProductDetail({ params }: Props) {
           <div className="flex justify-between gap-2 border-b border-black/5 py-1 dark:border-white/10">
             <dt className="text-black/60 dark:text-white/60">Category</dt>
             <dd className="font-medium text-black dark:text-white">
-              #{product.categoryId}
+              {categoryName}
             </dd>
           </div>
         </dl>
