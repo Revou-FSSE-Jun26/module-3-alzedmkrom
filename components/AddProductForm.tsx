@@ -9,7 +9,8 @@
 // This checkpoint is local state only: a valid submit mutates component state,
 // it never issues a POST. Real persistence is Checkpoint 3.
 //
-// Values are held as strings in FormState because that is what inputs produce;
+// Values are held as strings in ProductFormState because that is what inputs
+// produce;
 // price and stockQuantity are parsed only inside validate(). On submit the
 // handler calls preventDefault() first, then validate(); it proceeds to append
 // only when validate() returns no keys. A failed validation leaves every
@@ -25,7 +26,12 @@ import {
   type ChangeEvent,
   type FormEvent,
 } from "react";
-import type { Category, FormErrors, FormState, Product } from "@/lib/types";
+import type {
+  Category,
+  FormErrors,
+  ProductFormState,
+  Product,
+} from "@/lib/types";
 
 interface AddProductFormProps {
   /** Categories for the dropdown, fetched on the server and passed down. */
@@ -34,7 +40,7 @@ interface AddProductFormProps {
   onAdd: (product: Product) => void;
 }
 
-const EMPTY_FORM: FormState = {
+const EMPTY_FORM: ProductFormState = {
   name: "",
   description: "",
   price: "",
@@ -47,8 +53,10 @@ const EMPTY_FORM: FormState = {
 // the design: name required and at least 3 characters, description required,
 // price required and a positive number, stock required and a whole number >= 0,
 // and a category must be chosen.
-export function validate(data: FormState): FormErrors {
-  const errors: FormErrors = {};
+export function validate(
+  data: ProductFormState,
+): FormErrors<ProductFormState> {
+  const errors: FormErrors<ProductFormState> = {};
 
   if (!data.name.trim()) {
     errors.name = "Name is required.";
@@ -86,7 +94,7 @@ export function validate(data: FormState): FormErrors {
 // negative id. Kept in module scope so it survives re-renders of the form.
 let nextLocalId = -1;
 
-function buildProduct(data: FormState): Product {
+function buildProduct(data: ProductFormState): Product {
   return {
     id: nextLocalId--,
     categoryId: Number(data.categoryId),
@@ -106,13 +114,14 @@ export default function AddProductForm({
 }: AddProductFormProps) {
   // Controlled form values, held as strings. Preserved across a failed submit
   // so the user never loses what they typed.
-  const [values, setValues] = useState<FormState>(EMPTY_FORM);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [values, setValues] = useState<ProductFormState>(EMPTY_FORM);
+  const [errors, setErrors] = useState<FormErrors<ProductFormState>>({});
 
   // A unique prefix so error-message ids are stable and collision-free even if
   // the form is ever rendered more than once on a page.
   const fieldId = useId();
-  const errorId = (field: keyof FormState) => `${fieldId}-${field}-error`;
+  const errorId = (field: keyof ProductFormState) =>
+    `${fieldId}-${field}-error`;
 
   function handleChange(
     event: ChangeEvent<

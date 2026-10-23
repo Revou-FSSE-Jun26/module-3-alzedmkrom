@@ -17,6 +17,7 @@
 
 import { useState } from "react";
 import Card from "@/components/Card";
+import AddToCartButton from "@/components/AddToCartButton";
 import { availabilityOf, type ProductCardProps } from "@/lib/types";
 import {
   getBadgeClasses,
@@ -90,41 +91,54 @@ export default function ProductCard({
 
       {!readOnly && (
         <div className="mt-auto flex flex-col gap-2">
-          <div className="flex items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={decrement}
-              disabled={!inStock || quantity <= 0}
-              aria-label="Decrease quantity"
-              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
-            >
-              −
-            </button>
-            <span
-              aria-live="polite"
-              className="w-8 text-center font-semibold text-black dark:text-white"
-            >
-              {quantity}
-            </span>
-            <button
-              type="button"
-              onClick={increment}
-              disabled={!inStock || quantity >= product.stockQuantity}
-              aria-label="Increase quantity"
-              className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
-            >
-              +
-            </button>
-          </div>
+          {onAddToCart ? (
+            // Simple mode: just show the AddToCartButton
+            <AddToCartButton
+              product={product}
+              quantity={1}
+              label={actionLabel}
+              onSuccess={() => setQuantity(0)}
+            />
+          ) : (
+            // Interactive mode: show quantity controls and button
+            <>
+              <div className="flex items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={decrement}
+                  disabled={!inStock || quantity <= 0}
+                  aria-label="Decrease quantity"
+                  className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+                >
+                  −
+                </button>
+                <span
+                  aria-live="polite"
+                  className="w-8 text-center font-semibold text-black dark:text-white"
+                >
+                  {quantity}
+                </span>
+                <button
+                  type="button"
+                  onClick={increment}
+                  disabled={!inStock || quantity >= product.stockQuantity}
+                  aria-label="Increase quantity"
+                  className="flex h-8 w-8 items-center justify-center rounded-md border border-black/10 font-semibold text-black transition hover:bg-black/5 active:not-disabled:scale-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-white/15 dark:text-white dark:hover:bg-white/10"
+                >
+                  +
+                </button>
+              </div>
 
-          <button
-            type="button"
-            onClick={handleAdd}
-            disabled={!inStock}
-            className={getButtonClasses(inStock)}
-          >
-            {inStock ? actionLabel : "Out of stock"}
-          </button>
+              <button
+                type="button"
+                onClick={handleAdd}
+                disabled={!inStock}
+                className={getButtonClasses(inStock)}
+              >
+                {inStock ? actionLabel : "Out of stock"}
+              </button>
+            </>
+          )}
         </div>
       )}
     </Card>

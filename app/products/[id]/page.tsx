@@ -37,6 +37,7 @@ import { availabilityOf } from "@/lib/types";
 import { getBadgeClasses, getBadgeLabel } from "@/lib/productStyles";
 import { formatRupiah } from "@/lib/format";
 import Card from "@/components/Card";
+import AddToCartButton from "@/components/AddToCartButton";
 import { DetailSkeleton } from "./loading";
 
 type Props = {
@@ -122,6 +123,10 @@ async function ProductDetail({ params }: Props) {
             </dd>
           </div>
         </dl>
+
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <AddToCartButton product={product} quantity={1} />
+        </div>
       </div>
     </Card>
   );
