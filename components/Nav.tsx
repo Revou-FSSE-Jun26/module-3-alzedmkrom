@@ -70,14 +70,16 @@ export default function Nav() {
         className={isActive(pathname, "/cart") ? ACTIVE_LINK : INACTIVE_LINK}
       >
         Cart
-        {cart.totalItems > 0 && (
-          <span
-            aria-label={`${cart.totalItems} items in cart`}
-            className="ml-2 inline-flex items-center justify-center rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white dark:bg-blue-400 dark:text-black"
-          >
-            {cart.totalItems}
-          </span>
-        )}
+        <span
+          aria-label={cart.totalItems > 0 ? `${cart.totalItems} items in cart` : undefined}
+          className={`ml-2 inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-bold ${
+            cart.totalItems > 0
+              ? "bg-blue-600 text-white dark:bg-blue-400 dark:text-black"
+              : "hidden"
+          }`}
+        >
+          {cart.totalItems}
+        </span>
       </Link>
     </nav>
   );
