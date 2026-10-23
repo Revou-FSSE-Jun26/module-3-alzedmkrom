@@ -12,6 +12,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useCart } from "@/hooks/useCart";
 
 interface NavLink {
   href: string;
@@ -41,6 +42,7 @@ const INACTIVE_LINK =
 
 export default function Nav() {
   const pathname = usePathname();
+  const cart = useCart();
 
   return (
     <nav
@@ -60,6 +62,23 @@ export default function Nav() {
           </Link>
         );
       })}
+      
+      {/* Cart link with item count badge */}
+      <Link
+        href="/cart"
+        aria-current={isActive(pathname, "/cart") ? "page" : undefined}
+        className={isActive(pathname, "/cart") ? ACTIVE_LINK : INACTIVE_LINK}
+      >
+        Cart
+        {cart.totalItems > 0 && (
+          <span
+            aria-label={`${cart.totalItems} items in cart`}
+            className="ml-2 inline-flex items-center justify-center rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white dark:bg-blue-400 dark:text-black"
+          >
+            {cart.totalItems}
+          </span>
+        )}
+      </Link>
     </nav>
   );
 }
@@ -80,6 +99,9 @@ export function NavFallback() {
           {link.label}
         </Link>
       ))}
+      <Link href="/cart" className={INACTIVE_LINK}>
+        Cart
+      </Link>
     </nav>
   );
 }
