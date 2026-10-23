@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -33,12 +34,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           AuthProvider wraps the whole app so Header and every route can read
           the session through useAuth(). CartProvider nests inside this provider,
           so logout can clear the cart via the auth event.
+          
+          Toaster is a single-instance notification system. It must be inside
+          the providers but outside the page content so it renders above
+          everything else.
         */}
         <AuthProvider>
           <CartProvider>
             <Header />
             <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
+            <Toaster />
           </CartProvider>
         </AuthProvider>
       </body>

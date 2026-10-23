@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { useRequireRole } from '@/hooks/useRequireRole';
 import { useCart } from '@/hooks/useCart';
 import { formatRupiah } from '@/lib/format';
+import { toastSuccess } from '@/lib/toast';
 
 export default function CartPage() {
   const { ready } = useRequireRole();
@@ -25,6 +26,11 @@ export default function CartPage() {
   if (!ready) {
     return null;
   }
+
+  const handleRemoveItem = (productId: number, productName: string) => {
+    removeItem(productId);
+    toastSuccess(`${productName} removed from cart`);
+  };
 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 pt-6 pb-12 sm:px-6">
@@ -100,7 +106,7 @@ export default function CartPage() {
                       </td>
                       <td className="px-4 py-3 text-right">
                         <button
-                          onClick={() => removeItem(item.productId)}
+                          onClick={() => handleRemoveItem(item.productId, item.name)}
                           className="text-red-600 hover:text-red-700 font-semibold transition active:scale-95 dark:text-red-400 dark:hover:text-red-300"
                           aria-label={`Remove ${item.name} from cart`}
                         >
