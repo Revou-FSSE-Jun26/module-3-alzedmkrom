@@ -168,6 +168,8 @@ export const LOW_STOCK_THRESHOLD = 5;
 
 export interface ProductCardProps {
   product: Product;
+  /** Optional: categories list to display category name */
+  categories?: Category[];
   /** Optional: hides the counter and add button for read-only grids. */
   readOnly?: boolean;
   /** Optional: label on the add control. */

@@ -21,6 +21,7 @@ import Card from "@/components/Card";
 import AddToCartButton from "@/components/AddToCartButton";
 import { useCart } from "@/hooks/useCart";
 import { availabilityOf, type ProductCardProps } from "@/lib/types";
+import type { Category } from "@/lib/types";
 import {
   getBadgeClasses,
   getBadgeLabel,
@@ -39,6 +40,7 @@ function clamp(value: number, max: number): number {
 
 export default function ProductCard({
   product,
+  categories = [],
   readOnly = false,
   actionLabel = "Add to cart",
   onAddToCart,
@@ -46,6 +48,10 @@ export default function ProductCard({
   const availability = availabilityOf(product);
   const inStock = availability.kind !== "out-of-stock";
   const cart = useCart();
+  
+  // Find the category name from the categoryId
+  const category = categories.find((c: Category) => c.id === product.categoryId);
+  const categoryName = category?.name || "Uncategorized";
 
   // Every product starts at 0; the shopper chooses a quantity before adding.
   const [quantity, setQuantity] = useState(0);
@@ -96,6 +102,10 @@ export default function ProductCard({
 
         <p className="line-clamp-2 text-sm text-black/70 dark:text-white/70">
           {product.description}
+        </p>
+
+        <p className="text-xs text-black/50 dark:text-white/50 font-medium">
+          {categoryName}
         </p>
 
         <p className="text-lg font-bold text-black dark:text-white">

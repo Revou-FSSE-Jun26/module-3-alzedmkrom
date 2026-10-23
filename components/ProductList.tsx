@@ -173,7 +173,7 @@ export default function ProductList({
         )}
       </div>
 
-      <ProductGrid products={items} />
+      <ProductGrid products={items} categories={categories} />
 
       <CartSummary items={cart.items} />
     </div>

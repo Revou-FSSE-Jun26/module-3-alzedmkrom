@@ -14,10 +14,12 @@
 // renders in place of the grid so the surrounding layout never collapses.
 
 import ProductCard from "@/components/ProductCard";
-import type { Product, ProductCardProps } from "@/lib/types";
+import type { Product, Category, ProductCardProps } from "@/lib/types";
 
 interface ProductGridProps {
   products: Product[];
+  /** Categories for displaying category names on cards. */
+  categories?: Category[];
   /** Forwarded to every card: hides the counter and add control. */
   readOnly?: ProductCardProps["readOnly"];
   /** Forwarded to every card: label on the add control. */
@@ -28,6 +30,7 @@ interface ProductGridProps {
 
 export default function ProductGrid({
   products,
+  categories = [],
   readOnly,
   actionLabel,
   onAddToCart,
@@ -51,6 +54,7 @@ export default function ProductGrid({
         <ProductCard
           key={product.id}
           product={product}
+          categories={categories}
           readOnly={readOnly}
           actionLabel={actionLabel}
           onAddToCart={onAddToCart}
