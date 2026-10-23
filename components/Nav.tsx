@@ -40,9 +40,38 @@ const ACTIVE_LINK =
 const INACTIVE_LINK =
   "border-b-2 border-transparent pb-1 font-medium text-black/70 transition-colors hover:text-black dark:text-white/70 dark:hover:text-white";
 
-export default function Nav() {
+/**
+ * CartBadge is a separate client component that reads useCart().
+ * This isolates the hydration-sensitive code so Nav can render on server
+ * without calling hooks that depend on context that isn't available yet.
+ */
+function CartBadge() {
   const pathname = usePathname();
   const cart = useCart();
+
+  return (
+    <Link
+      href="/cart"
+      aria-current={isActive(pathname, "/cart") ? "page" : undefined}
+      className={isActive(pathname, "/cart") ? ACTIVE_LINK : INACTIVE_LINK}
+    >
+      Cart
+      <span
+        aria-label={cart.totalItems > 0 ? `${cart.totalItems} items in cart` : undefined}
+        className={`ml-2 inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-bold ${
+          cart.totalItems > 0
+            ? "bg-blue-600 text-white dark:bg-blue-400 dark:text-black"
+            : "hidden"
+        }`}
+      >
+        {cart.totalItems}
+      </span>
+    </Link>
+  );
+}
+
+export default function Nav() {
+  const pathname = usePathname();
 
   return (
     <nav
@@ -63,24 +92,8 @@ export default function Nav() {
         );
       })}
       
-      {/* Cart link with item count badge */}
-      <Link
-        href="/cart"
-        aria-current={isActive(pathname, "/cart") ? "page" : undefined}
-        className={isActive(pathname, "/cart") ? ACTIVE_LINK : INACTIVE_LINK}
-      >
-        Cart
-        <span
-          aria-label={cart.totalItems > 0 ? `${cart.totalItems} items in cart` : undefined}
-          className={`ml-2 inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-bold ${
-            cart.totalItems > 0
-              ? "bg-blue-600 text-white dark:bg-blue-400 dark:text-black"
-              : "hidden"
-          }`}
-        >
-          {cart.totalItems}
-        </span>
-      </Link>
+      {/* Cart link with item count badge - isolated in its own component */}
+      <CartBadge />
     </nav>
   );
 }
@@ -103,11 +116,6 @@ export function NavFallback() {
       ))}
       <Link href="/cart" className={INACTIVE_LINK}>
         Cart
-        <span
-          className="ml-2 inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-bold hidden"
-        >
-          0
-        </span>
       </Link>
     </nav>
   );

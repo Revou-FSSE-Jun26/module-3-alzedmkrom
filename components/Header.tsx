@@ -76,6 +76,10 @@ export default function Header() {
             would block prerendering the shared chrome. Wrapping Nav in Suspense
             lets the shell prerender with the inactive fallback and streams the
             active state in — the documented fix for a runtime client hook.
+            
+            CartBadge reads useCart() which depends on context, so it renders
+            after the Suspense fallback and streams in the cart count once
+            hydration is complete.
           */}
           <Suspense fallback={<NavFallback />}>
             <Nav />
