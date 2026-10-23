@@ -221,9 +221,10 @@ async function login(email: string, password: string): Promise<LoginResponse> {
 }
 
 /**
- * Refresh the access token using the current token. The backend auto-refreshes
- * tokens when the user is actively browsing, so calling this endpoint extends
- * the session lifetime. Called proactively when the token is close to expiry.
+ * Refresh the access token using the refresh token. The backend requires the
+ * refresh token (with @jwt_required(refresh=True)) in the Authorization header.
+ * Returns a new LoginResponse with fresh access and refresh tokens.
+ * Called proactively when the token is close to expiry.
  */
 async function refreshToken(token: string): Promise<LoginResponse> {
   return fetchJson<LoginResponse>('/auth/refresh', {
