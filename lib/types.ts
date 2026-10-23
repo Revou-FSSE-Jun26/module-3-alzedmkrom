@@ -66,10 +66,11 @@ export interface UserRecord {
   created_at: string;
 }
 
-// POST /auth/login returns a bearer token with a lifetime plus the user.
+// POST /auth/login returns bearer tokens and user info
 export interface LoginResponse {
   access_token: string;
-  expires_in: number; // seconds until the token expires
+  refresh_token: string;
+  expires_in: number; // seconds until the access token expires
   token_type: string;
   user: UserRecord;
 }
@@ -106,7 +107,8 @@ export interface User {
 // The whole authenticated session, persisted under a single storage key so a
 // restore is one read and one JSON.parse — never a half-written set of fields.
 export interface Session {
-  token: string;
+  token: string; // access token
+  refreshToken: string; // refresh token used to get new access tokens
   user: User;
   // Absolute epoch ms, derived from LoginResponse.expires_in at login time, so
   // expiry survives reloads without re-reading a relative countdown.

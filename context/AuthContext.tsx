@@ -70,12 +70,12 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
  */
 function sessionFromLogin(response: {
   access_token: string;
+  refresh_token: string;
   expires_in: number;
   user: Parameters<typeof toUser>[0];
 }): Session {
   const now = Date.now();
   // Backend returns expires_in in SECONDS, so multiply by 1000 for milliseconds
-  // But validate that expires_in is reasonable (should be between 1 minute and 1 day)
   const expiresInMs = response.expires_in * 1000;
   const expiresAt = now + expiresInMs;
   
@@ -89,6 +89,7 @@ function sessionFromLogin(response: {
   
   return {
     token: response.access_token,
+    refreshToken: response.refresh_token,
     user: toUser(response.user),
     expiresAt,
   };
@@ -239,12 +240,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (timeUntilExpiry < 300000) {
         console.log(`[Token Refresh] Refreshing token (expiring in ${timeUntilExpiry}ms)`);
         try {
-          console.log(`[Token Refresh] Calling apiRefreshToken with token: ${currentSession.token.substring(0, 20)}...`);
-          const response = await apiRefreshToken(currentSession.token);
+          console.log(`[Token Refresh] Calling apiRefreshToken with refresh token: ${currentSession.refreshToken.substring(0, 20)}...`);
+          const response = await apiRefreshToken(currentSession.refreshToken);
           console.log(`[Token Refresh] Refresh API response:`, response);
           
           const next: Session = {
             token: response.access_token,
+            refreshToken: response.refresh_token,
             user: currentSession.user, // User doesn't change on refresh
             expiresAt: now + response.expires_in * 1000,
           };
