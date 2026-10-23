@@ -165,12 +165,22 @@ export default function CheckoutPage() {
         </table>
       </div>
 
-      {/* Order total */}
-      <div className="mb-8 flex flex-col items-end gap-2 rounded-lg bg-black/2 p-4 dark:bg-white/5">
-        <p className="text-black/60 dark:text-white/60">Order Total</p>
-        <p className="text-3xl font-bold text-black dark:text-white">
-          {formatRupiah(totalPrice)}
-        </p>
+      {/* Order total and quantity */}
+      <div className="mb-8 flex flex-col gap-4 rounded-lg bg-black/2 p-4 dark:bg-white/5">
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
+            <p className="text-black/60 dark:text-white/60">Total Quantity</p>
+            <p className="text-lg font-semibold text-black dark:text-white">
+              {items.reduce((sum, item) => sum + item.quantity, 0)} items
+            </p>
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="text-black/60 dark:text-white/60">Order Total</p>
+            <p className="text-3xl font-bold text-black dark:text-white">
+              {formatRupiah(totalPrice)}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Confirm and cancel buttons */}
