@@ -196,19 +196,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Refresh the token when it's close to expiry. The backend auto-refreshes
   // tokens when the user is active, so we proactively refresh before expiry
   // to keep the session alive. Check every 10 seconds if a refresh is needed.
+  //
+  // The interval must read the CURRENT session from the store on each check,
+  // not rely on a closure-captured snapshot, because the snapshot changes
+  // every time the token is refreshed. If we captured snapshot.session once,
+  // the interval would use stale expiresAt and never refresh when needed.
   useEffect(() => {
     if (!snapshot.session?.token) return; // Not logged in
 
     const checkAndRefresh = async () => {
+      // Read the current session from the store, not from closure
+      const currentSession = store.getSnapshot().session;
+      
+      // If session was cleared (logged out), stop checking
+      if (!currentSession?.token) return;
+      
       const now = Date.now();
-      const timeUntilExpiry = snapshot.session!.expiresAt - now;
+      const timeUntilExpiry = currentSession.expiresAt - now;
       // Refresh if expiring within 1 minute (60000 ms)
       if (timeUntilExpiry < 60000) {
         try {
-          const response = await apiRefreshToken(snapshot.session!.token);
+          const response = await apiRefreshToken(currentSession.token);
           const next: Session = {
             token: response.access_token,
-            user: snapshot.session!.user, // User doesn't change on refresh
+            user: currentSession.user, // User doesn't change on refresh
             expiresAt: now + response.expires_in * 1000,
           };
           writeJson(SESSION_KEY, next);
@@ -222,7 +233,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const interval = setInterval(checkAndRefresh, 10000); // Check every 10 seconds
     return () => clearInterval(interval);
-  }, [snapshot.session, store, logout]);
+  }, [store, logout]); // Only depend on store and logout, not snapshot.session
 
   const value = useMemo<AuthContextValue>(
     () => ({
