@@ -172,10 +172,18 @@ export default function CategoriesPage() {
 
       {/* Create/Edit form - shown at top when active */}
       {formMode === 'create' && (
-        <CreateCategoryForm
-          isSubmitting={isEditing}
-          onSubmit={handleCreateSubmit}
-        />
+        <div className="flex flex-col gap-4">
+          <CreateCategoryForm
+            isSubmitting={isEditing}
+            onSubmit={handleCreateSubmit}
+          />
+          <button
+            onClick={closeForm}
+            className="w-fit rounded-md border border-black/15 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-black/5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+          >
+            Cancel
+          </button>
+        </div>
       )}
       {formMode === 'edit' && (
         <EditCategoryForm

@@ -402,6 +402,18 @@ async function getAllOrders(token: string): Promise<Order[]> {
   return records.map(toOrder);
 }
 
+export async function updateOrderStatus(id: number, status: string, token: string): Promise<Order> {
+  const record = await authedFetchJson<OrderRecord>(
+    `/orders/${id}`,
+    token,
+    {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    },
+  );
+  return toOrder(record);
+}
+
 // NOTE: `getOrders` lives in lib/auth.ts, not here. It requires a server-only
 // bearer token, and lib/auth.ts imports `server-only`. Keeping it out of this
 // module means lib/api.ts carries no edge to `server-only`, so the client-safe

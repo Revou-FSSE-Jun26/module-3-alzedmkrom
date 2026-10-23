@@ -191,11 +191,19 @@ export default function DashboardPage() {
 
       {/* Form section - full width at top */}
       {formMode === 'create' && (
-        <CreateProductForm
-          categories={categories}
-          isSubmitting={isEditing}
-          onSubmit={handleCreateSubmit}
-        />
+        <div className="flex flex-col gap-4">
+          <CreateProductForm
+            categories={categories}
+            isSubmitting={isEditing}
+            onSubmit={handleCreateSubmit}
+          />
+          <button
+            onClick={closeForm}
+            className="w-fit rounded-md border border-black/15 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-black/5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+          >
+            Cancel
+          </button>
+        </div>
       )}
       {formMode === 'edit' && (
         <EditProductForm
@@ -221,6 +229,9 @@ export default function DashboardPage() {
                   Name
                 </th>
                 <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
+                  Category
+                </th>
+                <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
                   Price
                 </th>
                 <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
@@ -232,13 +243,18 @@ export default function DashboardPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-black/10 dark:divide-white/15">
-              {products.map((product) => (
+              {products.map((product) => {
+                const category = categories.find((c) => c.id === product.categoryId);
+                return (
                 <tr
                   key={product.id}
                   className="hover:bg-black/2 dark:hover:bg-white/2"
                 >
                   <td className="px-4 py-3 text-black dark:text-white">
                     {product.name}
+                  </td>
+                  <td className="px-4 py-3 text-black dark:text-white">
+                    {category?.name || 'Unknown'}
                   </td>
                   <td className="px-4 py-3 text-black dark:text-white">
                     {formatRupiah(product.price)}
@@ -261,7 +277,8 @@ export default function DashboardPage() {
                     </button>
                   </td>
                 </tr>
-              ))}
+              );
+              })}
             </tbody>
           </table>
         </div>

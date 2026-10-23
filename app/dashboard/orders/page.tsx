@@ -12,8 +12,8 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { getAllOrders } from '@/lib/api';
-import { toastError } from '@/lib/toast';
+import { getAllOrders, updateOrderStatus } from '@/lib/api';
+import { toastError, toastSuccess } from '@/lib/toast';
 import type { Order } from '@/lib/types';
 import { formatRupiah, formatDate } from '@/lib/format';
 import Link from 'next/link';
@@ -23,18 +23,29 @@ export default function DashboardOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [editingOrderId, setEditingOrderId] = useState<number | null>(null);
+  const [editingStatus, setEditingStatus] = useState('');
+  const [isUpdating, setIsUpdating] = useState(false);
 
   // Fetch all orders on mount.
   useEffect(() => {
+    let didCall = false;
+
     async function init() {
-      if (!session?.token) return;
+      if (!session?.token) {
+        setIsLoading(false);
+        return;
+      }
 
       try {
         const allOrders = await getAllOrders(session.token);
         setOrders(allOrders);
         setError(null);
       } catch (err) {
-        toastError(err);
+        if (!didCall) {
+          toastError(err);
+          didCall = true;
+        }
         setError(
           err instanceof Error
             ? err.message
@@ -46,7 +57,34 @@ export default function DashboardOrdersPage() {
     }
 
     init();
-  }, [session?.token]);
+  }, [session]);
+
+  function openEditModal(order: Order): void {
+    setEditingOrderId(order.id);
+    setEditingStatus(order.status);
+  }
+
+  function closeEditModal(): void {
+    setEditingOrderId(null);
+    setEditingStatus('');
+  }
+
+  async function handleStatusSubmit(): Promise<void> {
+    if (editingOrderId === null || !session?.token) return;
+    setIsUpdating(true);
+    try {
+      const updated = await updateOrderStatus(editingOrderId, editingStatus, session.token);
+      setOrders((prev) =>
+        prev.map((o) => (o.id === editingOrderId ? updated : o)),
+      );
+      toastSuccess(`Order status changed to ${editingStatus}`);
+      closeEditModal();
+    } catch (err) {
+      toastError(err);
+    } finally {
+      setIsUpdating(false);
+    }
+  }
 
   // Guard: token is required.
   if (!session?.token) {
@@ -108,6 +146,9 @@ export default function DashboardOrdersPage() {
                 <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
                   Date
                 </th>
+                <th className="px-4 py-3 text-right font-semibold text-black dark:text-white">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-black/10 dark:divide-white/15">
@@ -145,10 +186,62 @@ export default function DashboardOrdersPage() {
                   <td className="px-4 py-3 text-black dark:text-white">
                     {formatDate(order.createdAt)}
                   </td>
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => openEditModal(order)}
+                      className="rounded px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
+                    >
+                      Edit
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Edit status modal */}
+      {editingOrderId !== null && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 z-50">
+          <div className="w-full max-w-sm rounded-lg border border-black/10 bg-white p-6 shadow-lg dark:border-white/15 dark:bg-black">
+            <h2 className="text-lg font-semibold text-black dark:text-white">
+              Edit Order #{editingOrderId} Status
+            </h2>
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-black dark:text-white mb-2">
+                Status
+              </label>
+              <select
+                value={editingStatus}
+                onChange={(e) => setEditingStatus(e.target.value)}
+                disabled={isUpdating}
+                className="w-full rounded-md border border-black/10 dark:border-white/15 bg-white dark:bg-white/5 px-3 py-2 text-black dark:text-white disabled:opacity-50"
+              >
+                <option value="PENDING">PENDING</option>
+                <option value="PROCESSING">PROCESSING</option>
+                <option value="SHIPPED">SHIPPED</option>
+                <option value="COMPLETED">COMPLETED</option>
+                <option value="CANCELLED">CANCELLED</option>
+              </select>
+            </div>
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={closeEditModal}
+                disabled={isUpdating}
+                className="flex-1 rounded-md border border-black/15 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-black/5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleStatusSubmit}
+                disabled={isUpdating}
+                className="flex-1 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isUpdating ? 'Saving…' : 'Save'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
           </div>
