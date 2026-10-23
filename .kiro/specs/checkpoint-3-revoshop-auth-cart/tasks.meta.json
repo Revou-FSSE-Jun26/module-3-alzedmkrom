@@ -1,0 +1,268 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Install the new dependencies": [
+      {
+        "executionId": "d66dd1c2-c763-42d1-b8ac-fc18de0db92c",
+        "chatSessionId": "sess_056ebd43-384c-4ca2-ac91-dc514e0df404",
+        "timestamp": 1792421670470
+      },
+      {
+        "executionId": "d66dd1c2-c763-42d1-b8ac-fc18de0db92c",
+        "chatSessionId": "sess_056ebd43-384c-4ca2-ac91-dc514e0df404",
+        "timestamp": 1792421815741
+      }
+    ],
+    "1.2 Extend `lib/types.ts`": [
+      {
+        "executionId": "7d572dd7-251d-4ed8-9ad2-6211ffdb92a3",
+        "chatSessionId": "sess_cb0dd98c-1e1d-4891-a54d-1a33560347fd",
+        "timestamp": 1792422083715
+      },
+      {
+        "executionId": "7d572dd7-251d-4ed8-9ad2-6211ffdb92a3",
+        "chatSessionId": "sess_cb0dd98c-1e1d-4891-a54d-1a33560347fd",
+        "timestamp": 1792422408367
+      }
+    ],
+    "1. Add dependencies and extend the type layer": [
+      {
+        "executionId": "7d572dd7-251d-4ed8-9ad2-6211ffdb92a3",
+        "chatSessionId": "sess_cb0dd98c-1e1d-4891-a54d-1a33560347fd",
+        "timestamp": 1792422408468
+      }
+    ],
+    "2.1 Write `lib/storage.ts`": [
+      {
+        "executionId": "e32dcbaf-7361-48c7-b058-8008b8d54bdf",
+        "chatSessionId": "sess_fb05605b-db3b-4f08-b8b7-be0cea918e7c",
+        "timestamp": 1792422505044
+      },
+      {
+        "executionId": "e32dcbaf-7361-48c7-b058-8008b8d54bdf",
+        "chatSessionId": "sess_fb05605b-db3b-4f08-b8b7-be0cea918e7c",
+        "timestamp": 1792422607512
+      }
+    ],
+    "2.2 Add authenticated helpers to `lib/api.ts`": [
+      {
+        "executionId": "d394cdca-b325-4413-9d59-0830c5e83485",
+        "chatSessionId": "sess_54f1af2e-118a-4a97-ad9a-4b9133e7f3b3",
+        "timestamp": 1792422672875
+      },
+      {
+        "executionId": "d394cdca-b325-4413-9d59-0830c5e83485",
+        "chatSessionId": "sess_54f1af2e-118a-4a97-ad9a-4b9133e7f3b3",
+        "timestamp": 1792422889701
+      }
+    ],
+    "2. Build the storage and authenticated request layer": [
+      {
+        "executionId": "d394cdca-b325-4413-9d59-0830c5e83485",
+        "chatSessionId": "sess_54f1af2e-118a-4a97-ad9a-4b9133e7f3b3",
+        "timestamp": 1792422889818
+      }
+    ],
+    "3. Build the auth context": [
+      {
+        "executionId": "9f3bbe7c-e200-4ade-97ed-8cf5f85d55e2",
+        "chatSessionId": "sess_5a9b9208-fa5f-48d2-bc8b-5947fcc6d8c1",
+        "timestamp": 1792422932856
+      },
+      {
+        "executionId": "9f3bbe7c-e200-4ade-97ed-8cf5f85d55e2",
+        "chatSessionId": "sess_5a9b9208-fa5f-48d2-bc8b-5947fcc6d8c1",
+        "timestamp": 1792423547118
+      }
+    ],
+    "4.1 Build `RegisterForm` and the `/register` route": [
+      {
+        "executionId": "2448fb4b-4e63-40ab-891d-68358456cf69",
+        "chatSessionId": "sess_8f382b4d-7ce5-4f59-a58e-01512921d90f",
+        "timestamp": 1792423607122
+      },
+      {
+        "executionId": "2448fb4b-4e63-40ab-891d-68358456cf69",
+        "chatSessionId": "sess_8f382b4d-7ce5-4f59-a58e-01512921d90f",
+        "timestamp": 1792423768854
+      }
+    ],
+    "4.2 Build `LoginForm` and the `/login` route": [
+      {
+        "executionId": "b97a2548-f130-4046-b4f3-9e7fd92bd518",
+        "chatSessionId": "sess_903d9d31-fe32-49b4-830d-6787479084e8",
+        "timestamp": 1792423817341
+      },
+      {
+        "executionId": "b97a2548-f130-4046-b4f3-9e7fd92bd518",
+        "chatSessionId": "sess_903d9d31-fe32-49b4-830d-6787479084e8",
+        "timestamp": 1792424143834
+      }
+    ],
+    "4. Build the register and login pages": [
+      {
+        "executionId": "b97a2548-f130-4046-b4f3-9e7fd92bd518",
+        "chatSessionId": "sess_903d9d31-fe32-49b4-830d-6787479084e8",
+        "timestamp": 1792424143947
+      }
+    ],
+    "5. Show session state in the header": [
+      {
+        "executionId": "e05c4bc3-c93f-4e84-8b77-6169b55e7709",
+        "chatSessionId": "sess_0af94dde-f5cc-47f6-b90e-ce7fbedfb3c1",
+        "timestamp": 1792675659969
+      },
+      {
+        "executionId": "e05c4bc3-c93f-4e84-8b77-6169b55e7709",
+        "chatSessionId": "sess_0af94dde-f5cc-47f6-b90e-ce7fbedfb3c1",
+        "timestamp": 1792675915183
+      }
+    ],
+    "6. Add role-based route protection": [
+      {
+        "executionId": "7145bd19-3b5b-4e3d-a331-c34f09b2a9f7",
+        "chatSessionId": "sess_543806d7-f031-4f16-81a5-36bd4f810125",
+        "timestamp": 1792676197369
+      }
+    ],
+    "7. Build the cart context": [
+      {
+        "executionId": "e6b001e8-457b-4a8b-bfde-9ff034509280",
+        "chatSessionId": "sess_6647ffda-a9b0-42d7-8bff-c76cb4a3b755",
+        "timestamp": 1792676259257
+      },
+      {
+        "executionId": "e6b001e8-457b-4a8b-bfde-9ff034509280",
+        "chatSessionId": "sess_6647ffda-a9b0-42d7-8bff-c76cb4a3b755",
+        "timestamp": 1792676477041
+      }
+    ],
+    "8.1 Build `AddToCartButton`": [
+      {
+        "executionId": "d2a021e2-b0b8-4946-a450-2e035bdc5043",
+        "chatSessionId": "sess_3119e74c-7bf8-4007-b9d1-7f56fc0f52af",
+        "timestamp": 1792676535164
+      },
+      {
+        "executionId": "d2a021e2-b0b8-4946-a450-2e035bdc5043",
+        "chatSessionId": "sess_3119e74c-7bf8-4007-b9d1-7f56fc0f52af",
+        "timestamp": 1792676757346
+      }
+    ],
+    "8.2 Build the `/cart` route": [
+      {
+        "executionId": "2f48a694-217b-42cd-873c-acead1cf579e",
+        "chatSessionId": "sess_199b62dd-8525-4bc7-9693-ec982b414130",
+        "timestamp": 1792676846377
+      },
+      {
+        "executionId": "2f48a694-217b-42cd-873c-acead1cf579e",
+        "chatSessionId": "sess_199b62dd-8525-4bc7-9693-ec982b414130",
+        "timestamp": 1792677100652
+      }
+    ],
+    "8. Build the add-to-cart control and cart page": [
+      {
+        "executionId": "2f48a694-217b-42cd-873c-acead1cf579e",
+        "chatSessionId": "sess_199b62dd-8525-4bc7-9693-ec982b414130",
+        "timestamp": 1792677100836
+      }
+    ],
+    "9. Build checkout": [
+      {
+        "executionId": "0705c089-e7e0-4590-89a7-2e28ba004038",
+        "chatSessionId": "sess_0f67d6d9-6939-40a6-8746-3d96a3454eb6",
+        "timestamp": 1792726165378
+      },
+      {
+        "executionId": "0705c089-e7e0-4590-89a7-2e28ba004038",
+        "chatSessionId": "sess_0f67d6d9-6939-40a6-8746-3d96a3454eb6",
+        "timestamp": 1792726473339
+      }
+    ],
+    "10. Rework the customer order views": [
+      {
+        "executionId": "37577def-dd7f-4ba5-a19d-2d4a115d213b",
+        "chatSessionId": "sess_147c2eb6-ef38-4cc4-9161-f41aa88269c7",
+        "timestamp": 1792726545183
+      },
+      {
+        "executionId": "37577def-dd7f-4ba5-a19d-2d4a115d213b",
+        "chatSessionId": "sess_147c2eb6-ef38-4cc4-9161-f41aa88269c7",
+        "timestamp": 1792726836709
+      }
+    ],
+    "11. Build admin product CRUD": [
+      {
+        "executionId": "3cb1ac7d-3bd8-41eb-9c73-04cc5a9f0218",
+        "chatSessionId": "sess_472ba0a0-bb24-41f3-aa09-0adf48cef011",
+        "timestamp": 1792726902733
+      },
+      {
+        "executionId": "3cb1ac7d-3bd8-41eb-9c73-04cc5a9f0218",
+        "chatSessionId": "sess_472ba0a0-bb24-41f3-aa09-0adf48cef011",
+        "timestamp": 1792727293242
+      }
+    ],
+    "12. Build admin category CRUD": [
+      {
+        "executionId": "2c06a1a0-1dd6-4049-9d2c-5f2d041e2e28",
+        "chatSessionId": "sess_5975af49-66d1-4737-b75a-2c2837f9b8f9",
+        "timestamp": 1792727359075
+      },
+      {
+        "executionId": "2c06a1a0-1dd6-4049-9d2c-5f2d041e2e28",
+        "chatSessionId": "sess_5975af49-66d1-4737-b75a-2c2837f9b8f9",
+        "timestamp": 1792727637622
+      }
+    ],
+    "13. Build the admin order overview": [
+      {
+        "executionId": "06592124-f7e4-4ffc-9b9a-d6ed1413001f",
+        "chatSessionId": "sess_00401091-76c1-4b30-803d-ad088e286469",
+        "timestamp": 1792727994103
+      },
+      {
+        "executionId": "06592124-f7e4-4ffc-9b9a-d6ed1413001f",
+        "chatSessionId": "sess_00401091-76c1-4b30-803d-ad088e286469",
+        "timestamp": 1792728106471
+      }
+    ],
+    "14. Add toast notifications": [
+      {
+        "executionId": "3b8a65c8-d2f9-4dd8-97cb-09c38e566ea9",
+        "chatSessionId": "sess_478f7412-bb00-46e2-8290-5be1abd00226",
+        "timestamp": 1792728178771
+      },
+      {
+        "executionId": "3b8a65c8-d2f9-4dd8-97cb-09c38e566ea9",
+        "chatSessionId": "sess_478f7412-bb00-46e2-8290-5be1abd00226",
+        "timestamp": 1792728567560
+      }
+    ],
+    "16. Write the shopping journey end-to-end spec": [
+      {
+        "executionId": "0d7cc09c-8f6d-4e82-879e-fc9b6924c797",
+        "chatSessionId": "sess_85eca1fb-4ff0-4407-aa9b-9c9bcd66b46b",
+        "timestamp": 1792736511033
+      },
+      {
+        "executionId": "0d7cc09c-8f6d-4e82-879e-fc9b6924c797",
+        "chatSessionId": "sess_85eca1fb-4ff0-4407-aa9b-9c9bcd66b46b",
+        "timestamp": 1792737036134
+      }
+    ],
+    "17. Write the admin CRUD end-to-end spec": [
+      {
+        "executionId": "dbfe4a4d-d8af-4e41-96e2-87aafd0d895a",
+        "chatSessionId": "sess_8e462ee2-6c72-4702-8091-5278eff9c1f3",
+        "timestamp": 1792742718569
+      },
+      {
+        "executionId": "dbfe4a4d-d8af-4e41-96e2-87aafd0d895a",
+        "chatSessionId": "sess_8e462ee2-6c72-4702-8091-5278eff9c1f3",
+        "timestamp": 1792744095504
+      }
+    ]
+  }
+}
