@@ -166,90 +166,83 @@ export default function DashboardPage() {
         Products
       </h1>
 
-      <div className="grid gap-8 lg:grid-cols-3">
-        {/* Form panel */}
-        <div className="lg:col-span-1">
-          {formMode === 'create' ? (
-            <CreateProductForm
-              categories={categories}
-              isSubmitting={isEditing}
-              onSubmit={handleCreateSubmit}
-            />
-          ) : (
-            selectedProduct && (
-              <EditProductForm
-                product={selectedProduct}
-                categories={categories}
-                isSubmitting={isEditing}
-                onSubmit={handleEditSubmit}
-                onCancel={closeForm}
-              />
-            )
-          )}
-        </div>
+      {/* Form section - full width at top */}
+      {formMode === 'create' && (
+        <CreateProductForm
+          categories={categories}
+          isSubmitting={isEditing}
+          onSubmit={handleCreateSubmit}
+        />
+      )}
+      {formMode === 'edit' && selectedProduct && (
+        <EditProductForm
+          product={selectedProduct}
+          categories={categories}
+          isSubmitting={isEditing}
+          onSubmit={handleEditSubmit}
+          onCancel={closeForm}
+        />
+      )}
 
-        {/* Products table */}
-        <div className="lg:col-span-2">
-          {products.length === 0 ? (
-            <div className="rounded-md border border-black/10 bg-white p-8 text-center text-black dark:border-white/15 dark:bg-white/5 dark:text-white">
-              <p>No products yet. Create one to get started.</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/15">
-              <table className="w-full text-sm">
-                <thead className="border-b border-black/10 bg-black/5 dark:border-white/15 dark:bg-white/5">
-                  <tr>
-                    <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
-                      Name
-                    </th>
-                    <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
-                      Price
-                    </th>
-                    <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
-                      Stock
-                    </th>
-                    <th className="px-4 py-3 text-right font-semibold text-black dark:text-white">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-black/10 dark:divide-white/15">
-                  {products.map((product) => (
-                    <tr
-                      key={product.id}
-                      className="hover:bg-black/2 dark:hover:bg-white/2"
-                    >
-                      <td className="px-4 py-3 text-black dark:text-white">
-                        {product.name}
-                      </td>
-                      <td className="px-4 py-3 text-black dark:text-white">
-                        {formatRupiah(product.price)}
-                      </td>
-                      <td className="px-4 py-3 text-black dark:text-white">
-                        {product.stockQuantity}
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <button
-                          onClick={() => openEditForm(product)}
-                          className="mr-2 rounded px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => setDeleteConfirm({ product })}
-                          className="rounded px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+      {/* Products table - full width below form */}
+      {products.length === 0 ? (
+        <div className="rounded-md border border-black/10 bg-white p-8 text-center text-black dark:border-white/15 dark:bg-white/5 dark:text-white">
+          <p>No products yet. Create one to get started.</p>
         </div>
-      </div>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/15">
+          <table className="w-full text-sm">
+            <thead className="border-b border-black/10 bg-black/5 dark:border-white/15 dark:bg-white/5">
+              <tr>
+                <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
+                  Name
+                </th>
+                <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
+                  Price
+                </th>
+                <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
+                  Stock
+                </th>
+                <th className="px-4 py-3 text-right font-semibold text-black dark:text-white">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 dark:divide-white/15">
+              {products.map((product) => (
+                <tr
+                  key={product.id}
+                  className="hover:bg-black/2 dark:hover:bg-white/2"
+                >
+                  <td className="px-4 py-3 text-black dark:text-white">
+                    {product.name}
+                  </td>
+                  <td className="px-4 py-3 text-black dark:text-white">
+                    {formatRupiah(product.price)}
+                  </td>
+                  <td className="px-4 py-3 text-black dark:text-white">
+                    {product.stockQuantity}
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => openEditForm(product)}
+                      className="mr-2 rounded px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => setDeleteConfirm({ product })}
+                      className="rounded px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Delete confirmation modal */}
       {deleteConfirm && (
@@ -290,6 +283,7 @@ export default function DashboardPage() {
     </div>
   );
 }
+
 
 
 
