@@ -100,12 +100,12 @@ export default function ProductCard({
           </span>
         </div>
 
-        <p className="line-clamp-2 text-sm text-black/70 dark:text-white/70">
-          {product.description}
-        </p>
-
         <p className="text-sm font-medium text-black dark:text-white">
           {categoryName}
+        </p>
+
+        <p className="line-clamp-2 text-sm text-black/70 dark:text-white/70">
+          {product.description}
         </p>
 
         <p className="text-lg font-bold text-black dark:text-white">
