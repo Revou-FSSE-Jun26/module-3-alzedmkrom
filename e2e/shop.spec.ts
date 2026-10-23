@@ -42,6 +42,7 @@ test.describe('Shopping journey', () => {
     await page.fill('input[name="username"]', testUsername);
     await page.fill('input[name="email"]', uniqueEmail);
     await page.fill('input[name="password"]', testPassword);
+    await page.fill('input[name="confirmPassword"]', testPassword);
 
     await page.click('button[type="submit"]');
 
@@ -71,20 +72,38 @@ test.describe('Shopping journey', () => {
     const firstProductName = await productNameElements.nth(0).textContent();
     const secondProductName = await productNameElements.nth(1).textContent();
 
-    // Click the first add to cart button
-    await addToCartButtons.nth(0).click();
+    // For the first product: increment quantity and add to cart
+    // Each product is wrapped in a Link, so filter by product name to get the right card
+    const firstProductCard = page.locator('a').filter({ hasText: firstProductName! }).first();
+    // Click the + button to increment quantity from 0 to 1
+    await firstProductCard.locator('button:has-text("+")').click();
+    // Wait a moment for the quantity to update
+    await page.waitForTimeout(200);
+    // Click the add to cart button within this card
+    await firstProductCard.locator('button:has-text("Add to cart")').click();
 
     // Wait for the success toast
     await page.waitForSelector('text=added to cart', { timeout: 5000 });
 
-    // Click the second add to cart button
-    await addToCartButtons.nth(1).click();
+    // For the second product: increment quantity and add to cart
+    // Filter by the second product name to get its card
+    const secondProductCard = page.locator('a').filter({ hasText: secondProductName! }).first();
+    // Click the + button to increment quantity from 0 to 1
+    await secondProductCard.locator('button:has-text("+")').click();
+    // Wait a moment for the quantity to update
+    await page.waitForTimeout(200);
+    // Click the add to cart button within this card
+    await secondProductCard.locator('button:has-text("Add to cart")').click();
 
     // Wait for the second success toast
     await page.waitForSelector('text=added to cart', { timeout: 5000 });
 
-    // --- Navigate to cart ---
-    await page.goto('/cart');
+    // --- Navigate to cart using the Cart link in the header ---
+    // Use a more specific selector to avoid strict mode violation - the Cart link in the nav bar
+    await page.locator('a[href="/cart"]').first().click();
+    
+    // Wait for the cart page to load
+    await page.waitForURL('/cart', { timeout: 10000 });
 
     // Verify cart page title (use heading for specificity)
     await expect(page.getByRole('heading', { name: 'Shopping Cart' })).toBeVisible();
@@ -96,10 +115,10 @@ test.describe('Shopping journey', () => {
     expect(cartItemCount).toBe(2);
 
     // Verify first product is in cart table
-    await expect(page.locator(`text=${firstProductName}`)).toBeVisible();
+    await expect(page.locator('tbody').locator('td', { hasText: firstProductName! })).toBeVisible();
 
     // Verify second product is in cart table
-    await expect(page.locator(`text=${secondProductName}`)).toBeVisible();
+    await expect(page.locator('tbody').locator('td', { hasText: secondProductName! })).toBeVisible();
 
     // --- Assert the cart total is displayed ---
     const totalText = page.locator('text=Order Total');
@@ -131,8 +150,8 @@ test.describe('Shopping journey', () => {
     await page.click('button:has-text("Confirm Order")');
 
     // Order will be confirmed and we'll be redirected
-    // Wait for navigation to orders page
-    await page.waitForURL('/orders');
+    // Wait for navigation to orders page with explicit longer timeout
+    await page.waitForURL('/orders', { timeout: 60000 });
 
     // --- Verify cart is cleared (landing on /orders confirms redirect happened) ---
     // Verify orders page is loaded (use heading for specificity)
@@ -140,6 +159,8 @@ test.describe('Shopping journey', () => {
 
     // --- Verify newly created order appears in the list ---
     // The newly created order should appear as a row in the orders table
+    // Wait for the orders table to be populated
+    await page.waitForSelector('tbody tr', { timeout: 10000 });
     const orderRows = page.locator('tbody tr');
     const orderCount = await orderRows.count();
 

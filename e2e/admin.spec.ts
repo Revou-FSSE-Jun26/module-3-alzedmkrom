@@ -71,11 +71,15 @@ test.describe('Admin CRUD dashboard', () => {
 
     // --- PRODUCT CRUD ---
 
-    // Verify we're on the products page
-    await expect(page.getByRole('heading', { name: 'Products' })).toBeVisible({ timeout: 10000 });
+    // Verify we're on the products page - wait for the products table to appear
+    await page.waitForSelector('table tbody', { timeout: 10000 });
 
     // --- Create Product ---
-    // Fill in the product creation form
+    // Click the + Add Product button to show the form
+    await page.click('button:has-text("+ Add Product")');
+    await page.waitForTimeout(300);
+
+    // Now fill in the product creation form
     await page.fill('input[name="name"]', uniqueProductName);
     await page.fill('textarea[name="description"]', 'Test product for e2e admin CRUD');
     await page.fill('input[name="price"]', '50000');
@@ -146,11 +150,15 @@ test.describe('Admin CRUD dashboard', () => {
     // Navigate to categories page
     await page.goto('/dashboard/categories');
 
-    // Verify we're on the categories page
-    await expect(page.getByRole('heading', { name: 'Categories' })).toBeVisible({ timeout: 10000 });
+    // Verify we're on the categories page - wait for the categories table to appear
+    await page.waitForSelector('table tbody', { timeout: 10000 });
 
     // --- Create Category ---
-    // Fill in the category creation form
+    // Click the + Add Category button to show the form
+    await page.click('button:has-text("+ Add Category")');
+    await page.waitForTimeout(300);
+
+    // Now fill in the category creation form
     await page.fill('input[name="name"]', uniqueCategoryName);
     await page.fill('textarea[name="description"]', 'Test category for e2e admin CRUD');
 

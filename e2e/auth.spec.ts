@@ -57,6 +57,7 @@ test.describe('Authentication flow', () => {
     await page.fill('input[name="username"]', testUsername);
     await page.fill('input[name="email"]', uniqueEmail);
     await page.fill('input[name="password"]', testPassword);
+    await page.fill('input[name="confirmPassword"]', testPassword);
 
     // Submit the form
     await page.click('button[type="submit"]');
