@@ -122,11 +122,19 @@ export default function CartPage() {
 
           {/* Total and checkout */}
           <div className="flex flex-col items-end gap-4 sm:flex-row sm:justify-between sm:items-center">
-            <div className="flex flex-col items-end gap-1">
-              <p className="text-black/60 dark:text-white/60">Order Total</p>
-              <p className="text-3xl font-bold text-black dark:text-white">
-                {formatRupiah(totalPrice)}
-              </p>
+            <div className="flex flex-col items-end gap-2">
+              <div className="flex flex-col items-end gap-1">
+                <p className="text-black/60 dark:text-white/60">Total Quantity</p>
+                <p className="text-lg font-semibold text-black dark:text-white">
+                  {items.reduce((sum, item) => sum + item.quantity, 0)} items
+                </p>
+              </div>
+              <div className="flex flex-col items-end gap-1">
+                <p className="text-black/60 dark:text-white/60">Order Total</p>
+                <p className="text-3xl font-bold text-black dark:text-white">
+                  {formatRupiah(totalPrice)}
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-col gap-2 w-full sm:w-auto">
