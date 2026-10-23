@@ -12,7 +12,7 @@
 // in-flight fetch shows app/loading.tsx.
 
 import type { Metadata } from "next";
-import { getProducts } from "@/lib/api";
+import { getProducts, getCategories } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 
 export const metadata: Metadata = {
@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const products = await getProducts({});
+  const categories = await getCategories();
   const featured = products.slice(0, 5);
 
   return (
@@ -36,7 +37,7 @@ export default async function Home() {
         </p>
       </header>
 
-      <ProductGrid products={featured} readOnly />
+      <ProductGrid products={featured} categories={categories} readOnly />
     </section>
   );
 }
