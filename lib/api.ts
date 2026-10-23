@@ -221,18 +221,26 @@ async function login(email: string, password: string): Promise<LoginResponse> {
 }
 
 /**
- * Refresh the access token using the current token. The backend auto-refreshes
- * tokens when the user is actively browsing, so calling this endpoint extends
- * the session lifetime. Called proactively when the token is close to expiry.
+ * Refresh the access token using the refresh token. The backend requires the
+ * refresh token (with @jwt_required(refresh=True)) in the Authorization header.
+ * Returns a new LoginResponse with fresh access and refresh tokens.
  */
-async function refreshToken(token: string): Promise<LoginResponse> {
-  return fetchJson<LoginResponse>('/auth/refresh', {
+async function refreshToken(refreshTokenValue: string): Promise<LoginResponse> {
+  const url = `${baseUrl()}/auth/refresh`;
+  const res = await fetch(url, {
+    cache: 'no-store',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      'Authorization': `Bearer ${refreshTokenValue}`,
     },
   });
+
+  if (!res.ok) {
+    throw new ApiError(await describeFailure(res), res.status, url);
+  }
+
+  return (await res.json()) as LoginResponse;
 }
 
 // ---------- admin writes ----------
