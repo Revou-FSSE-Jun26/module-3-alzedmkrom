@@ -74,8 +74,19 @@ function sessionFromLogin(response: {
   user: Parameters<typeof toUser>[0];
 }): Session {
   const now = Date.now();
-  const expiresAt = now + response.expires_in * 1000;
-  console.log(`[Token Refresh] Session created: expires_in=${response.expires_in}s, now=${now}, expiresAt=${expiresAt}, diff=${expiresAt - now}ms`);
+  // Backend returns expires_in in SECONDS, so multiply by 1000 for milliseconds
+  // But validate that expires_in is reasonable (should be between 1 minute and 1 day)
+  const expiresInMs = response.expires_in * 1000;
+  const expiresAt = now + expiresInMs;
+  
+  console.log(`[Token Refresh] Session created:`);
+  console.log(`  - expires_in from API: ${response.expires_in} (raw value)`);
+  console.log(`  - expires_in in seconds: ${response.expires_in}s`);
+  console.log(`  - expires_in in ms: ${expiresInMs}ms`);
+  console.log(`  - now: ${now}`);
+  console.log(`  - calculated expiresAt: ${expiresAt}`);
+  console.log(`  - time until expiry: ${expiresAt - now}ms (${((expiresAt - now) / 1000).toFixed(0)}s)`);
+  
   return {
     token: response.access_token,
     user: toUser(response.user),
