@@ -23,7 +23,7 @@ import CreateProductForm from '@/components/CreateProductForm';
 import EditProductForm from '@/components/EditProductForm';
 import Link from 'next/link';
 
-type FormMode = 'create' | 'edit';
+type FormMode = 'create' | 'edit' | null;
 
 // Helper to convert form data (strings) to API input (numbers)
 function formToInput(data: ProductFormState) {
@@ -42,7 +42,7 @@ export default function DashboardPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [formMode, setFormMode] = useState<FormMode>('create');
+  const [formMode, setFormMode] = useState<FormMode>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{
     product: Product;
@@ -153,7 +153,7 @@ export default function DashboardPage() {
   }
 
   function closeForm(): void {
-    setFormMode('create');
+    setFormMode(null);
     setSelectedProduct(null);
   }
 
@@ -184,7 +184,7 @@ export default function DashboardPage() {
           onSubmit={handleCreateSubmit}
         />
       )}
-      {formMode === 'edit' && selectedProduct && (
+      {formMode === 'edit' && (
         <EditProductForm
           product={selectedProduct}
           categories={categories}
@@ -294,5 +294,6 @@ export default function DashboardPage() {
     </section>
   );
 }
+
 
 

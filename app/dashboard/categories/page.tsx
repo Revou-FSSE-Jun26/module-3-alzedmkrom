@@ -22,14 +22,14 @@ import CreateCategoryForm from '@/components/CreateCategoryForm';
 import EditCategoryForm from '@/components/EditCategoryForm';
 import Link from 'next/link';
 
-type FormMode = 'create' | 'edit';
+type FormMode = 'create' | 'edit' | null;
 
 export default function CategoriesPage() {
   const { session } = useAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [formMode, setFormMode] = useState<FormMode>('create');
+  const [formMode, setFormMode] = useState<FormMode>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{
     category: Category;
@@ -134,7 +134,7 @@ export default function CategoriesPage() {
   }
 
   function closeForm(): void {
-    setFormMode('create');
+    setFormMode(null);
     setSelectedCategory(null);
   }
 
@@ -164,7 +164,7 @@ export default function CategoriesPage() {
           onSubmit={handleCreateSubmit}
         />
       )}
-      {formMode === 'edit' && selectedCategory && (
+      {formMode === 'edit' && (
         <EditCategoryForm
           category={selectedCategory}
           isSubmitting={isEditing}
@@ -267,5 +267,6 @@ export default function CategoriesPage() {
     </section>
   );
 }
+
 
 
