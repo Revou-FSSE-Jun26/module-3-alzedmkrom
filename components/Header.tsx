@@ -8,7 +8,7 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
-import Nav, { NavFallback } from "./Nav";
+import Nav, { NavFallback, CartBadge } from "./Nav";
 import { useAuth } from "@/hooks/useAuth";
 
 function SessionUI() {
@@ -58,6 +58,14 @@ function SessionUI() {
   );
 }
 
+function CartBadgeFallback() {
+  return (
+    <Link href="/cart" className="border-b-2 border-transparent pb-1 font-medium text-black/70 transition-colors hover:text-black dark:text-white/70 dark:hover:text-white">
+      Cart
+    </Link>
+  );
+}
+
 export default function Header() {
   return (
     <header className="border-b border-black/10 bg-white dark:border-white/15 dark:bg-black">
@@ -76,14 +84,20 @@ export default function Header() {
             would block prerendering the shared chrome. Wrapping Nav in Suspense
             lets the shell prerender with the inactive fallback and streams the
             active state in — the documented fix for a runtime client hook.
-            
-            CartBadge reads useCart() which depends on context, so it renders
-            after the Suspense fallback and streams in the cart count once
-            hydration is complete.
           */}
           <Suspense fallback={<NavFallback />}>
             <Nav />
           </Suspense>
+          
+          {/*
+            CartBadge reads useCart() and usePathname(). It's wrapped in its own
+            Suspense boundary so it can load independently after hydration without
+            blocking the main nav rendering.
+          */}
+          <Suspense fallback={<CartBadgeFallback />}>
+            <CartBadge />
+          </Suspense>
+          
           <SessionUI />
         </div>
       </div>

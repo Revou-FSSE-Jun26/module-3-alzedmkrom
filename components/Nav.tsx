@@ -91,12 +91,11 @@ export default function Nav() {
           </Link>
         );
       })}
-      
-      {/* Cart link with item count badge - isolated in its own component */}
-      <CartBadge />
     </nav>
   );
 }
+
+export { CartBadge };
 
 // Prerender fallback for the Suspense boundary around <Nav /> in the Header.
 // It reads no pathname, so it is safe to prerender on a dynamic route; every
