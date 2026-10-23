@@ -20,6 +20,7 @@ import { toastError, toastSuccess } from '@/lib/toast';
 import type { Category, CategoryFormState } from '@/lib/types';
 import CreateCategoryForm from '@/components/CreateCategoryForm';
 import EditCategoryForm from '@/components/EditCategoryForm';
+import Link from 'next/link';
 
 type FormMode = 'create' | 'edit';
 
@@ -144,9 +145,17 @@ export default function CategoriesPage() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
       <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-bold text-black dark:text-white">
-        Categories
-      </h1>
+      <nav className="flex gap-6 border-b border-black/10 dark:border-white/15 pb-4">
+        <Link href="/dashboard" className="text-2xl font-bold text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white">
+          Products
+        </Link>
+        <Link href="/dashboard/categories" className="text-2xl font-bold text-black dark:text-white hover:text-black/70 dark:hover:text-white/70">
+          Categories
+        </Link>
+        <Link href="/dashboard/orders" className="text-2xl font-bold text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white">
+          Orders
+        </Link>
+      </nav>
 
       {/* Create/Edit form - shown at top when active */}
       {formMode === 'create' && (
@@ -258,3 +267,4 @@ export default function CategoriesPage() {
     </section>
   );
 }
+

@@ -16,6 +16,7 @@ import { getAllOrders } from '@/lib/api';
 import { toastError } from '@/lib/toast';
 import type { Order } from '@/lib/types';
 import { formatRupiah, formatDate } from '@/lib/format';
+import Link from 'next/link';
 
 export default function DashboardOrdersPage() {
   const { session } = useAuth();
@@ -71,9 +72,17 @@ export default function DashboardOrdersPage() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
       <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-bold text-black dark:text-white">
-        All Orders
-      </h1>
+      <nav className="flex gap-6 border-b border-black/10 dark:border-white/15 pb-4">
+        <Link href="/dashboard" className="text-2xl font-bold text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white">
+          Products
+        </Link>
+        <Link href="/dashboard/categories" className="text-2xl font-bold text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white">
+          Categories
+        </Link>
+        <Link href="/dashboard/orders" className="text-2xl font-bold text-black dark:text-white hover:text-black/70 dark:hover:text-white/70">
+          Orders
+        </Link>
+      </nav>
 
       {orders.length === 0 ? (
         <div className="rounded-md border border-black/10 bg-white p-8 text-center text-black dark:border-white/15 dark:bg-white/5 dark:text-white">
@@ -146,3 +155,4 @@ export default function DashboardOrdersPage() {
     </section>
   );
 }
+

@@ -21,6 +21,7 @@ import type { Category, Product, ProductFormState } from '@/lib/types';
 import { formatRupiah } from '@/lib/format';
 import CreateProductForm from '@/components/CreateProductForm';
 import EditProductForm from '@/components/EditProductForm';
+import Link from 'next/link';
 
 type FormMode = 'create' | 'edit';
 
@@ -163,9 +164,17 @@ export default function DashboardPage() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
       <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-bold text-black dark:text-white">
-        Products
-      </h1>
+      <nav className="flex gap-6 border-b border-black/10 dark:border-white/15 pb-4">
+        <Link href="/dashboard" className="text-2xl font-bold text-black dark:text-white hover:text-black/70 dark:hover:text-white/70">
+          Products
+        </Link>
+        <Link href="/dashboard/categories" className="text-2xl font-bold text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white">
+          Categories
+        </Link>
+        <Link href="/dashboard/orders" className="text-2xl font-bold text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white">
+          Orders
+        </Link>
+      </nav>
 
       {/* Form section - full width at top */}
       {formMode === 'create' && (
@@ -285,3 +294,4 @@ export default function DashboardPage() {
     </section>
   );
 }
+
