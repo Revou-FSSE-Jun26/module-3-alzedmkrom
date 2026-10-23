@@ -1,5 +1,5 @@
-export const instant = false;
 'use client';
+export const instant = false;
 
 // app/dashboard/page.tsx
 //
@@ -291,4 +291,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
 
