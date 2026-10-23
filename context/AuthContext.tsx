@@ -209,29 +209,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const currentSession = store.getSnapshot().session;
       
       // If session was cleared (logged out), stop checking
-      if (!currentSession?.token) return;
+      if (!currentSession?.token) {
+        console.log(`[Token Refresh] No active session, skipping refresh`);
+        return;
+      }
       
       const now = Date.now();
       const timeUntilExpiry = currentSession.expiresAt - now;
       
       // Log for debugging
-      console.log(`[Token Refresh] Time until expiry: ${timeUntilExpiry}ms`);
+      console.log(`[Token Refresh] Time until expiry: ${timeUntilExpiry}ms, Token: ${currentSession.token.substring(0, 20)}...`);
       
       // Refresh if expiring within 1 minute (60000 ms)
       if (timeUntilExpiry < 60000) {
         console.log(`[Token Refresh] Refreshing token (expiring in ${timeUntilExpiry}ms)`);
         try {
+          console.log(`[Token Refresh] Calling apiRefreshToken with token: ${currentSession.token.substring(0, 20)}...`);
           const response = await apiRefreshToken(currentSession.token);
+          console.log(`[Token Refresh] Refresh API response:`, response);
+          
           const next: Session = {
             token: response.access_token,
             user: currentSession.user, // User doesn't change on refresh
             expiresAt: now + response.expires_in * 1000,
           };
-          console.log(`[Token Refresh] Token refreshed successfully. New expiry: ${next.expiresAt}`);
+          console.log(`[Token Refresh] Token refreshed successfully. New expiry: ${next.expiresAt}, New token: ${next.token.substring(0, 20)}...`);
           writeJson(SESSION_KEY, next);
           store.setSession(next);
         } catch (error) {
-          console.error(`[Token Refresh] Refresh failed:`, error);
+          console.error(`[Token Refresh] Refresh failed:`, error instanceof Error ? error.message : String(error));
           // Refresh failed; token has expired. Log out the user.
           logout();
         }
