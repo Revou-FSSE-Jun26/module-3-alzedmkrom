@@ -104,7 +104,7 @@ export default function ProductCard({
           {product.description}
         </p>
 
-        <p className="text-xs text-black/50 dark:text-white/50 font-medium">
+        <p className="text-sm font-medium text-black dark:text-white">
           {categoryName}
         </p>
 
