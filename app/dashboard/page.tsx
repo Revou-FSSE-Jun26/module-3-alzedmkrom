@@ -161,7 +161,8 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
+      <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-bold text-black dark:text-white">
         Products
       </h1>
@@ -280,13 +281,7 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
-    </div>
+          </div>
+    </section>
   );
 }
-
-
-
-
-
-
-

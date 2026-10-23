@@ -142,7 +142,8 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6">
+      <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-bold text-black dark:text-white">
         Categories
       </h1>
@@ -253,12 +254,7 @@ export default function CategoriesPage() {
           </div>
         </div>
       )}
-    </div>
+          </div>
+    </section>
   );
 }
-
-
-
-
-
-
