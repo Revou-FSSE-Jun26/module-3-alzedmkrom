@@ -171,7 +171,7 @@ export default function CheckoutPage() {
           <div className="flex flex-col items-end gap-1">
             <p className="text-black/60 dark:text-white/60">Total Quantity</p>
             <p className="text-lg font-semibold text-black dark:text-white">
-              {items.reduce((sum, item) => sum + item.quantity, 0)} total quantity
+              {items.reduce((sum, item) => sum + item.quantity, 0)} items
             </p>
           </div>
           <div className="flex flex-col items-end gap-1">
