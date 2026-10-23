@@ -198,17 +198,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // to keep the session alive. Check every 10 seconds if a refresh is needed.
   //
   // The interval must read the CURRENT session from the store on each check,
-  // not rely on a closure-captured snapshot, because the snapshot changes
-  // every time the token is refreshed. If we captured snapshot.session once,
-  // the interval would use stale expiresAt and never refresh when needed.
+  // not rely on a closure-captured snapshot. We set up the interval on mount
+  // and never tear it down, letting the check function itself decide whether
+  // to refresh based on the current store state.
   useEffect(() => {
-    if (!snapshot.session?.token) return; // Not logged in
+    console.log('[Token Refresh] Effect setup, initializing token refresh interval');
 
     const checkAndRefresh = async () => {
       // Read the current session from the store, not from closure
       const currentSession = store.getSnapshot().session;
       
-      // If session was cleared (logged out), stop checking
+      // If session was cleared (logged out), skip this check
       if (!currentSession?.token) {
         console.log(`[Token Refresh] No active session, skipping refresh`);
         return;
@@ -244,11 +244,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     };
 
-    // Check immediately on effect setup, then every 10 seconds
+    // Check immediately on effect setup
+    console.log('[Token Refresh] Running initial check');
     checkAndRefresh();
-    const interval = setInterval(checkAndRefresh, 10000);
-    return () => clearInterval(interval);
-  }, [store, logout]); // Only depend on store and logout, not snapshot.session
+    
+    // Then check every 10 seconds
+    const interval = setInterval(() => {
+      console.log('[Token Refresh] Running interval check');
+      checkAndRefresh();
+    }, 10000);
+    
+    console.log('[Token Refresh] Interval started, ID:', interval);
+    
+    return () => {
+      console.log('[Token Refresh] Cleaning up interval');
+      clearInterval(interval);
+    };
+  }, [store, logout]);
 
   const value = useMemo<AuthContextValue>(
     () => ({
