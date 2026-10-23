@@ -234,8 +234,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Log for debugging
       console.log(`[Token Refresh] Now: ${now}, ExpiresAt: ${currentSession.expiresAt}, Time until expiry: ${timeUntilExpiry}ms (${(timeUntilExpiry / 1000).toFixed(0)}s)`);
       
-      // Refresh if expiring within 2 minutes (120000 ms) to have more buffer
-      if (timeUntilExpiry < 120000) {
+      // Refresh when token has less than 5 minutes remaining (300000 ms)
+      // This keeps the session actively refreshed throughout the user's browsing
+      if (timeUntilExpiry < 300000) {
         console.log(`[Token Refresh] Refreshing token (expiring in ${timeUntilExpiry}ms)`);
         try {
           console.log(`[Token Refresh] Calling apiRefreshToken with token: ${currentSession.token.substring(0, 20)}...`);
