@@ -213,8 +213,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       const now = Date.now();
       const timeUntilExpiry = currentSession.expiresAt - now;
+      
+      // Log for debugging
+      console.log(`[Token Refresh] Time until expiry: ${timeUntilExpiry}ms`);
+      
       // Refresh if expiring within 1 minute (60000 ms)
       if (timeUntilExpiry < 60000) {
+        console.log(`[Token Refresh] Refreshing token (expiring in ${timeUntilExpiry}ms)`);
         try {
           const response = await apiRefreshToken(currentSession.token);
           const next: Session = {
@@ -222,16 +227,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             user: currentSession.user, // User doesn't change on refresh
             expiresAt: now + response.expires_in * 1000,
           };
+          console.log(`[Token Refresh] Token refreshed successfully. New expiry: ${next.expiresAt}`);
           writeJson(SESSION_KEY, next);
           store.setSession(next);
         } catch (error) {
+          console.error(`[Token Refresh] Refresh failed:`, error);
           // Refresh failed; token has expired. Log out the user.
           logout();
         }
       }
     };
 
-    const interval = setInterval(checkAndRefresh, 10000); // Check every 10 seconds
+    // Check immediately on effect setup, then every 10 seconds
+    checkAndRefresh();
+    const interval = setInterval(checkAndRefresh, 10000);
     return () => clearInterval(interval);
   }, [store, logout]); // Only depend on store and logout, not snapshot.session
 
