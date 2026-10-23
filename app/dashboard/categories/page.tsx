@@ -161,7 +161,7 @@ export default function CategoriesPage() {
       {formMode === null && (
         <button
           onClick={() => setFormMode('create')}
-          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
+          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
         >
           + Add Category
         </button>
@@ -277,6 +277,7 @@ export default function CategoriesPage() {
     </section>
   );
 }
+
 
 
 

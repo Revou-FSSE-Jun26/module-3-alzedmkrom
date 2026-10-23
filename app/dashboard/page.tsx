@@ -180,7 +180,7 @@ export default function DashboardPage() {
       {formMode === null && (
         <button
           onClick={openCreateForm}
-          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
+          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
         >
           + Add Product
         </button>
@@ -304,6 +304,7 @@ export default function DashboardPage() {
     </section>
   );
 }
+
 
 
 
