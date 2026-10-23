@@ -73,10 +73,13 @@ function sessionFromLogin(response: {
   expires_in: number;
   user: Parameters<typeof toUser>[0];
 }): Session {
+  const now = Date.now();
+  const expiresAt = now + response.expires_in * 1000;
+  console.log(`[Token Refresh] Session created: expires_in=${response.expires_in}s, now=${now}, expiresAt=${expiresAt}, diff=${expiresAt - now}ms`);
   return {
     token: response.access_token,
     user: toUser(response.user),
-    expiresAt: Date.now() + response.expires_in * 1000,
+    expiresAt,
   };
 }
 
@@ -218,7 +221,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const timeUntilExpiry = currentSession.expiresAt - now;
       
       // Log for debugging
-      console.log(`[Token Refresh] Time until expiry: ${timeUntilExpiry}ms, Token: ${currentSession.token.substring(0, 20)}...`);
+      console.log(`[Token Refresh] Now: ${now}, ExpiresAt: ${currentSession.expiresAt}, Time until expiry: ${timeUntilExpiry}ms (${(timeUntilExpiry / 1000).toFixed(0)}s)`);
       
       // Refresh if expiring within 2 minutes (120000 ms) to have more buffer
       if (timeUntilExpiry < 120000) {
