@@ -122,6 +122,11 @@ export default function CategoriesPage() {
     }
   }
 
+  function openCreateForm(): void {
+    setFormMode('create');
+    setSelectedCategory(null);
+  }
+
   function openEditForm(category: Category): void {
     setFormMode('edit');
     setSelectedCategory(category);
@@ -142,82 +147,75 @@ export default function CategoriesPage() {
         Categories
       </h1>
 
-      <div className="grid gap-8 lg:grid-cols-3">
-        {/* Form panel */}
-        <div className="lg:col-span-1">
-          {formMode === 'create' ? (
-            <CreateCategoryForm
-              isSubmitting={isEditing}
-              onSubmit={handleCreateSubmit}
-            />
-          ) : (
-            selectedCategory && (
-              <EditCategoryForm
-                category={selectedCategory}
-                isSubmitting={isEditing}
-                onSubmit={handleEditSubmit}
-                onCancel={closeForm}
-              />
-            )
-          )}
-        </div>
+      {/* Create/Edit form - shown at top when active */}
+      {formMode === 'create' && (
+        <CreateCategoryForm
+          isSubmitting={isEditing}
+          onSubmit={handleCreateSubmit}
+        />
+      )}
+      {formMode === 'edit' && selectedCategory && (
+        <EditCategoryForm
+          category={selectedCategory}
+          isSubmitting={isEditing}
+          onSubmit={handleEditSubmit}
+          onCancel={closeForm}
+        />
+      )}
 
-        {/* Categories table */}
-        <div className="lg:col-span-2">
-          {categories.length === 0 ? (
-            <div className="rounded-md border border-black/10 bg-white p-8 text-center text-black dark:border-white/15 dark:bg-white/5 dark:text-white">
-              <p>No categories yet. Create one to get started.</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/15">
-              <table className="w-full text-sm">
-                <thead className="border-b border-black/10 bg-black/5 dark:border-white/15 dark:bg-white/5">
-                  <tr>
-                    <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
-                      Name
-                    </th>
-                    <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
-                      Description
-                    </th>
-                    <th className="px-4 py-3 text-right font-semibold text-black dark:text-white">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-black/10 dark:divide-white/15">
-                  {categories.map((category) => (
-                    <tr
-                      key={category.id}
-                      className="hover:bg-black/2 dark:hover:bg-white/2"
-                    >
-                      <td className="px-4 py-3 text-black dark:text-white">
-                        {category.name}
-                      </td>
-                      <td className="px-4 py-3 text-black dark:text-white line-clamp-1">
-                        {category.description}
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <button
-                          onClick={() => openEditForm(category)}
-                          className="mr-2 rounded px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => setDeleteConfirm({ category })}
-                          className="rounded px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+      {/* Categories table - full width */}
+      {categories.length === 0 ? (
+        <div className="rounded-md border border-black/10 bg-white p-8 text-center text-black dark:border-white/15 dark:bg-white/5 dark:text-white">
+          <p>No categories yet. Create one to get started.</p>
         </div>
-      </div>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-black/10 dark:border-white/15">
+          <table className="w-full text-sm">
+            <thead className="border-b border-black/10 bg-black/5 dark:border-white/15 dark:bg-white/5">
+              <tr>
+                <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
+                  Name
+                </th>
+                <th className="px-4 py-3 text-left font-semibold text-black dark:text-white">
+                  Description
+                </th>
+                <th className="px-4 py-3 text-right font-semibold text-black dark:text-white">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-black/10 dark:divide-white/15">
+              {categories.map((category) => (
+                <tr
+                  key={category.id}
+                  className="hover:bg-black/2 dark:hover:bg-white/2"
+                >
+                  <td className="px-4 py-3 text-black dark:text-white">
+                    {category.name}
+                  </td>
+                  <td className="px-4 py-3 text-black dark:text-white line-clamp-1">
+                    {category.description}
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => openEditForm(category)}
+                      className="mr-2 rounded px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => setDeleteConfirm({ category })}
+                      className="rounded px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Delete confirmation modal */}
       {deleteConfirm && (
