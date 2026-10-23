@@ -259,8 +259,8 @@ Tasks 1 through 3 are strictly sequential — everything needs types, then stora
   - Commit: `test(e2e): cover admin CRUD dashboard journey`
   - _Requirements: 13.5, 13.6_
 
-- [ ] 18. Document the project and capture screenshots
-- [ ] 18.1 Update the README
+- [x] 18. Document the project and capture screenshots
+- [x] 18.1 Update the README
   - Write an overview of what the RevoShop frontend does
   - List the implemented pages and major functionality
   - List the technologies used: Next.js, React, TypeScript, Tailwind CSS, react-hot-toast, Playwright, `next/navigation`, `localStorage` session persistence and `NEXT_PUBLIC_API_BASE_URL`
@@ -268,12 +268,12 @@ Tasks 1 through 3 are strictly sequential — everything needs types, then stora
   - Note that the admin role cannot be self-registered, since `POST /register` always returns `CUSTOMER`, so an admin account must be provisioned out of band
   - _Requirements: 14.1, 14.2, 14.3, 14.4_
 
-- [ ] 18.2 Capture and reference the screenshots
+- [x] 18.2 Capture and reference the screenshots
   - Capture at least one working view each for home, product listing, product detail, category listing, register, login and the admin dashboard
   - Commit the images and reference every one from the README, verifying each path resolves
   - _Requirements: 14.5_
 
-- [ ] 18.3 Final verification pass
+- [x] 18.3 Final verification pass
   - Run `npx tsc --noEmit`, `npm run lint` and `npm run build`; confirm all three exit clean
   - Run `npm run test:e2e` and confirm all three specs pass locally
   - Confirm the commit history shows progress across forms, authentication and testing
