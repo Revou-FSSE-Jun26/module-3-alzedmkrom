@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 import { useRequireRole } from '@/hooks/useRequireRole';
 import { getMyOrders } from '@/lib/api';
+import { formatRupiah } from '@/lib/format';
 import type { Order } from '@/lib/types';
 
 export default function OrdersPage() {
@@ -126,7 +127,7 @@ export default function OrdersPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-black dark:text-white">
-                    ${(order.totalPrice / 100).toFixed(2)}
+                    {formatRupiah(order.totalPrice)}
                   </td>
                   <td className="px-4 py-3 text-black/60 dark:text-white/60">
                     {new Date(order.createdAt).toLocaleDateString()}

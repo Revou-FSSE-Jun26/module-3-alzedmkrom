@@ -15,6 +15,7 @@ import { useParams } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useRequireRole } from '@/hooks/useRequireRole';
 import { getOrderDetail } from '@/lib/api';
+import { formatRupiah } from '@/lib/format';
 import type { OrderDetail } from '@/lib/types';
 
 export default function OrderDetailPage() {
@@ -112,7 +113,7 @@ export default function OrderDetailPage() {
                   Total
                 </p>
                 <p className="mt-1 font-semibold text-black dark:text-white">
-                  ${(order.totalPrice / 100).toFixed(2)}
+                  {formatRupiah(order.totalPrice)}
                 </p>
               </div>
               <div>
@@ -163,13 +164,13 @@ export default function OrderDetailPage() {
                         </Link>
                       </td>
                       <td className="px-4 py-3 text-right text-black dark:text-white">
-                        ${(item.unitPrice / 100).toFixed(2)}
+                        {formatRupiah(item.unitPrice)}
                       </td>
                       <td className="px-4 py-3 text-right text-black dark:text-white">
                         {item.quantity}
                       </td>
                       <td className="px-4 py-3 text-right font-semibold text-black dark:text-white">
-                        ${(item.lineTotal / 100).toFixed(2)}
+                        {formatRupiah(item.lineTotal)}
                       </td>
                     </tr>
                   ))}
