@@ -22,13 +22,14 @@
 import {
   createContext,
   useCallback,
+  useEffect,
   useMemo,
   useState,
   useSyncExternalStore,
 } from 'react';
 import type { ReactNode } from 'react';
 
-import { login as apiLogin, register as apiRegister } from '@/lib/api';
+import { login as apiLogin, register as apiRegister, refreshToken as apiRefreshToken } from '@/lib/api';
 import { isSession, readJson, remove, writeJson } from '@/lib/storage';
 import { CART_KEY, SESSION_KEY, toUser } from '@/lib/types';
 import type { Session, User } from '@/lib/types';
@@ -191,6 +192,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     remove(CART_KEY);
     store.setSession(null);
   }, [store]);
+
+  // Refresh the token when it's close to expiry. The backend auto-refreshes
+  // tokens when the user is active, so we proactively refresh before expiry
+  // to keep the session alive. Check every 10 seconds if a refresh is needed.
+  useEffect(() => {
+    if (!snapshot.session?.token) return; // Not logged in
+
+    const checkAndRefresh = async () => {
+      const now = Date.now();
+      const timeUntilExpiry = snapshot.session!.expiresAt - now;
+      // Refresh if expiring within 1 minute (60000 ms)
+      if (timeUntilExpiry < 60000) {
+        try {
+          const response = await apiRefreshToken(snapshot.session!.token);
+          const next: Session = {
+            token: response.access_token,
+            user: snapshot.session!.user, // User doesn't change on refresh
+            expiresAt: now + response.expires_in * 1000,
+          };
+          writeJson(SESSION_KEY, next);
+          store.setSession(next);
+        } catch (error) {
+          // Refresh failed; token has expired. Log out the user.
+          logout();
+        }
+      }
+    };
+
+    const interval = setInterval(checkAndRefresh, 10000); // Check every 10 seconds
+    return () => clearInterval(interval);
+  }, [snapshot.session, store, logout]);
 
   const value = useMemo<AuthContextValue>(
     () => ({

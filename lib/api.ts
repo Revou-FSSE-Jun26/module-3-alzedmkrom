@@ -220,6 +220,21 @@ async function login(email: string, password: string): Promise<LoginResponse> {
   });
 }
 
+/**
+ * Refresh the access token using the current token. The backend auto-refreshes
+ * tokens when the user is actively browsing, so calling this endpoint extends
+ * the session lifetime. Called proactively when the token is close to expiry.
+ */
+async function refreshToken(token: string): Promise<LoginResponse> {
+  return fetchJson<LoginResponse>('/auth/refresh', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 // ---------- admin writes ----------
 //
 // The input shapes are camelCase, matching the app models the forms produce.
@@ -402,7 +417,7 @@ async function getAllOrders(token: string): Promise<Order[]> {
   return records.map(toOrder);
 }
 
-export async function updateOrderStatus(id: number, status: string, token: string): Promise<Order> {
+async function updateOrderStatus(id: number, status: string, token: string): Promise<Order> {
   const record = await authedFetchJson<OrderRecord>(
     `/orders/${id}`,
     token,
@@ -431,6 +446,7 @@ export {
   getCategories,
   register,
   login,
+  refreshToken,
   createProduct,
   updateProduct,
   deleteProduct,
@@ -441,6 +457,7 @@ export {
   getMyOrders,
   getOrderDetail,
   getAllOrders,
+  updateOrderStatus,
 };
 export type {
   ProductWriteInput,
