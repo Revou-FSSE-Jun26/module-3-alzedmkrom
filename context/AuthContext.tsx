@@ -252,9 +252,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           writeJson(SESSION_KEY, next);
           store.setSession(next);
         } catch (error) {
-          console.error(`[Token Refresh] Refresh failed:`, error instanceof Error ? error.message : String(error));
-          // Refresh failed; token has expired. Log out the user.
-          logout();
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          console.error(`[Token Refresh] Refresh failed: ${errorMessage}`);
+          
+          // Only log out on actual failure, not invalid token (which might be recoverable)
+          // Check if it's a 401 Unauthorized or similar auth error
+          if (error instanceof Error && (errorMessage.includes('401') || errorMessage.includes('Unauthorized'))) {
+            console.log(`[Token Refresh] Token unauthorized, logging out`);
+            logout();
+          } else {
+            console.log(`[Token Refresh] Refresh error is recoverable, keeping session alive`);
+          }
         }
       }
     };
