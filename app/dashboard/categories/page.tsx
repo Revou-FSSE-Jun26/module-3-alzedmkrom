@@ -185,7 +185,7 @@ export default function CategoriesPage() {
           </button>
         </div>
       )}
-      {formMode === 'edit' && (
+      {formMode === 'edit' && selectedCategory && (
         <EditCategoryForm
           category={selectedCategory}
           isSubmitting={isEditing}

@@ -12,9 +12,9 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { getAllOrders, updateOrderStatus } from '@/lib/api';
+import { getAllOrders, updateOrderStatus, getOrderDetail } from '@/lib/api';
 import { toastError, toastSuccess } from '@/lib/toast';
-import type { Order } from '@/lib/types';
+import type { Order, OrderDetail } from '@/lib/types';
 import { formatRupiah, formatDate } from '@/lib/format';
 import Link from 'next/link';
 
@@ -26,6 +26,9 @@ export default function DashboardOrdersPage() {
   const [editingOrderId, setEditingOrderId] = useState<number | null>(null);
   const [editingStatus, setEditingStatus] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
+  const [expandedOrderId, setExpandedOrderId] = useState<number | null>(null);
+  const [expandedOrderDetail, setExpandedOrderDetail] = useState<OrderDetail | null>(null);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
 
   // Fetch all orders on mount.
   useEffect(() => {
@@ -84,6 +87,26 @@ export default function DashboardOrdersPage() {
     } finally {
       setIsUpdating(false);
     }
+  }
+
+  async function handleExpandOrder(orderId: number): Promise<void> {
+    if (!session?.token) return;
+    setExpandedOrderId(orderId);
+    setIsLoadingDetail(true);
+    try {
+      const detail = await getOrderDetail(orderId, session.token);
+      setExpandedOrderDetail(detail);
+    } catch (err) {
+      toastError(err);
+      setExpandedOrderId(null);
+    } finally {
+      setIsLoadingDetail(false);
+    }
+  }
+
+  function closeExpandedOrder(): void {
+    setExpandedOrderId(null);
+    setExpandedOrderDetail(null);
   }
 
   // Guard: token is required.
@@ -188,6 +211,13 @@ export default function DashboardOrdersPage() {
                   </td>
                   <td className="px-4 py-3 text-right">
                     <button
+                      onClick={() => handleExpandOrder(order.id)}
+                      title="View order details"
+                      className="mr-2 rounded px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
+                    >
+                      ▼
+                    </button>
+                    <button
                       onClick={() => openEditModal(order)}
                       className="rounded px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-500/10"
                     >
@@ -198,6 +228,80 @@ export default function DashboardOrdersPage() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Expanded order detail modal */}
+      {expandedOrderId !== null && expandedOrderDetail && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 z-50">
+          <div className="w-full max-w-2xl rounded-lg border border-black/10 bg-white p-6 shadow-lg dark:border-white/15 dark:bg-black max-h-[80vh] overflow-y-auto">
+            <h2 className="text-lg font-semibold text-black dark:text-white mb-4">
+              Order #{expandedOrderId} Details
+            </h2>
+
+            {isLoadingDetail ? (
+              <div className="text-center py-4 text-black dark:text-white">Loading…</div>
+            ) : (
+              <>
+                <div className="mb-4 grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="text-black/60 dark:text-white/60">User ID</p>
+                    <p className="font-semibold text-black dark:text-white">{expandedOrderDetail.userId}</p>
+                  </div>
+                  <div>
+                    <p className="text-black/60 dark:text-white/60">Status</p>
+                    <span
+                      className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
+                        expandedOrderDetail.status === 'COMPLETED'
+                          ? 'bg-green-100 text-green-800 dark:bg-green-500/20 dark:text-green-300'
+                          : expandedOrderDetail.status === 'CANCELLED'
+                            ? 'bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-300'
+                            : expandedOrderDetail.status === 'SHIPPED'
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-300'
+                              : expandedOrderDetail.status === 'PROCESSING'
+                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-500/20 dark:text-yellow-300'
+                                : 'bg-gray-100 text-gray-800 dark:bg-gray-500/20 dark:text-gray-300'
+                      }`}
+                    >
+                      {expandedOrderDetail.status}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-black/60 dark:text-white/60">Total</p>
+                    <p className="font-semibold text-black dark:text-white">{formatRupiah(expandedOrderDetail.totalPrice)}</p>
+                  </div>
+                  <div>
+                    <p className="text-black/60 dark:text-white/60">Date</p>
+                    <p className="font-semibold text-black dark:text-white">{formatDate(expandedOrderDetail.createdAt)}</p>
+                  </div>
+                </div>
+
+                <div className="border-t border-black/10 dark:border-white/15 pt-4">
+                  <h3 className="font-semibold text-black dark:text-white mb-3">Items</h3>
+                  <div className="space-y-2">
+                    {expandedOrderDetail.items.map((item) => (
+                      <div key={item.product.id} className="flex justify-between text-sm p-2 bg-black/5 dark:bg-white/5 rounded">
+                        <div>
+                          <p className="font-medium text-black dark:text-white">{item.product.name}</p>
+                          <p className="text-black/60 dark:text-white/60 text-xs">Qty: {item.quantity} × {formatRupiah(item.unitPrice)}</p>
+                        </div>
+                        <p className="font-semibold text-black dark:text-white">{formatRupiah(item.lineTotal)}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={closeExpandedOrder}
+                className="flex-1 rounded-md border border-black/15 bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-black/5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

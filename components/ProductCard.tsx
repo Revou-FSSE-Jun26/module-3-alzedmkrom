@@ -18,6 +18,7 @@
 import { useState } from "react";
 import Card from "@/components/Card";
 import AddToCartButton from "@/components/AddToCartButton";
+import { useCart } from "@/hooks/useCart";
 import { availabilityOf, type ProductCardProps } from "@/lib/types";
 import {
   getBadgeClasses,
@@ -25,6 +26,7 @@ import {
   getButtonClasses,
 } from "@/lib/productStyles";
 import { formatRupiah } from "@/lib/format";
+import { toastSuccess } from "@/lib/toast";
 
 // Clamp a quantity into [0, max] inclusive, so the counter can never drop below
 // zero or climb past the available stock.
@@ -42,6 +44,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   const availability = availabilityOf(product);
   const inStock = availability.kind !== "out-of-stock";
+  const cart = useCart();
 
   // Every product starts at 0; the shopper chooses a quantity before adding.
   const [quantity, setQuantity] = useState(0);
@@ -53,7 +56,15 @@ export default function ProductCard({
 
   const handleAdd = () => {
     if (!inStock || quantity < 1) return; // nothing to add at zero
-    onAddToCart?.(product, quantity);
+    if (onAddToCart) {
+      // Callback mode (dashboard, detail page)
+      onAddToCart(product, quantity);
+    } else {
+      // Direct mode (catalog) — use cart context
+      cart.addItem(product, quantity);
+      toastSuccess(`${product.name} added to cart`);
+      setQuantity(0);
+    }
   };
 
   return (

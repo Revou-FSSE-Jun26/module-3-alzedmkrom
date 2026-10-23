@@ -205,7 +205,7 @@ export default function DashboardPage() {
           </button>
         </div>
       )}
-      {formMode === 'edit' && (
+      {formMode === 'edit' && selectedProduct && (
         <EditProductForm
           product={selectedProduct}
           categories={categories}
@@ -292,7 +292,7 @@ export default function DashboardPage() {
               Delete Product?
             </h2>
             <p className="mt-2 text-sm text-black/70 dark:text-white/70">
-              Are you sure you want to delete "{deleteConfirm.product.name}"?
+              Are you sure you want to delete &ldquo;{deleteConfirm.product.name}&rdquo;?
             </p>
 
             {deleteError && (

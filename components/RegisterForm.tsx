@@ -43,11 +43,13 @@ const EMPTY_FORM: RegisterFormState = {
   username: '',
   email: '',
   password: '',
+  confirmPassword: '',
 };
 
 // Per-field validation. Returns a FormErrors map; an empty object means valid.
 // The three rules match the design: username non-empty, email a basic address
-// shape, password at least the API's 8-character minimum.
+// shape, password at least the API's 8-character minimum, and confirm password
+// must match the password.
 export function validate(
   data: RegisterFormState,
 ): FormErrors<RegisterFormState> {
@@ -67,6 +69,12 @@ export function validate(
     errors.password = 'Password is required.';
   } else if (data.password.length < MIN_PASSWORD_LENGTH) {
     errors.password = `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`;
+  }
+
+  if (!data.confirmPassword) {
+    errors.confirmPassword = 'Confirm password is required.';
+  } else if (data.password !== data.confirmPassword) {
+    errors.confirmPassword = 'Passwords do not match.';
   }
 
   return errors;
@@ -212,6 +220,29 @@ export default function RegisterForm() {
         {errors.password && (
           <p id={errorId('password')} role="alert" className={errorClasses}>
             {errors.password}
+          </p>
+        )}
+      </div>
+
+      {/* Confirm Password */}
+      <div className="flex flex-col gap-1">
+        <label htmlFor={`${fieldId}-confirmPassword`} className={labelClasses}>
+          Confirm Password
+        </label>
+        <input
+          id={`${fieldId}-confirmPassword`}
+          name="confirmPassword"
+          type="password"
+          autoComplete="new-password"
+          value={values.confirmPassword}
+          onChange={handleChange}
+          aria-invalid={errors.confirmPassword ? true : undefined}
+          aria-describedby={errors.confirmPassword ? errorId('confirmPassword') : undefined}
+          className={inputClasses}
+        />
+        {errors.confirmPassword && (
+          <p id={errorId('confirmPassword')} role="alert" className={errorClasses}>
+            {errors.confirmPassword}
           </p>
         )}
       </div>

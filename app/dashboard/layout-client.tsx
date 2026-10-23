@@ -40,7 +40,8 @@ export default function DashboardLayoutClient({ children }: { children: ReactNod
 
       try {
         // Make a lightweight read call to verify the token is still valid.
-        await getProducts({ limit: 1 });
+        // Just fetch products without filters — the API responds quickly.
+        await getProducts();
         setTokenValid(true);
       } catch (error) {
         if (!didCall) {

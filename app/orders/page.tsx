@@ -76,7 +76,7 @@ export default function OrdersPage() {
             No orders yet
           </p>
           <p className="text-sm text-black/60 dark:text-white/60">
-            You haven't placed any orders yet. Start shopping!
+            You haven&rsquo;t placed any orders yet. Start shopping!
           </p>
         </div>
       ) : (

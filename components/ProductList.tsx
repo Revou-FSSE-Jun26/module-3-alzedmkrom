@@ -31,7 +31,7 @@
 // same pattern CategoryFilter uses, so a slow fetch that resolves after a newer
 // one can never clobber the fresher list.
 
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -39,7 +39,7 @@ import ProductGrid from "@/components/ProductGrid";
 import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import CartSummary from "@/components/CartSummary";
-import AddProductForm from "@/components/AddProductForm";
+import { useCart } from "@/hooks/useCart";
 import { getProducts } from "@/lib/api";
 import type { Category, Product } from "@/lib/types";
 
@@ -59,16 +59,14 @@ export default function ProductList({
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search") ?? "";
 
+  // Read the cart from context. CartSummary will display these grouped items.
+  const cart = useCart();
+
   // The rendered list, seeded from the server-fetched prop so first paint shows
   // real data (already filtered when the URL carried a `search`).
   const [items, setItems] = useState<Product[]>(products);
   // The selected category, or null for "All categories".
   const [categoryId, setCategoryId] = useState<number | null>(null);
-  // The cart. Held here because this is the single interactive subtree. It is
-  // only ever *replaced* with a new array — never mutated in place — so React
-  // sees a fresh reference and CartSummary recomputes from it (design
-  // Property 7).
-  const [cart, setCart] = useState<Product[]>([]);
   // True while a client refetch is in flight; drives the pending indicator.
   const [isPending, setIsPending] = useState<boolean>(false);
   // A recoverable message shown instead of silently rendering an empty list.
@@ -133,28 +131,6 @@ export default function ProductList({
     setFetchError(null);
   }
 
-  // Add a product to the cart immutably: the updater returns a brand-new array
-  // with the product appended `quantity` times, so the cart is replaced rather
-  // than mutated — no push/splice/element assignment (design Property 7).
-  // ProductCard passes the quantity chosen on its counter; CartSummary counts
-  // one entry per unit, so appending N copies makes the item count and total
-  // reflect the chosen quantity. ProductCard only invokes this for an in-stock
-  // product with quantity >= 1, so a sold-out or zero-quantity add never lands.
-  function handleAddToCart(product: Product, quantity: number): void {
-    if (quantity < 1) return;
-    const additions = Array.from({ length: quantity }, () => product);
-    setCart((prev) => [...prev, ...additions]);
-  }
-
-  // Prepend a locally-added product immutably: the updater returns a brand-new
-  // array with the new product at the front, so the rendered list is replaced
-  // rather than mutated and the addition appears at the top of the grid (the
-  // design's `[newProduct, ...prev]` wording). Local state only — no POST is
-  // issued; persistence is Checkpoint 3.
-  function handleAddProduct(newProduct: Product): void {
-    setItems((prev) => [newProduct, ...prev]);
-  }
-
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
@@ -197,11 +173,9 @@ export default function ProductList({
         )}
       </div>
 
-      <ProductGrid products={items} onAddToCart={handleAddToCart} />
+      <ProductGrid products={items} />
 
-      <CartSummary cart={cart} />
-
-      <AddProductForm categories={categories} onAdd={handleAddProduct} />
+      <CartSummary items={cart.items} />
     </div>
   );
 }
