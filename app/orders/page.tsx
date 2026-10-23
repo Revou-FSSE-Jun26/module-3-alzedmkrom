@@ -18,14 +18,14 @@ import type { Order } from '@/lib/types';
 
 export default function OrdersPage() {
   const { ready } = useRequireRole();
-  const { user, token } = useAuth();
+  const { session, user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Only fetch when authorized and have a token
-    if (!ready || !token) {
+    if (!ready || !session?.token) {
       return;
     }
 
@@ -33,7 +33,7 @@ export default function OrdersPage() {
       try {
         setIsLoading(true);
         setError(null);
-        const data = await getMyOrders(token);
+        const data = await getMyOrders(session.token);
         setOrders(data);
       } catch (err) {
         setError(
@@ -43,7 +43,7 @@ export default function OrdersPage() {
         setIsLoading(false);
       }
     })();
-  }, [ready, token]);
+  }, [ready, session?.token]);
 
   // Render nothing while authorization is being checked. This prevents a flash
   // of protected content before the redirect.
