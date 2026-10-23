@@ -103,6 +103,11 @@ export function NavFallback() {
       ))}
       <Link href="/cart" className={INACTIVE_LINK}>
         Cart
+        <span
+          className="ml-2 inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-bold hidden"
+        >
+          0
+        </span>
       </Link>
     </nav>
   );
