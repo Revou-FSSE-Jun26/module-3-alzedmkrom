@@ -1,3 +1,4 @@
+export const instant = false;
 'use client';
 
 // app/dashboard/categories/page.tsx
@@ -258,3 +259,4 @@ export default function CategoriesPage() {
     </div>
   );
 }
+
