@@ -176,6 +176,16 @@ export default function DashboardPage() {
         </Link>
       </nav>
 
+      {/* Add button */}
+      {formMode === null && (
+        <button
+          onClick={openCreateForm}
+          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
+        >
+          + Add Product
+        </button>
+      )}
+
       {/* Form section - full width at top */}
       {formMode === 'create' && (
         <CreateProductForm
@@ -294,6 +304,7 @@ export default function DashboardPage() {
     </section>
   );
 }
+
 
 
 

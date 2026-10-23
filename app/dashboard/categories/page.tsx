@@ -157,6 +157,16 @@ export default function CategoriesPage() {
         </Link>
       </nav>
 
+      {/* Add button */}
+      {formMode === null && (
+        <button
+          onClick={() => setFormMode('create')}
+          className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
+        >
+          + Add Category
+        </button>
+      )}
+
       {/* Create/Edit form - shown at top when active */}
       {formMode === 'create' && (
         <CreateCategoryForm
@@ -267,6 +277,7 @@ export default function CategoriesPage() {
     </section>
   );
 }
+
 
 
 
