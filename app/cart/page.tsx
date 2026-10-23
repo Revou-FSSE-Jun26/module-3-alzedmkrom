@@ -125,7 +125,7 @@ export default function CartPage() {
                   <div className="flex flex-col gap-1">
                     <p className="text-black/60 dark:text-white/60">Total Quantity</p>
                     <p className="text-lg font-semibold text-black dark:text-white">
-                      {items.reduce((sum, item) => sum + item.quantity, 0)} items
+                      {items.reduce((sum, item) => sum + item.quantity, 0)} total quantity
                     </p>
                   </div>
                   <div className="flex flex-col gap-1">
