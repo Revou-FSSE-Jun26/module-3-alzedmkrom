@@ -1,4 +1,5 @@
 'use client';
+export const instant = false;
 
 // app/dashboard/orders/page.tsx
 //
@@ -144,6 +145,7 @@ export default function DashboardOrdersPage() {
     </div>
   );
 }
+
 
 
 
