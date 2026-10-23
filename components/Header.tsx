@@ -8,7 +8,7 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
-import Nav, { NavFallback, CartBadge } from "./Nav";
+import Nav, { NavFallback } from "./Nav";
 import { useAuth } from "@/hooks/useAuth";
 
 function SessionUI() {
@@ -58,14 +58,6 @@ function SessionUI() {
   );
 }
 
-function CartBadgeFallback() {
-  return (
-    <Link href="/cart" className="border-b-2 border-transparent pb-1 font-medium text-black/70 transition-colors hover:text-black dark:text-white/70 dark:hover:text-white">
-      Cart
-    </Link>
-  );
-}
-
 export default function Header() {
   return (
     <header className="border-b border-black/10 bg-white dark:border-white/15 dark:bg-black">
@@ -88,16 +80,6 @@ export default function Header() {
           <Suspense fallback={<NavFallback />}>
             <Nav />
           </Suspense>
-          
-          {/*
-            CartBadge reads useCart() and usePathname(). It's wrapped in its own
-            Suspense boundary so it can load independently after hydration without
-            blocking the main nav rendering.
-          */}
-          <Suspense fallback={<CartBadgeFallback />}>
-            <CartBadge />
-          </Suspense>
-          
           <SessionUI />
         </div>
       </div>
