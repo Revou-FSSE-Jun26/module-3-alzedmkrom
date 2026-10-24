@@ -32,6 +32,7 @@ import type {
   ProductFormState,
   Product,
 } from "@/lib/types";
+import CustomSelect, { type SelectOption } from "./CustomSelect";
 
 interface AddProductFormProps {
   /** Categories for the dropdown, fetched on the server and passed down. */
@@ -271,24 +272,23 @@ export default function AddProductForm({
         <label htmlFor={`${fieldId}-categoryId`} className={labelClasses}>
           Category
         </label>
-        <select
+        <CustomSelect
           id={`${fieldId}-categoryId`}
-          name="categoryId"
+          ariaLabel="Category"
+          options={[
+            { value: "", label: "Select a category…" },
+            ...categories.map(
+              (category): SelectOption => ({
+                value: String(category.id),
+                label: category.name,
+              }),
+            ),
+          ]}
           value={values.categoryId}
-          onChange={handleChange}
-          aria-invalid={errors.categoryId ? true : undefined}
-          aria-describedby={
-            errors.categoryId ? errorId("categoryId") : undefined
+          onChange={(value) =>
+            setValues((prev) => ({ ...prev, categoryId: value }))
           }
-          className={inputClasses}
-        >
-          <option value="">Select a category…</option>
-          {categories.map((category) => (
-            <option key={category.id} value={String(category.id)}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+        />
         {errors.categoryId && (
           <p id={errorId("categoryId")} role="alert" className={errorClasses}>
             {errors.categoryId}
