@@ -56,23 +56,16 @@ body::before {
     linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
 }
 
-/* Dark background gradient, driven by the `.dark` class. Blue fills the top
-   half of the page, then transitions into the calm blue-gray slate for the
-   bottom half. */
+/* Dark background gradient, driven by the `.dark` class. Fixed to the viewport
+   (it does not scroll with the page). Within the fixed viewport, blue fills the
+   top half and the calm blue-gray slate fills the bottom half. */
 .dark body::before {
   background:
-    radial-gradient(
-      120% 70% at 50% -10%,
-      rgba(96, 165, 250, 0.55) 0%,
-      rgba(59, 130, 246, 0.15) 30%,
-      rgba(96, 165, 250, 0) 50%
-    ),
     linear-gradient(
       180deg,
       #2563eb 0%,
-      #2f4e8f 25%,
+      #2f4e8f 30%,
       #3b4452 50%,
-      #3b4452 75%,
-      #363e4b 100%
+      #3b4452 100%
     );
 }
