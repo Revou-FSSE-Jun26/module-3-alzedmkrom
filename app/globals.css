@@ -18,10 +18,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Dark theme variables, driven by the `.dark` class that next-themes toggles.
-   next-themes is configured with enableSystem, so it adds `.dark` on its own
-   when the system prefers dark — which means we no longer need a separate
-   prefers-color-scheme media query here (that would fight a manual override). */
+/* Dark theme variables, driven by the `.dark` class that next-themes toggles. */
 .dark {
   --background: #3b4452;
   --foreground: #ededed;
@@ -37,16 +34,13 @@ input.password-field::-ms-clear {
   display: none;
 }
 
-/* Royal blue background on a fixed, behind-everything layer rather than on the
-   body itself. Putting a `fixed` background on the scrolling body is a known
-   mobile scroll-breaker; a separate fixed pseudo-element is visually identical
-   but never touches the body's scroll behaviour. A soft white glow from the
-   top blends into a vertical wash that deepens to #ABD9FF. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
+/* LIGHT MODE background.
+   Painted on <html> with `background-attachment: fixed`, which glues the
+   gradient to the viewport: it stays put while the page content scrolls over
+   it, and never stretches with page length. A soft white glow from the top
+   blends into a vertical wash that deepens to #ABD9FF. */
+html {
+  min-height: 100%;
   background:
     radial-gradient(
       120% 80% at 50% -10%,
@@ -54,18 +48,24 @@ body::before {
       rgba(255, 255, 255, 0) 55%
     ),
     linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-/* Dark background gradient, driven by the `.dark` class. Fixed to the viewport
-   (it does not scroll with the page). Within the fixed viewport, blue fills the
-   top half and the calm blue-gray slate fills the bottom half. */
-.dark body::before {
+/* DARK MODE background.
+   Same fixed-to-viewport behaviour: blue fills the top of the screen and the
+   calm blue-gray slate fills the bottom. Because it is attached to the viewport
+   it follows you as you scroll — the blue is always at the top of your screen,
+   the slate always at the bottom, regardless of page length or scroll position. */
+html.dark {
   background:
     linear-gradient(
       180deg,
       #2563eb 0%,
       #2f4e8f 30%,
-      #3b4452 50%,
+      #3b4452 55%,
       #3b4452 100%
     );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
