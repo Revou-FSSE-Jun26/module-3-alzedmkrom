@@ -115,7 +115,7 @@ export default function CategoryFilter({
           onChange={handleChange}
           disabled={isPending}
           aria-busy={isPending}
-          className="w-full rounded-md border border-black/15 bg-white px-3 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/20 dark:bg-white/5 dark:text-white"
+          className="w-full rounded-md border border-black/15 bg-white px-3 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/20 dark:bg-[#252b35] dark:text-white [&>option]:bg-[#252b35] [&>option]:text-white"
         >
           <option value={ALL_CATEGORIES}>All categories</option>
           {options.map((category) => (
