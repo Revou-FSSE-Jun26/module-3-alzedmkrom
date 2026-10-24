@@ -23,7 +23,7 @@
    when the system prefers dark — which means we no longer need a separate
    prefers-color-scheme media query here (that would fight a manual override). */
 .dark {
-  --background: #0a0a0a;
+  --background: #3b4452;
   --foreground: #ededed;
 }
 
@@ -56,17 +56,16 @@ body::before {
     linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
 }
 
-/* Dark background gradient, driven by the `.dark` class. A bright light-blue
-   glow up top transitions quickly into a dark gray (black at ~60%) that fills
-   most of the screen, so the gray is actually visible rather than only at the
-   very bottom edge. */
+/* Dark background gradient, driven by the `.dark` class. A calm blue-gray
+   slate (matching the reference mock) with a soft lighter slate glow up top
+   that settles into the slate tone across the rest of the screen. */
 .dark body::before {
   background:
     radial-gradient(
       120% 70% at 50% -10%,
-      rgba(96, 165, 250, 0.55) 0%,
-      rgba(59, 130, 246, 0.15) 30%,
-      rgba(96, 165, 250, 0) 50%
+      rgba(90, 102, 122, 0.6) 0%,
+      rgba(90, 102, 122, 0.2) 35%,
+      rgba(90, 102, 122, 0) 55%
     ),
-    linear-gradient(180deg, #2563eb 0%, #3a4e6b 20%, #525a63 40%, #666666 60%, #666666 100%);
+    linear-gradient(180deg, #454f5e 0%, #3f4857 30%, #3b4452 60%, #363e4b 100%);
 }
