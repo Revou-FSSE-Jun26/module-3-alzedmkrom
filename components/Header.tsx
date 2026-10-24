@@ -61,7 +61,7 @@ function SessionUI() {
 
 export default function Header() {
   return (
-    <header className="border-b border-black/10 bg-white dark:border-white/15 dark:bg-gray-800/70">
+    <header className="border-b border-black/10 bg-white dark:border-white/15 dark:bg-transparent">
       <div className="flex w-full flex-col items-start gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6">
         <Link
           href="/"
