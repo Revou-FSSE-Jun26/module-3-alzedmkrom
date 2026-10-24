@@ -48,6 +48,7 @@ body::before {
     linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
 }
 
+/* Dark mode support - responds to both system preference AND manual toggle via next-themes */
 @media (prefers-color-scheme: dark) {
   body::before {
     background:
@@ -58,4 +59,15 @@ body::before {
       ),
       linear-gradient(180deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
   }
+}
+
+/* Explicitly support dark class for next-themes */
+:is(.dark) body::before {
+  background:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      rgba(20, 20, 20, 0.95) 0%,
+      rgba(20, 20, 20, 0) 55%
+    ),
+    linear-gradient(180deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
 }
