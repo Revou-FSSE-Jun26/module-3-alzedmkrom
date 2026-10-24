@@ -9,6 +9,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import Nav, { NavFallback } from "./Nav";
+import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 
 function SessionUI() {
@@ -80,6 +81,7 @@ export default function Header() {
           <Suspense fallback={<NavFallback />}>
             <Nav />
           </Suspense>
+          <ThemeToggle />
           <SessionUI />
         </div>
       </div>
