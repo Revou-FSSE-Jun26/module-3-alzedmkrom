@@ -56,16 +56,23 @@ body::before {
     linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
 }
 
-/* Dark background gradient, driven by the `.dark` class. A calm blue-gray
-   slate (matching the reference mock) with a soft lighter slate glow up top
-   that settles into the slate tone across the rest of the screen. */
+/* Dark background gradient, driven by the `.dark` class. Blue fills the top
+   half of the page, then transitions into the calm blue-gray slate for the
+   bottom half. */
 .dark body::before {
   background:
     radial-gradient(
       120% 70% at 50% -10%,
-      rgba(90, 102, 122, 0.6) 0%,
-      rgba(90, 102, 122, 0.2) 35%,
-      rgba(90, 102, 122, 0) 55%
+      rgba(96, 165, 250, 0.55) 0%,
+      rgba(59, 130, 246, 0.15) 30%,
+      rgba(96, 165, 250, 0) 50%
     ),
-    linear-gradient(180deg, #454f5e 0%, #3f4857 30%, #3b4452 60%, #363e4b 100%);
+    linear-gradient(
+      180deg,
+      #2563eb 0%,
+      #2f4e8f 25%,
+      #3b4452 50%,
+      #3b4452 75%,
+      #363e4b 100%
+    );
 }
