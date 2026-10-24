@@ -1,40 +1,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+  const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
+  // Avoid hydration mismatch
   useEffect(() => {
     setIsMounted(true);
-    // Check if dark class exists on html element
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
   }, []);
-
-  const toggleTheme = () => {
-    const html = document.documentElement;
-    const newIsDark = !isDark;
-    
-    if (newIsDark) {
-      html.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      html.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-    
-    setIsDark(newIsDark);
-  };
 
   if (!isMounted) {
     return <div className="w-9 h-9" />;
   }
 
+  const isDark = theme === 'dark';
+
   return (
     <button
-      onClick={toggleTheme}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="rounded-lg p-2 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
       aria-label="Toggle dark mode"
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
