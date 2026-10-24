@@ -81,18 +81,22 @@ export default function CustomSelect({
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [isOpen]);
 
-  // When opening, highlight the currently selected option and focus the list.
+  // When the menu is open, move focus to the list so arrow keys work
+  // immediately. This effect only syncs focus (an external/DOM concern); the
+  // highlighted option is set in openMenu() at the moment of opening, not here,
+  // which keeps setState out of the effect body.
   useEffect(() => {
     if (isOpen) {
-      const current = options.findIndex((o) => o.value === value);
-      setActiveIndex(current === -1 ? 0 : current);
-      // Focus the list so arrow keys work immediately.
       listRef.current?.focus();
     }
-  }, [isOpen, options, value]);
+  }, [isOpen]);
 
   function openMenu() {
-    if (!disabled) setIsOpen(true);
+    if (disabled) return;
+    // Highlight the currently selected option as we open.
+    const current = options.findIndex((o) => o.value === value);
+    setActiveIndex(current === -1 ? 0 : current);
+    setIsOpen(true);
   }
 
   function closeMenu(returnFocus = true) {

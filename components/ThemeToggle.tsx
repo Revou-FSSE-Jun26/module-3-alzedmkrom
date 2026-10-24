@@ -7,8 +7,12 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
-  // Avoid hydration mismatch
+  // Mount guard to avoid a hydration mismatch: `theme` is only known on the
+  // client, so we render a placeholder until after mount. Setting a boolean
+  // flag once in a mount effect is the intended next-themes pattern; the
+  // set-state-in-effect rule is a false positive for this one-shot guard.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
   }, []);
 

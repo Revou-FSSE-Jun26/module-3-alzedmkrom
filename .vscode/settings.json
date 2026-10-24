@@ -1,0 +1,24 @@
+{
+  // Tailwind CSS v4 uses at-rules the built-in VS Code CSS/SCSS/Less linters do
+  // not recognize (@import "tailwindcss", @theme, @custom-variant, @apply),
+  // which otherwise produce hundreds of false "Unknown at rule" warnings.
+  // Defer CSS validation to the Tailwind CSS IntelliSense extension instead.
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+
+  // Treat the project CSS as Tailwind so the Tailwind extension lints it
+  // correctly and provides class completions.
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  // Let the Tailwind extension recognize arbitrary-value and variant classes
+  // used throughout the TSX (e.g. dark:bg-[#252b35]) without flagging them.
+  "tailwindCSS.includeLanguages": {
+    "typescriptreact": "javascript"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  }
+}
