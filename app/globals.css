@@ -57,7 +57,7 @@ body::before {
 }
 
 /* Dark background gradient, driven by the `.dark` class. A bright light-blue
-   glow up top deepens through blue into a softer dark gray (black at ~70%)
+   glow up top deepens through blue into a medium gray (black at ~50%)
    at the bottom, rather than pure black. */
 .dark body::before {
   background:
@@ -67,5 +67,5 @@ body::before {
       rgba(59, 130, 246, 0.15) 40%,
       rgba(96, 165, 250, 0) 65%
     ),
-    linear-gradient(180deg, #2563eb 0%, #1e3a8a 25%, #1a3056 50%, #232933 80%, #4d4d4d 100%);
+    linear-gradient(180deg, #2563eb 0%, #2c4a86 25%, #3a4e6b 50%, #566270 80%, #808080 100%);
 }
