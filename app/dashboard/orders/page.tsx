@@ -17,6 +17,15 @@ import { toastError, toastSuccess } from '@/lib/toast';
 import type { Order, OrderDetail } from '@/lib/types';
 import { formatRupiah, formatDate } from '@/lib/format';
 import Link from 'next/link';
+import CustomSelect from '@/components/CustomSelect';
+
+const ORDER_STATUS_OPTIONS = [
+  { value: 'PENDING', label: 'PENDING' },
+  { value: 'PROCESSING', label: 'PROCESSING' },
+  { value: 'SHIPPED', label: 'SHIPPED' },
+  { value: 'COMPLETED', label: 'COMPLETED' },
+  { value: 'CANCELLED', label: 'CANCELLED' },
+];
 
 export default function DashboardOrdersPage() {
   const { session } = useAuth();
@@ -308,7 +317,7 @@ export default function DashboardOrdersPage() {
       {/* Edit status modal */}
       {editingOrderId !== null && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 p-4 z-50">
-          <div className="w-full max-w-sm rounded-lg border border-black/10 bg-white p-6 shadow-lg dark:border-white/15 dark:bg-black">
+          <div className="w-full max-w-sm rounded-lg border border-black/10 bg-white p-6 shadow-lg dark:border-white/15 dark:bg-[#252b35]">
             <h2 className="text-lg font-semibold text-black dark:text-white">
               Edit Order #{editingOrderId} Status
             </h2>
@@ -316,18 +325,13 @@ export default function DashboardOrdersPage() {
               <label className="block text-sm font-medium text-black dark:text-white mb-2">
                 Status
               </label>
-              <select
+              <CustomSelect
+                ariaLabel="Order status"
+                options={ORDER_STATUS_OPTIONS}
                 value={editingStatus}
-                onChange={(e) => setEditingStatus(e.target.value)}
+                onChange={setEditingStatus}
                 disabled={isUpdating}
-                className="w-full rounded-md border border-black/10 dark:border-white/15 bg-white dark:bg-white/5 px-3 py-2 text-black dark:text-white disabled:opacity-50"
-              >
-                <option value="PENDING">PENDING</option>
-                <option value="PROCESSING">PROCESSING</option>
-                <option value="SHIPPED">SHIPPED</option>
-                <option value="COMPLETED">COMPLETED</option>
-                <option value="CANCELLED">CANCELLED</option>
-              </select>
+              />
             </div>
             <div className="mt-6 flex gap-3">
               <button
