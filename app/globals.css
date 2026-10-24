@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Tailwind v4 requires this directive to make `dark:` utilities respond to a
+   `.dark` class on an ancestor (the next-themes approach) instead of only to
+   the system `prefers-color-scheme`. Without it, `darkMode: 'class'` in the
+   config is ignored and manual toggling has no effect. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,11 +18,13 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark theme variables, driven by the `.dark` class that next-themes toggles.
+   next-themes is configured with enableSystem, so it adds `.dark` on its own
+   when the system prefers dark — which means we no longer need a separate
+   prefers-color-scheme media query here (that would fight a manual override). */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
@@ -48,21 +56,8 @@ body::before {
     linear-gradient(180deg, #e6f2ff 0%, #c4e2ff 45%, #abd9ff 100%);
 }
 
-/* Dark mode support - responds to both system preference AND manual toggle via next-themes */
-@media (prefers-color-scheme: dark) {
-  body::before {
-    background:
-      radial-gradient(
-        120% 80% at 50% -10%,
-        rgba(20, 20, 20, 0.95) 0%,
-        rgba(20, 20, 20, 0) 55%
-      ),
-      linear-gradient(180deg, #1a1a2e 0%, #16213e 45%, #0f3460 100%);
-  }
-}
-
-/* Explicitly support dark class for next-themes */
-:is(.dark) body::before {
+/* Dark background gradient, driven by the `.dark` class. */
+.dark body::before {
   background:
     radial-gradient(
       120% 80% at 50% -10%,
