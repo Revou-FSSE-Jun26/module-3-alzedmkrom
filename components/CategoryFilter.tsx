@@ -20,9 +20,10 @@
 
 "use client";
 
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import { getCategories, getProducts } from "@/lib/api";
 import type { Category, Product } from "@/lib/types";
+import CustomSelect, { type SelectOption } from "./CustomSelect";
 
 interface CategoryFilterProps {
   /** Server-fetched categories, used for first paint before the mount fetch resolves. */
@@ -75,10 +76,7 @@ export default function CategoryFilter({
 
   // Refetches the catalog for the chosen category and lifts the result up. An
   // empty value means "All categories" and refetches with no category filter.
-  async function handleChange(
-    event: ChangeEvent<HTMLSelectElement>,
-  ): Promise<void> {
-    const raw = event.target.value;
+  async function handleChange(raw: string): Promise<void> {
     const categoryId = raw === ALL_CATEGORIES ? null : Number(raw);
 
     setIsPending(true);
@@ -102,28 +100,25 @@ export default function CategoryFilter({
   const selectValue =
     selectedCategoryId === null ? ALL_CATEGORIES : String(selectedCategoryId);
 
+  const selectOptions: SelectOption[] = [
+    { value: ALL_CATEGORIES, label: "All categories" },
+    ...options.map((category) => ({
+      value: String(category.id),
+      label: category.name,
+    })),
+  ];
+
   return (
     <div className="flex w-full flex-col gap-1">
       <div className="flex w-full items-center gap-2">
-        <label htmlFor="category-filter" className="sr-only">
-          Filter by category
-        </label>
-        <select
+        <CustomSelect
           id="category-filter"
-          name="category"
+          ariaLabel="Filter by category"
+          options={selectOptions}
           value={selectValue}
           onChange={handleChange}
           disabled={isPending}
-          aria-busy={isPending}
-          className="w-full rounded-md border border-black/15 bg-white px-3 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/20 dark:bg-[#252b35] dark:text-white [&>option]:bg-[#252b35] [&>option]:text-white"
-        >
-          <option value={ALL_CATEGORIES}>All categories</option>
-          {options.map((category) => (
-            <option key={category.id} value={String(category.id)}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+        />
         {isPending && (
           <span
             role="status"
