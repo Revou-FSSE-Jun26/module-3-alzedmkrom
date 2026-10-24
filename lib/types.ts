@@ -288,5 +288,5 @@ export function availabilityOf(product: Product): Availability {
 //
 // Namespaced so they never collide with another app sharing the origin's
 // localStorage. The session is one key, so a restore is a single read.
-export const SESSION_KEY = 'revoshop.session';
-export const CART_KEY = 'revoshop.cart';
+export const SESSION_KEY = 'revogarb.session';
+export const CART_KEY = 'revogarb.cart';

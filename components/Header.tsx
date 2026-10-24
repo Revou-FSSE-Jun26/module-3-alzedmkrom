@@ -2,7 +2,7 @@
 
 // components/Header.tsx
 //
-// The application header: the RevoShop wordmark, the primary navigation, and
+// The application header: the RevoGarb wordmark, the primary navigation, and
 // the session state. The interactive parts (active-route detection and auth UI)
 // are client islands.
 
@@ -66,7 +66,7 @@ export default function Header() {
           href="/"
           className="text-2xl font-extrabold tracking-tight text-[#ffde3d] [text-shadow:-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000,0_0_12px_rgba(255,222,61,0.9)]"
         >
-          RevoShop
+          RevoGarb
         </Link>
         <div className="flex w-full flex-col items-start gap-3 sm:w-auto sm:flex-row sm:items-center sm:justify-end sm:gap-6">
           {/*

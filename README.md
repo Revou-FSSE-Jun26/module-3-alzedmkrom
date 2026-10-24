@@ -1,6 +1,6 @@
-﻿# RevoShop
+﻿# RevoGarb
 
-**Requirement 14.1** — RevoShop is a full-stack e-commerce frontend built with Next.js and the App Router, backed by a Flask API. It provides a browsable product catalog with search and filtering, user authentication with session persistence, a shopping cart backed by localStorage, order checkout and management, role-based admin tools for product and category CRUD, toast notifications for user feedback, and an automated end-to-end test suite.
+**Requirement 14.1** — RevoGarb is a full-stack e-commerce frontend built with Next.js and the App Router, backed by a Flask API. It provides a browsable product catalog with search and filtering, user authentication with session persistence, a shopping cart backed by localStorage, order checkout and management, role-based admin tools for product and category CRUD, toast notifications for user feedback, and an automated end-to-end test suite.
 
 ## Features
 
@@ -49,7 +49,7 @@
 
 ### Prerequisites
 - Node.js 18+ and npm
-- The RevoShop Flask API running (see `.env.example` for the live production endpoint)
+- The RevoGarb Flask API running (see `.env.example` for the live production endpoint)
 
 ### Setup and Run
 
@@ -67,7 +67,7 @@
    E2E_ADMIN_PASSWORD=your-admin-password
    ```
 
-   - `NEXT_PUBLIC_API_BASE_URL` — The base URL of the RevoShop Flask API (no `/api` path, no trailing slash)
+   - `NEXT_PUBLIC_API_BASE_URL` — The base URL of the RevoGarb Flask API (no `/api` path, no trailing slash)
    - `E2E_ADMIN_EMAIL` and `E2E_ADMIN_PASSWORD` — Optional; only needed to run Playwright tests
 
 3. **Install dependencies:**
@@ -142,8 +142,8 @@ The `POST /register` API endpoint always returns a `CUSTOMER` role, regardless o
 
 The app uses `localStorage` for two key data sets:
 
-- **Session** — The logged-in user's access token and user record, under the key `revoshop.session`. Survives page refreshes and is cleared on logout.
-- **Cart** — Items, quantities, and prices, under the key `revoshop.cart`. Survives page refreshes and is cleared after a successful checkout.
+- **Session** — The logged-in user's access token and user record, under the key `revogarb.session`. Survives page refreshes and is cleared on logout.
+- **Cart** — Items, quantities, and prices, under the key `revogarb.cart`. Survives page refreshes and is cleared after a successful checkout.
 
 Both are secured by type guards so a corrupted value does not crash the app; instead, the guard rejects it and treats it as absent (logged out or empty cart).
 

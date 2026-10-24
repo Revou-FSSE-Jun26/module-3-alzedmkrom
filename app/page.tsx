@@ -16,9 +16,9 @@ import { getProducts, getCategories } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 
 export const metadata: Metadata = {
-  title: "RevoShop — Home",
+  title: "RevoGarb — Home",
   description:
-    "Discover a selection of featured products from the RevoShop catalog, served live from the RevoShop API.",
+    "Discover a selection of featured products from the RevoGarb catalog, served live from the RevoGarb API.",
 };
 
 export default async function Home() {
@@ -33,7 +33,7 @@ export default async function Home() {
           Featured products
         </h1>
         <p className="text-black/60 dark:text-white/60">
-          A quick look at five products from the RevoShop catalog.
+          A quick look at five products from the RevoGarb catalog.
         </p>
       </header>
 
