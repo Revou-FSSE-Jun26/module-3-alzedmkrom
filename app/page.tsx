@@ -14,6 +14,7 @@
 import type { Metadata } from "next";
 import { getProducts, getCategories } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
+import HeroCarousel from "@/components/HeroCarousel";
 
 export const metadata: Metadata = {
   title: "RevoGarb — Home",
@@ -28,6 +29,10 @@ export default async function Home() {
 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 pt-6 pb-12 sm:px-6">
+      {/* Hero carousel — sits inside the same max-w-7xl section as the grid, so
+          its left/right edges align exactly with the product cards below. */}
+      <HeroCarousel />
+
       <header className="mb-6 flex flex-col gap-2">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
           Featured products
