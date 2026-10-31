@@ -21,6 +21,9 @@ const PRODUCT_IMAGES: Record<number, string> = {
   // Plain Cotton Combed T-Shirt
   // Photo by Avtar Singh on Unsplash.
   2: '/products/cotton-tshirt.jpg',
+  // Fleece Jogger Pants
+  // Photo by Engin Akyurt on Unsplash.
+  3: '/products/fleece-jogger-pants.jpg',
 };
 
 /**
