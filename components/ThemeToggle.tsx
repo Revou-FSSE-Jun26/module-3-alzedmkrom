@@ -30,26 +30,34 @@ export default function ThemeToggle() {
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {isDark ? (
-        // Sun icon for dark mode (click to switch to light)
+        // Sun icon shown in dark mode (click to switch to light). A clean
+        // stroke-based circle with evenly spaced rays, crisp at small sizes.
         <svg
-          className="w-5 h-5 text-yellow-400"
-          fill="currentColor"
-          viewBox="0 0 20 20"
+          className="h-5 w-5 text-yellow-400"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
         >
-          <path
-            fillRule="evenodd"
-            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 1.78a1 1 0 011.39 0l.707.707a1 1 0 11-1.39 1.39l-.707-.707a1 1 0 010-1.39zm2.83 2.83a1 1 0 011.39 0l.707.707a1 1 0 11-1.39 1.39l-.707-.707a1 1 0 010-1.39zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm1.22 4.22a1 1 0 001.39-1.39l-.707-.707a1 1 0 10-1.39 1.39l.707.707zM11 17a1 1 0 102 0v-1a1 1 0 10-2 0v1zm3.78-1.22a1 1 0 001.39-1.39l-.707-.707a1 1 0 10-1.39 1.39l.707.707zM5.78 4.22a1 1 0 011.39 0l.707.707a1 1 0 01-1.39 1.39L5.78 5.61a1 1 0 010-1.39zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zm1.22 4.22a1 1 0 01-1.39-1.39l.707-.707a1 1 0 011.39 1.39l-.707.707zM10 17a1 1 0 112 0v-1a1 1 0 11-2 0v1zm3-5.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-            clipRule="evenodd"
-          />
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
         </svg>
       ) : (
-        // Moon icon for light mode (click to switch to dark)
+        // Moon icon shown in light mode (click to switch to dark).
         <svg
-          className="w-5 h-5 text-slate-700"
-          fill="currentColor"
-          viewBox="0 0 20 20"
+          className="h-5 w-5 text-slate-700"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
         >
-          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
         </svg>
       )}
     </button>
