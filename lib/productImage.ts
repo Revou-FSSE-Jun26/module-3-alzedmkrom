@@ -18,6 +18,9 @@ const PRODUCT_IMAGES: Record<number, string> = {
   // Nike Air Max Running Shoes
   // Photo by Mojtaba Mosayebzadeh on Unsplash.
   1: '/products/nike-air-max.jpg',
+  // Plain Cotton Combed T-Shirt
+  // Photo by Avtar Singh on Unsplash.
+  2: '/products/cotton-tshirt.jpg',
 };
 
 /**
