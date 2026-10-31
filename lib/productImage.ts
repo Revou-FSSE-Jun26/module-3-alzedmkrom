@@ -24,6 +24,9 @@ const PRODUCT_IMAGES: Record<number, string> = {
   // Fleece Jogger Pants
   // Photo by Engin Akyurt on Unsplash.
   3: '/products/fleece-jogger-pants.jpg',
+  // Unisex Baseball Cap
+  // Photo by Mediamodifier on Unsplash.
+  4: '/products/baseball-cap.jpg',
 };
 
 /**
