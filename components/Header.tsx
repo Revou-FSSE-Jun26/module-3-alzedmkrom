@@ -31,11 +31,17 @@ function SessionUI() {
     );
   }
 
-  // Logged in: show username and logout control.
+  // Logged in: username links to the profile page, plus a logout control.
   if (user) {
     return (
       <div className="flex items-center gap-4">
-        <span className="text-sm font-medium">{user.username}</span>
+        <Link
+          href="/profile"
+          className="text-sm font-medium hover:underline"
+          title="View your profile"
+        >
+          {user.username}
+        </Link>
         <button
           onClick={logout}
           className="text-sm font-medium hover:underline"
