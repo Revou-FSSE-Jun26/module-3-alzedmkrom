@@ -9,6 +9,7 @@
 // so snake_case never escapes this module and lib/api.ts.
 
 import type { ReactNode } from 'react';
+import { productImageUrl } from './productImage';
 
 // ---------- wire layer: exactly what the Flask API returns ----------
 
@@ -230,7 +231,10 @@ export function toProduct(record: ProductRecord): Product {
     stockQuantity: record.stock_quantity,
     isDeleted: record.is_delete,
     createdAt: record.created_at,
-    imageUrl: null,
+    // The backend has no image column, so derive a stable placeholder photo
+    // from the product id (see lib/productImage.ts). Swap this for the record's
+    // own URL if an image column is added later.
+    imageUrl: productImageUrl(record.id),
   };
 }
 
