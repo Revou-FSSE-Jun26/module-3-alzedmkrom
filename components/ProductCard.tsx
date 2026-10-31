@@ -20,6 +20,7 @@ import Link from "next/link";
 import Card from "@/components/Card";
 import AddToCartButton from "@/components/AddToCartButton";
 import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/hooks/useAuth";
 import { availabilityOf, type ProductCardProps } from "@/lib/types";
 import type { Category } from "@/lib/types";
 import {
@@ -48,6 +49,11 @@ export default function ProductCard({
   const availability = availabilityOf(product);
   const inStock = availability.kind !== "out-of-stock";
   const cart = useCart();
+  // Gate the cart controls behind authentication: only logged-in shoppers can
+  // add to the cart. `isLoading` covers the first tick while the session is
+  // restored from storage, so we don't flash the login prompt for a user who
+  // is actually signed in.
+  const { user, isLoading: isAuthLoading } = useAuth();
   
   // Find the category name from the categoryId
   const category = categories.find((c: Category) => c.id === product.categoryId);
@@ -114,7 +120,22 @@ export default function ProductCard({
 
         {!readOnly && (
           <div className="mt-auto flex flex-col gap-2" onClick={(e) => e.preventDefault()}>
-            {onAddToCart ? (
+            {isAuthLoading ? (
+              // Session still restoring: render nothing cart-related yet to
+              // avoid flashing the login prompt at an already-logged-in user.
+              null
+            ) : !user ? (
+              // Logged out: hide the cart controls and invite the shopper to
+              // sign in. The link stops propagation so it doesn't also trigger
+              // the card's navigation to the product detail page.
+              <Link
+                href="/login"
+                onClick={(e) => e.stopPropagation()}
+                className="rounded-md border border-black/15 bg-white px-4 py-2 text-center text-sm font-semibold text-black transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+              >
+                Log in to add to cart
+              </Link>
+            ) : onAddToCart ? (
               // Simple mode: just show the AddToCartButton
               <AddToCartButton
                 product={product}
