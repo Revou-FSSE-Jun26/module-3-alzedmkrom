@@ -59,18 +59,36 @@ export default function ProductList({
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search") ?? "";
 
+  // A `category` URL param lets other pages deep-link into a filtered catalog
+  // (e.g. the Categories page links to /products?category=2). Parse it to a
+  // number, falling back to null ("All categories") when absent or invalid.
+  const categoryParam = searchParams.get("category");
+  const categoryFromUrl =
+    categoryParam && !Number.isNaN(Number(categoryParam))
+      ? Number(categoryParam)
+      : null;
+
   // Read the cart from context. CartSummary will display these grouped items.
   const cart = useCart();
 
   // The rendered list, seeded from the server-fetched prop so first paint shows
   // real data (already filtered when the URL carried a `search`).
   const [items, setItems] = useState<Product[]>(products);
-  // The selected category, or null for "All categories".
-  const [categoryId, setCategoryId] = useState<number | null>(null);
+  // The selected category, or null for "All categories". Initialised from the
+  // URL so a direct load of /products?category=2 arrives already filtered.
+  const [categoryId, setCategoryId] = useState<number | null>(categoryFromUrl);
   // True while a client refetch is in flight; drives the pending indicator.
   const [isPending, setIsPending] = useState<boolean>(false);
   // A recoverable message shown instead of silently rendering an empty list.
   const [fetchError, setFetchError] = useState<string | null>(null);
+
+  // Keep the selected category in sync with the URL. Navigating between
+  // category deep-links (e.g. /products?category=1 -> ?category=2) updates the
+  // param while this component stays mounted, so mirror it into state. The
+  // fetch effect below is keyed on categoryId and refetches when it changes.
+  useEffect(() => {
+    setCategoryId(categoryFromUrl);
+  }, [categoryFromUrl]);
 
   // Refetch whenever the URL's `search` value changes. Keyed on the search
   // string (and the current category) so a direct load of

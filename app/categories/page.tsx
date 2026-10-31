@@ -13,6 +13,7 @@
 // app/categories/error.tsx; the in-flight fetch shows app/categories/loading.tsx.
 
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getCategories } from "@/lib/api";
 import Card from "@/components/Card";
 
@@ -48,14 +49,20 @@ export default async function CategoriesPage() {
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
-            <Card key={category.id} className="flex flex-col gap-2">
-              <h2 className="text-lg font-semibold text-black dark:text-white">
-                {category.name}
-              </h2>
-              <p className="text-sm text-black/60 dark:text-white/60">
-                {category.description}
-              </p>
-            </Card>
+            <Link
+              key={category.id}
+              href={`/products?category=${category.id}`}
+              className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            >
+              <Card className="flex h-full flex-col gap-2 transition hover:border-black/20 hover:shadow-md dark:hover:border-white/30">
+                <h2 className="text-lg font-semibold text-black dark:text-white">
+                  {category.name}
+                </h2>
+                <p className="text-sm text-black/60 dark:text-white/60">
+                  {category.description}
+                </p>
+              </Card>
+            </Link>
           ))}
         </div>
       )}
