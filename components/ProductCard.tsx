@@ -122,21 +122,12 @@ export default function ProductCard({
 
         {!readOnly && (
           <div className="mt-auto flex flex-col gap-2" onClick={(e) => e.preventDefault()}>
-            {isAuthLoading ? (
-              // Session still restoring: render nothing cart-related yet to
-              // avoid flashing the login prompt at an already-logged-in user.
+            {isAuthLoading || !user ? (
+              // Not logged in (or session still restoring): show no cart control
+              // on the catalog card at all — matching the read-only home grid.
+              // Shoppers open the product detail page to log in and add to cart,
+              // where the "Log in to add to cart" prompt still lives.
               null
-            ) : !user ? (
-              // Logged out: hide the cart controls and invite the shopper to
-              // sign in. The link stops propagation so it doesn't also trigger
-              // the card's navigation to the product detail page.
-              <Link
-                href="/login"
-                onClick={(e) => e.stopPropagation()}
-                className="rounded-md border border-black/15 bg-white px-4 py-2 text-center text-sm font-semibold text-black transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
-              >
-                Log in to add to cart
-              </Link>
             ) : onAddToCart ? (
               // Simple mode: just show the AddToCartButton
               <AddToCartButton
