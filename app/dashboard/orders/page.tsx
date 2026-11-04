@@ -9,7 +9,10 @@
 // exported from a Client Component, which is why the interactive UI lives in
 // orders-client.tsx and this thin page stays a Server Component.
 
+import type { Metadata } from 'next';
 import OrdersClient from './orders-client';
+
+export const metadata: Metadata = { title: 'Manage Orders' };
 
 export const instant = false;
 

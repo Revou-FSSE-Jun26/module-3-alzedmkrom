@@ -4,19 +4,23 @@
 // is held in React state and updated through an onChange handler, so the input
 // never drifts from state.
 //
-// On Enter it drives the URL rather than filtering locally: it calls
-// router.push("/products?search=" + encodeURIComponent(query)). That keeps the
-// search shareable and reload-safe — ProductList reads the `search` param back
-// out via useSearchParams() and refetches — and encodeURIComponent keeps a
-// query such as "a&b" from corrupting the query string.
+// Search filters live as the user types. A debounced effect mirrors the input
+// into the URL's `search` param (router.replace, scroll:false) 300ms after the
+// last keystroke, so ProductList — which reads `search` via useSearchParams()
+// and refetches — updates without needing a submit. encodeURIComponent keeps a
+// query such as "a&b" from corrupting the query string. Submitting with Enter
+// still works and simply flushes the same navigation immediately.
+//
+// router.replace (not push) is used so typing doesn't stack a history entry per
+// keystroke; the Back button returns to the previous page, not each character.
 //
 // An optional `initialQuery` seeds the input so a direct load of
 // /products?search=watch shows the active term in the box, not an empty field.
 
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface SearchBarProps {
   /** Optional: seeds the input, e.g. from the current `search` query param. */
@@ -25,17 +29,42 @@ interface SearchBarProps {
 
 export default function SearchBar({ initialQuery = "" }: SearchBarProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState<string>(initialQuery);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     setQuery(event.target.value);
   }
 
+  // Debounced live filter: push the trimmed query into the URL 300ms after the
+  // user stops typing. Skip when it already matches the current `search` param,
+  // so re-renders from external URL changes don't loop.
+  useEffect(() => {
+    const trimmed = query.trim();
+    if (trimmed === (searchParams.get("search") ?? "")) return;
+
+    const timeoutId = setTimeout(() => {
+      router.replace(
+        trimmed
+          ? `/products?search=${encodeURIComponent(trimmed)}`
+          : "/products",
+        { scroll: false },
+      );
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [query, searchParams, router]);
+
   // Wrapped in a <form> so Enter submits naturally; preventDefault stops the
-  // full-page GET and we navigate client-side instead.
+  // full-page GET and we navigate client-side instead. The debounce above also
+  // handles typing, so this just flushes the current query right away.
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    router.push("/products?search=" + encodeURIComponent(query.trim()));
+    const trimmed = query.trim();
+    router.replace(
+      trimmed ? `/products?search=${encodeURIComponent(trimmed)}` : "/products",
+      { scroll: false },
+    );
   }
 
   return (

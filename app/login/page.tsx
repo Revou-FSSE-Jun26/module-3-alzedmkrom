@@ -6,8 +6,11 @@
 // already-logged-in visitor away from this page (ADMIN to /dashboard, everyone
 // else to /) so a signed-in user never sees the login form.
 
+import type { Metadata } from 'next';
 import LoginForm from '@/components/LoginForm';
 import RedirectIfAuthenticated from '@/components/RedirectIfAuthenticated';
+
+export const metadata: Metadata = { title: 'Log in' };
 
 export default function LoginPage() {
   return (

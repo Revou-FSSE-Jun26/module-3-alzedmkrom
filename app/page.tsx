@@ -17,7 +17,9 @@ import ProductGrid from "@/components/ProductGrid";
 import HeroCarousel from "@/components/HeroCarousel";
 
 export const metadata: Metadata = {
-  title: "RevoGarb — Home",
+  // Home is the one route that should show the brand name alone rather than
+  // "Home · RevoGarb", so it sets an absolute title that bypasses the template.
+  title: { absolute: "RevoGarb — Home" },
   description:
     "Discover a selection of featured products from the RevoGarb catalog, served live from the RevoGarb API.",
 };

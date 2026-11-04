@@ -10,7 +10,10 @@
 // interactive UI lives in dashboard-client.tsx and this thin page stays a
 // Server Component.
 
+import type { Metadata } from 'next';
 import DashboardClient from './dashboard-client';
+
+export const metadata: Metadata = { title: 'Dashboard' };
 
 export const instant = false;
 

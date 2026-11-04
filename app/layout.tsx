@@ -19,9 +19,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RevoShop",
+  // `default` is used by routes that set no title of their own; `template`
+  // wraps any page-provided title as "<Page> · RevoGarb" for a consistent
+  // browser-tab format across the app.
+  title: {
+    default: "RevoGarb",
+    template: "%s · RevoGarb",
+  },
   description:
-    "RevoShop storefront — browse products, categories and orders, served live from the RevoShop API.",
+    "RevoGarb storefront — browse products, categories and orders, served live from the RevoGarb API.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -105,7 +105,7 @@ export default function HeroCarousel() {
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${count}`}
             aria-hidden={i !== index}
-            className={`relative flex min-h-48 w-full shrink-0 flex-col justify-center gap-3 bg-gradient-to-r px-6 py-8 sm:min-h-64 sm:px-10 ${slide.gradient}`}
+            className={`relative flex min-h-64 w-full shrink-0 flex-col justify-center gap-3 bg-gradient-to-r px-6 py-10 sm:min-h-80 sm:px-10 ${slide.gradient}`}
           >
             <h2 className="max-w-md text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
               {slide.title}

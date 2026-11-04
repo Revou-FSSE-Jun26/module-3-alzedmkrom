@@ -49,13 +49,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const product = await getProduct(Number(id));
     return {
-      title: `${product.name} — RevoShop`,
+      // The product name flows through the root template as "<name> · RevoGarb".
+      title: product.name,
       description: product.description,
     };
   } catch {
     // The fetch failed (unknown id, API down). Degrade to the id rather than
     // letting the metadata resolution break the page.
-    return { title: `Product ${id} — RevoShop` };
+    return { title: `Product ${id}` };
   }
 }
 

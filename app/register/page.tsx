@@ -6,8 +6,11 @@
 // already-logged-in visitor away from this page (ADMIN to /dashboard, everyone
 // else to /) so a signed-in user never sees the registration form.
 
+import type { Metadata } from 'next';
 import RegisterForm from '@/components/RegisterForm';
 import RedirectIfAuthenticated from '@/components/RedirectIfAuthenticated';
+
+export const metadata: Metadata = { title: 'Register' };
 
 export default function RegisterPage() {
   return (

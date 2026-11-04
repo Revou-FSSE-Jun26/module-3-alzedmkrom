@@ -24,9 +24,9 @@ import { getCategories, getProducts } from "@/lib/api";
 import ProductList from "@/components/ProductList";
 
 export const metadata: Metadata = {
-  title: "Products — RevoShop",
+  title: "Products",
   description:
-    "Browse the full RevoShop catalog. Search by name and filter by category, served live from the RevoShop API.",
+    "Browse the full RevoGarb catalog. Search by name and filter by category, served live from the RevoGarb API.",
 };
 
 export default async function ProductsPage({

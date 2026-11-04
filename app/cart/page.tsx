@@ -51,12 +51,24 @@ export default function CartPage() {
               <p className="text-sm text-black/60 dark:text-white/60">
                 Add some products to get started.
               </p>
-              <Link
-                href="/products"
-                className="mt-2 inline-block rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white transition hover:bg-blue-700 active:scale-95"
-              >
-                Continue shopping
-              </Link>
+              <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
+                <Link
+                  href="/products"
+                  className="inline-block rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 active:scale-95"
+                >
+                  Continue shopping
+                </Link>
+                {/* A real (not Link) disabled button: with nothing in the cart
+                    there is nothing to check out, so the control is present but
+                    inert and visibly disabled. */}
+                <button
+                  type="button"
+                  disabled
+                  className="rounded-lg bg-green-600 px-8 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Proceed to Checkout
+                </button>
+              </div>
             </div>
           ) : (
             // Cart with items

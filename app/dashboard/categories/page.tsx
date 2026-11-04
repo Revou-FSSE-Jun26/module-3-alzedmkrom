@@ -9,7 +9,10 @@
 // exported from a Client Component, which is why the interactive UI lives in
 // categories-client.tsx and this thin page stays a Server Component.
 
+import type { Metadata } from 'next';
 import CategoriesClient from './categories-client';
+
+export const metadata: Metadata = { title: 'Manage Categories' };
 
 export const instant = false;
 

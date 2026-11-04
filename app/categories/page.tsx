@@ -18,9 +18,9 @@ import { getCategories } from "@/lib/api";
 import Card from "@/components/Card";
 
 export const metadata: Metadata = {
-  title: "Categories — RevoShop",
+  title: "Categories",
   description:
-    "Browse the product categories in the RevoShop catalog, served live from the RevoShop API.",
+    "Browse the product categories in the RevoGarb catalog, served live from the RevoGarb API.",
 };
 
 export default async function CategoriesPage() {
