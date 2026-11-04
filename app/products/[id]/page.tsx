@@ -20,9 +20,10 @@
 // routes docs.)
 //
 // generateMetadata resolves the title from live data, with the raw id as the
-// fallback so a failed metadata fetch degrades to "Product <id> — RevoShop"
-// instead of breaking the page (design: the dynamic title uses the real name,
-// the id is the fallback).
+// fallback so a failed metadata fetch degrades to "Product <id>" (which the
+// root layout template renders as "Product <id> · RevoGarb") instead of
+// breaking the page (design: the dynamic title uses the real name, the id is
+// the fallback).
 //
 // A thrown ApiError — an unknown id returns a non-OK status, which getProduct
 // turns into an ApiError — propagates to app/products/[id]/error.tsx; the

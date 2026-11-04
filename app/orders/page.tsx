@@ -59,7 +59,7 @@ export default function OrdersPage() {
           Orders
         </h1>
         <p className="text-black/60 dark:text-white/60">
-          Your order history in RevoShop.
+          Your order history in RevoGarb.
         </p>
       </header>
 

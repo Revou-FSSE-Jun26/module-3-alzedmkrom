@@ -33,7 +33,7 @@ export default async function CategoriesPage() {
           Categories
         </h1>
         <p className="text-black/60 dark:text-white/60">
-          Explore the product categories in the RevoShop catalog.
+          Explore the product categories in the RevoGarb catalog.
         </p>
       </header>
 

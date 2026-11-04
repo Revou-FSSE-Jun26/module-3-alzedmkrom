@@ -51,7 +51,7 @@ export default async function ProductsPage({
           Products
         </h1>
         <p className="text-black/60 dark:text-white/60">
-          Search and filter the full RevoShop catalog.
+          Search and filter the full RevoGarb catalog.
         </p>
       </header>
 
