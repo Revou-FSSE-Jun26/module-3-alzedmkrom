@@ -14,7 +14,7 @@ const SKELETON_CARDS = 8;
 function SkeletonCard() {
   return (
     <div className="animate-pulse rounded-xl border border-black/10 bg-white p-4 shadow-sm dark:border-white/15 dark:bg-white/5">
-      <div className="aspect-[4/3] w-full rounded-lg bg-slate-200 dark:bg-white/10" />
+      <div className="aspect-square w-full rounded-lg bg-slate-200 dark:bg-white/10" />
       <div className="mt-3 flex items-start justify-between gap-2">
         <div className="h-5 w-32 rounded bg-slate-200 dark:bg-white/10" />
         <div className="h-5 w-16 rounded-full bg-slate-200 dark:bg-white/10" />

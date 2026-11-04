@@ -83,8 +83,10 @@ export default function ProductCard({
   return (
     <Link href={`/products/${product.id}`}>
       <Card className="flex flex-col gap-3 cursor-pointer transition hover:shadow-lg">
-        {/* Placeholder image — no image column exists yet. */}
-        <div className="flex aspect-4/3 w-full items-center justify-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
+        {/* Square (1:1) image slot. `object-cover` centre-crops any uploaded
+            image — tall, wide, or square — to fill this box without distortion,
+            so the grid stays uniform whatever ratio the admin uploads. */}
+        <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
           {product.imageUrl === null ? (
             <span className="text-sm">No image</span>
           ) : (
