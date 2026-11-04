@@ -45,10 +45,10 @@ export default function CartPage() {
           {isEmpty ? (
             // Empty cart state
             <div className="flex min-h-48 flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-black/15 p-8 text-center dark:border-white/20">
-              <p className="font-semibold text-black dark:text-white">
+              <p className="text-2xl font-bold tracking-tight sm:text-3xl text-black dark:text-white">
                 Your cart is empty
               </p>
-              <p className="text-sm text-black/60 dark:text-white/60">
+              <p className="text-black/60 dark:text-white/60">
                 Add some products to get started.
               </p>
               <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
