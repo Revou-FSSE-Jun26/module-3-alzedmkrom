@@ -191,7 +191,10 @@ export default function ProductList({
         )}
       </div>
 
-      <ProductGrid products={items} categories={categories} />
+      {/* readOnly: the catalog cards show no quantity/add-to-cart controls.
+          Adding to the cart happens on the product detail page (/products/[id])
+          only, so shoppers open a product to purchase it. */}
+      <ProductGrid products={items} categories={categories} readOnly />
 
       <CartSummary items={cart.items} />
     </div>
